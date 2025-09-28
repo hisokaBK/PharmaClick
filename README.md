@@ -1,4 +1,4 @@
-# 💊 PharmayClick – Online Pharmacy Platform
+# 💊 PharmaClick – Online Pharmacy Platform
 
 **PharmayClick** is a front-end web application built using **React**, **HTML**, **CSS**, and **Bootstrap**, designed to simulate an online pharmacy experience.
 
