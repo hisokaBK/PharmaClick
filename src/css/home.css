@@ -1,6 +1,6 @@
 
 .bcImg{
-    background-image: url('C:\Users\Admin\Desktop\fr_projet\react_r\public\images\back3.jpg');
+    background-image: url('../../public/images/back3.jpg');
     background-size: 84%;
     background-position: center;
     background-repeat: no-repeat;
