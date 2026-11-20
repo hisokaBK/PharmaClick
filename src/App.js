@@ -29,6 +29,7 @@ import MentalHealth from "./Com_servess/MentalHealth";
 import HealthyRecipes from "./Com_servess/HealthyRecipes";
 import SportsHealth from "./Com_servess/SportsHealth";
 import HealthAlerts from "./Com_servess/HealthAlerts";
+import RiskAssessments from "./Com_servess/RiskAssessments";
 import Working from "./Com_servess/test1";
 
 const App = () => {
@@ -64,7 +65,7 @@ const App = () => {
           <Route path="/Herbal" element={<HerbalSolutions />} />
           <Route path="/Mental" element={<MentalHealth />} />
           <Route path="/Sports" element={<SportsHealth />} />
-          <Route path="/Risk" element={<Working />} />
+          <Route path="/Risk" element={<RiskAssessments />} />
           <Route path="/Health_Alerts" element={<HealthAlerts />} />
           <Route path="/Health_Quizzes" element={<Working />} />
         </Route>
