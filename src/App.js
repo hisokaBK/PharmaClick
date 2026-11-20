@@ -26,6 +26,7 @@ import NutritionPrograms from "./Com_servess/NutritionPrograms";
 import MedicalNews from "./Com_servess/MedicalNews";
 import HerbalSolutions from "./Com_servess/HerbalSolutions";
 import MentalHealth from "./Com_servess/MentalHealth";
+import HealthyRecipes from "./Com_servess/HealthyRecipes";
 import Working from "./Com_servess/test1";
 
 const App = () => {
@@ -54,7 +55,7 @@ const App = () => {
           <Route path="/Produit/:idP" element={<Produit />} />
           <Route path="/Dashboard" element={<Dashboard />} />
           <Route path="/Slep" element={<Slep />} />
-          <Route path="/Healthy" element={<Working />} />
+          <Route path="/Healthy" element={<HealthyRecipes />} />
           <Route path="/Professional" element={<ProfessionalGuidelines />} />
           <Route path="/Nutrition" element={<NutritionPrograms />} />
           <Route path="/Medical_News" element={<MedicalNews />} />
