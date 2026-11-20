@@ -22,6 +22,7 @@ import TrackingPage from "./Com_Medications/Delivery";
 import Dashboard from "./Com_Medications/Dashboard";
 import Slep from "./Com_servess/Slep";
 import ProfessionalGuidelines from "./Com_servess/ProfessionalGuidelines";
+import NutritionPrograms from "./Com_servess/NutritionPrograms";
 import Working from "./Com_servess/test1";
 
 const App = () => {
@@ -52,7 +53,7 @@ const App = () => {
           <Route path="/Slep" element={<Slep />} />
           <Route path="/Healthy" element={<Working />} />
           <Route path="/Professional" element={<ProfessionalGuidelines />} />
-          <Route path="/Nutrition" element={<Working />} />
+          <Route path="/Nutrition" element={<NutritionPrograms />} />
           <Route path="/Medical_News" element={<Working />} />
           <Route path="/Herbal" element={<Working />} />
           <Route path="/Mental" element={<Working />} />
