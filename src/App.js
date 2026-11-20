@@ -23,6 +23,7 @@ import Dashboard from "./Com_Medications/Dashboard";
 import Slep from "./Com_servess/Slep";
 import ProfessionalGuidelines from "./Com_servess/ProfessionalGuidelines";
 import NutritionPrograms from "./Com_servess/NutritionPrograms";
+import MedicalNews from "./Com_servess/MedicalNews";
 import Working from "./Com_servess/test1";
 
 const App = () => {
@@ -54,7 +55,7 @@ const App = () => {
           <Route path="/Healthy" element={<Working />} />
           <Route path="/Professional" element={<ProfessionalGuidelines />} />
           <Route path="/Nutrition" element={<NutritionPrograms />} />
-          <Route path="/Medical_News" element={<Working />} />
+          <Route path="/Medical_News" element={<MedicalNews />} />
           <Route path="/Herbal" element={<Working />} />
           <Route path="/Mental" element={<Working />} />
           <Route path="/Sports" element={<Working />} />
