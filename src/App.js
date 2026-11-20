@@ -24,6 +24,7 @@ import Slep from "./Com_servess/Slep";
 import ProfessionalGuidelines from "./Com_servess/ProfessionalGuidelines";
 import NutritionPrograms from "./Com_servess/NutritionPrograms";
 import MedicalNews from "./Com_servess/MedicalNews";
+import HerbalSolutions from "./Com_servess/HerbalSolutions";
 import Working from "./Com_servess/test1";
 
 const App = () => {
@@ -56,7 +57,7 @@ const App = () => {
           <Route path="/Professional" element={<ProfessionalGuidelines />} />
           <Route path="/Nutrition" element={<NutritionPrograms />} />
           <Route path="/Medical_News" element={<MedicalNews />} />
-          <Route path="/Herbal" element={<Working />} />
+          <Route path="/Herbal" element={<HerbalSolutions />} />
           <Route path="/Mental" element={<Working />} />
           <Route path="/Sports" element={<Working />} />
           <Route path="/Risk" element={<Working />} />
