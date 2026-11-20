@@ -27,6 +27,7 @@ import MedicalNews from "./Com_servess/MedicalNews";
 import HerbalSolutions from "./Com_servess/HerbalSolutions";
 import MentalHealth from "./Com_servess/MentalHealth";
 import HealthyRecipes from "./Com_servess/HealthyRecipes";
+import SportsHealth from "./Com_servess/SportsHealth";
 import Working from "./Com_servess/test1";
 
 const App = () => {
@@ -61,7 +62,7 @@ const App = () => {
           <Route path="/Medical_News" element={<MedicalNews />} />
           <Route path="/Herbal" element={<HerbalSolutions />} />
           <Route path="/Mental" element={<MentalHealth />} />
-          <Route path="/Sports" element={<Working />} />
+          <Route path="/Sports" element={<SportsHealth />} />
           <Route path="/Risk" element={<Working />} />
           <Route path="/Health_Alerts" element={<Working />} />
           <Route path="/Health_Quizzes" element={<Working />} />
