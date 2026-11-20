@@ -30,7 +30,7 @@ import HealthyRecipes from "./Com_servess/HealthyRecipes";
 import SportsHealth from "./Com_servess/SportsHealth";
 import HealthAlerts from "./Com_servess/HealthAlerts";
 import RiskAssessments from "./Com_servess/RiskAssessments";
-import Working from "./Com_servess/test1";
+import HealthQuizzes from "./Com_servess/HealthQuizzes";
 
 const App = () => {
         const store=legacy_createStore(reducer)
@@ -67,7 +67,7 @@ const App = () => {
           <Route path="/Sports" element={<SportsHealth />} />
           <Route path="/Risk" element={<RiskAssessments />} />
           <Route path="/Health_Alerts" element={<HealthAlerts />} />
-          <Route path="/Health_Quizzes" element={<Working />} />
+          <Route path="/Health_Quizzes" element={<HealthQuizzes />} />
         </Route>
         <Route path="/signup" element={<SignUp />} />
         <Route path="/signin" element={<SignIn />} />
