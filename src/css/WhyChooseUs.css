@@ -1,0 +1,152 @@
+.why-choose-us {
+     margin-top: 82px;
+  background-color: #8aab8804;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  text-align: left; 
+ 
+}
+
+.section-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #2e7d32;
+  position: relative;
+  display: inline-block;
+  margin-bottom: 1rem;
+  text-align: left;
+}
+
+.section-title::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 0; 
+  width: 60px;
+  height: 3px;
+  background-color: #81c784; 
+}
+
+.section-subtitle {
+  font-size: 1rem;
+  color: #555;
+  max-width: 700px;
+  margin: 0;
+  text-align: left; 
+}
+
+.feature-card {
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(46, 125, 50, 0.08);
+  transition: all 0.3s ease;
+  border: 1px solid #e8f5e9; 
+  text-align: left;
+}
+
+
+
+/* -----------Animation styles---------------- */
+.feature-card {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.6s ease-out;
+}
+
+.feature-card.animate-feature {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.feature-card:nth-child(1) {
+  transition-delay: 0.1s;
+}
+.feature-card:nth-child(2) {
+  transition-delay: 0.2s;
+}
+.feature-card:nth-child(3) {
+  transition-delay: 0.3s;
+}
+.feature-card:nth-child(4) {
+  transition-delay: 0.4s;
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .feature-card {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+.feature-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 16px rgba(46, 125, 50, 0.12);
+  border-color: #c8e6c9; 
+}
+
+.feature-icon-wrapper {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 60px;
+  height: 60px;
+  background-color: #e8f5e9; 
+  border-radius: 50%;
+  margin: 0 0 1rem 0; 
+}
+
+.feature-icon {
+  font-size: 1.5rem;
+  color: #2e7d32;
+}
+
+.feature-title {
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: #2e7d32; 
+  text-align: left;
+}
+
+.feature-text {
+  color: #424242;
+  line-height: 1.6;
+  font-size: 0.95rem;
+  text-align: left;
+}
+.text-left {
+     padding-bottom: 23px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+  .section-title {
+    font-size: 1.75rem;
+  }
+  
+  .feature-icon-wrapper {
+    width: 50px;
+    height: 50px;
+  }
+  
+  .feature-icon {
+    font-size: 1.25rem;
+  }
+  .why-choose-us {
+     margin-top: 2px;
+}
+}
+
+@media (max-width: 768px) {
+  .section-title {
+    font-size: 1.5rem;
+  }
+  
+  .section-subtitle {
+    font-size: 0.9rem;
+  }
+  
+  .feature-card {
+    padding: 1.5rem;
+  }
+}

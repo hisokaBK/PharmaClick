@@ -1,0 +1,127 @@
+.commander-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.commander-content {
+  background-color: white;
+  padding: 30px;
+  border-radius: 10px;
+  width: 80%;
+  max-width: 800px;
+  max-height: 90vh;
+  overflow-y: auto;
+  direction: rtl;
+}
+
+.close-btn {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.invoice-header {
+  text-align: center;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #eee;
+  padding-bottom: 15px;
+}
+
+.invoice-info {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.invoice-items table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+}
+
+.invoice-items th, 
+.invoice-items td {
+  padding: 12px;
+  text-align: right;
+  border-bottom: 1px solid #eee;
+}
+
+.invoice-items th {
+  background-color: #f5f5f5;
+}
+
+.invoice-summary {
+  margin-top: 20px;
+  border-top: 2px solid #eee;
+  padding-top: 15px;
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.summary-row.total {
+  font-weight: bold;
+  font-size: 1.1em;
+  margin-top: 10px;
+}
+
+.invoice-actions {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 25px;
+}
+
+.print-btn, 
+.close-invoice-btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.print-btn {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.close-invoice-btn {
+  background-color: #f44336;
+  color: white;
+}
+
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  .commander-content, .commander-content * {
+    visibility: visible;
+  }
+  .commander-content {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    max-width: 100%;
+    box-shadow: none;
+  }
+  .invoice-actions {
+    display: none;
+  }
+}

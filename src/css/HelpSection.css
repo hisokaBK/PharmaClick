@@ -1,0 +1,179 @@
+.pharmacy-help-section {
+  padding: 60px 0;
+  font-family: 'Poppins', 'Roboto', sans-serif;
+  background-color: #32885315;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.help-content {
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+
+
+.help-subtitle {
+  font-size: 1.25rem;
+  color: #1e381f;
+  margin-bottom: 40px;
+}
+
+.help-options1 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+  margin-bottom: 40px;
+}
+
+.help-option {
+  padding: 30px;
+  border-radius: 10px;
+  border: 1px solid #e8f5e9;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(46, 125, 50, 0.05);
+}
+
+.help-option:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(46, 125, 50, 0.1);
+}
+
+.option-icon {
+  font-size: 2rem;
+  color: #2e7d32;
+  margin-bottom: 15px;
+}
+
+.help-option h3 {
+  font-size: 1.25rem;
+  color: #2e7d32;
+  margin-bottom: 10px;
+}
+
+.help-option p {
+  color: #555;
+  line-height: 1.6;
+}
+
+.email-subscription {
+  margin-top: 40px;
+}
+
+.email-subscription h3 {
+  font-size: 1.25rem;
+  color: #000000;
+  margin-bottom: 20px;
+}
+
+.email-input-group {
+  display: flex;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.email-input {
+  flex: 1;
+  padding: 12px 15px;
+  border: 1px solid #e8f5e9;
+  border-radius: 4px 0 0 4px;
+  font-size: 1rem;
+  outline: none;
+}
+
+.email-input:focus {
+  border-color: #81c784;
+}
+
+.submit-button {
+  background-color: #2e7d32;
+  color: white;
+  border: none;
+  padding: 0 20px;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 0 4px 4px 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: background-color 0.3s ease;
+}
+
+.submit-button:hover {
+  background-color: #1b5e20;
+}
+
+/* --------Link contact FAQ------------- */
+.LinkContFAQ{
+       text-decoration: none;
+       color: #81c784;
+
+}
+.LinkContFAQ:hover{
+      
+       text-decoration: underline;
+       
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .help-title {
+    font-size: 1.75rem;
+  }
+  
+  .help-subtitle {
+    font-size: 1.1rem;
+  }
+  
+  .email-input-group {
+    flex-direction: column;
+  }
+  
+  .email-input {
+    border-radius: 4px;
+    margin-bottom: 10px;
+  }
+  
+  .submit-button {
+    border-radius: 4px;
+    padding: 12px;
+    justify-content: center;
+  }
+}
+
+
+
+/* Animation styles */
+.help-options {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.6s ease-out;
+}
+
+.email-subscription {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.6s ease-out 0.2s; 
+}
+
+.help-options.animate-visible,
+.email-subscription.animate-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .help-options,
+  .email-subscription {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}

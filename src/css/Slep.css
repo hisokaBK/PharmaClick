@@ -1,0 +1,158 @@
+.hero-container {
+  display: flex;
+  max-width: 1200px;
+  margin: 0 auto;
+
+  padding: 100px 20px;
+  align-items: center;
+  gap: 40px;
+}
+
+.hero-content {
+  flex: 1;
+  padding: 20px;
+}
+
+.hero-image-container {
+  flex: 1;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.hero-image {
+  width: 100%;
+  height: auto;
+  display: block;
+  transition: transform 0.3s ease;
+}
+
+.hero-image:hover {
+  transform: scale(1.02);
+}
+
+.hero-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  line-height: 1.2;
+  color: #222;
+}
+
+.hero-subtitle {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+  color: #555;
+}
+
+
+
+
+
+
+
+
+@media (max-width: 768px) {
+  .hero-container {
+    flex-direction: column;
+    padding: 20px;
+  }
+  
+  .hero-content {
+    order: 2;
+    padding: 20px 0;
+  }
+  
+  .hero-image-container {
+    order: 1;
+    width: 100%;
+  }
+  
+  .hero-title {
+    font-size: 2rem;
+  }
+  
+  
+}
+
+/* ------------------------- */
+/* Sleep & Stress Articles Section */
+#sleep-stress-articles {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  background-color: white;
+}
+
+.sleep-article {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  margin-bottom: 50px;
+  padding: 20px;
+  border-radius: 8px;
+  background-color: #f8f8f8;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.sleep-article:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 100, 0, 0.1);
+}
+
+.sleep-article img {
+  width: 250px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 6px;
+  border: 3px solid #2e7d32;
+}
+
+.article-content {
+  flex: 1;
+}
+
+.sleep-article h2 {
+  color: #2e7d32;
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+  line-height: 1.4;
+}
+
+.sleep-article p {
+  color: #333;
+  line-height: 1.6;
+  margin-bottom: 0;
+}
+
+/* Alternate layout for even articles */
+.sleep-article:nth-child(even) {
+  flex-direction: row-reverse;
+  background-color: #e8f5e9;
+}
+
+.sleep-article:nth-child(even) h2 {
+  color: #1b5e20;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .sleep-article {
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .sleep-article:nth-child(even) {
+    flex-direction: column;
+  }
+  
+  .sleep-article img {
+    width: 100%;
+    height: auto;
+  }
+  
+  .sleep-article h2 {
+    font-size: 1.3rem;
+  }
+}

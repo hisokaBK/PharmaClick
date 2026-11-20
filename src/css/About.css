@@ -1,0 +1,241 @@
+.about-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 30px 20px;
+  font-family: 'Arial', sans-serif;
+  color: #333;
+  animation: fadeIn 0.5s ease-out;
+}
+
+.pha-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 50px 20px;
+}
+
+.pha-content {
+  display: flex;
+  align-items: center;
+  gap: 50px;
+}
+
+.pha-text {
+  flex: 1;
+}
+
+.welcome-text {
+  color: #04b077;
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+}
+
+.name-title {
+  font-size: 2.5rem;
+  color: #333;
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+.bio-text {
+  color: #666;
+  line-height: 1.6;
+  margin-bottom: 30px;
+  font-size: 1.1rem;
+}
+
+.pha-image {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.pha-photo {
+  width: 100%;
+  max-width: 400px;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  transition: transform 0.5s ease, box-shadow 0.5s ease;
+}
+
+.pha-photo:hover {
+  transform: scale(1.02);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+}
+
+.srvs-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 25px;
+  margin-top: 30px;
+  overflow: visible;
+}
+
+.srv-card {
+  background: white;
+  padding: 25px;
+  border-radius: 8px;
+  box-shadow: 0 3px 15px rgba(0,0,0,0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-left: 4px solid #04b077;
+  will-change: transform, opacity;
+}
+
+.srv-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+}
+
+.srv-card.warning {
+  border-left-color: #ff9800;
+}
+
+.srv-card.optional {
+  border-left-color: #9c27b0;
+}
+
+.srv-icon {
+  font-size: 2rem;
+  color: #04b077;
+  margin-bottom: 15px;
+  transition: transform 0.3s ease;
+}
+
+.srv-card:hover .srv-icon {
+  animation: bounce 0.6s ease infinite;
+}
+
+.srv-card.warning .srv-icon {
+  color: #ff9800;
+}
+
+.srv-card.optional .srv-icon {
+  color: #9c27b0;
+}
+
+.srv-card h3 {
+  color: #04b077;
+  margin-bottom: 15px;
+  font-size: 1.3rem;
+}
+
+.srv-card.warning h3 {
+  color: #ff9800;
+}
+
+.srv-card.optional h3 {
+  color: #9c27b0;
+}
+
+.srv-content {
+  transition: all 0.3s ease;
+  transform-origin: top center;
+}
+
+.srv-card:hover .srv-content {
+  transform: scale(1.02);
+}
+
+.srv-card p {
+  line-height: 1.6;
+  color: #555;
+}
+
+.srv-card ul {
+  padding-left: 20px;
+  margin-top: 10px;
+}
+
+.srv-card li {
+  margin-bottom: 8px;
+  color: #555;
+}
+
+.animated-contact-btn {
+  position: relative;
+  padding: 12px 30px;
+  background-color: #04b077;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 4px 15px rgba(4, 176, 119, 0.3);
+}
+
+.animated-contact-btn:hover {
+  background-color: #038a62;
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(4, 176, 119, 0.4);
+}
+
+.animated-contact-btn:active {
+  transform: translateY(1px);
+}
+
+.animated-contact-btn::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background: radial-gradient(circle, rgba(255,255,255,0.8) 1%, transparent 1%) center/15000%;
+  opacity: 0;
+  transition: opacity 1s, background-size 0.6s;
+}
+
+.animated-contact-btn:active::after {
+  background-size: 100%;
+  opacity: 0.3;
+  transition: 0s;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .pha-content {
+    flex-direction: column-reverse;
+    gap: 30px;
+  }
+  
+  .name-title {
+    font-size: 2rem;
+  }
+  
+  .pha-photo {
+    max-width: 300px;
+  }
+  
+  .srvs-container {
+    grid-template-columns: 1fr;
+  }
+  
+  .about-title {
+    font-size: 2rem;
+  }
+  
+  .srv-card {
+    padding: 20px;
+  }
+  
+  .animated-contact-btn {
+    padding: 10px 25px;
+    font-size: 0.9rem;
+  }
+}

@@ -1,0 +1,141 @@
+/* Main Container */
+.contact-page-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 70px 20px;
+  font-family: 'Arial', sans-serif;
+}
+
+/* Titles */
+.contact-title {
+   font-size: 2rem;
+  font-weight: 700;
+  color: #2e7d32;
+  margin-bottom: 1rem;
+  text-align: center;
+  }
+
+.contact-subtitle {
+  color: #333;
+  font-size: 1.3rem;
+  margin-bottom: 40px;
+  font-weight: 400;
+  text-align: center;
+  padding-top: 23px;
+}
+
+/* Content Layout */
+.contact-content {
+  display: flex;
+  gap: 40px;
+  margin-top: 30px;
+}
+
+.contact-info-section {
+  flex: 1;
+  padding: 30px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+}
+
+.contact-form-section {
+  flex: 1;
+  padding: 30px;
+}
+
+/* Contact Information */
+.contact-description {
+  color: #666;
+  margin-bottom: 30px;
+  line-height: 1.6;
+  font-size: 1.1rem;
+}
+
+.contact-info-list {
+  list-style: none;
+  padding: 0;
+}
+
+.contact-info-item {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 25px;
+  color: #555;
+  line-height: 1.5;
+}
+
+.contact-info-item.checked {
+  color: #04b077;
+  font-weight: 500;
+}
+
+.contact-icon {
+  margin-right: 15px;
+  margin-top: 3px;
+  font-size: 1.2rem;
+  min-width: 20px;
+}
+
+/* Form Styles */
+.pharmacy-contact-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 12px 15px;
+  border: 1px solid #45b847b8;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-family: inherit;
+}
+
+.form-group textarea:focus {
+      border: 1px solid #170101;
+
+}
+.form-group textarea {
+  min-height: 150px;
+  resize: vertical;
+}
+
+.submit-button {
+  background-color: #04b077;
+  color: white;
+  border: none;
+  padding: 12px 25px;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  align-self: flex-start;
+}
+
+.submit-button:hover {
+  background-color: #038a62;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .contact-content {
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .contact-info-section,
+  .contact-form-section {
+    padding: 20px;
+  }
+  
+  
+  
+  .contact-subtitle {
+    font-size: 1.1rem;
+  }
+}

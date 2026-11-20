@@ -1,0 +1,137 @@
+
+
+.container-fluid {
+    max-width: 80%;  
+    
+  }
+
+  .form-group {
+    position: relative;
+    margin-bottom: 1.5rem;
+    
+  }
+  #form3Example1:focus{
+          box-shadow: 0px 0px 2px green;
+          border: 1px solis;
+  }
+  #form3Example2:focus{
+          box-shadow: 0px 0px 2px green;
+             border: 1px solis;
+      }
+      #form3Example3:focus{
+              box-shadow: 0px 0px 2px green;
+                 border: 1px solis;
+          }
+          #form3Example4:focus{
+                  box-shadow: 0px 0px 2px green;
+                     border: 1px solis;
+              }
+  .form-control {
+    padding-top: 0.6rem;
+    height: calc(3.5rem + 2px);
+    
+  }
+  
+  .form-label {
+    position: absolute;
+    top: 0.5rem;
+    left: 1.75rem;
+    margin-bottom: 0;
+    color: #6c757d6a;
+    transition: all 0.2s;
+    pointer-events: none;
+    
+  }
+  
+  .form-control:focus ~ .form-label,
+  .form-control:not(:placeholder-shown) ~ .form-label {
+    top: -1rem;
+    left: 0.6rem;
+    font-size: 0.9rem;
+    color: #1c6d376c;
+    background-color: rgb(255, 254, 254);
+    padding: 3px;
+    padding-left: 2px;
+    padding-right: 6px;
+    border-radius: 9px;
+    font-family: cursive;
+  }
+  
+  /* Adjustments for Bootstrap's bg-glass class if needed */
+  .bg-glass .form-control {
+    background-color: rgba(255, 255, 255, 0.8);
+  }
+
+.form-control{
+       height: 100%;
+}
+
+  @media (max-width:991px){
+    .form-control:focus ~ .form-label,
+    .form-control:not(:placeholder-shown) ~ .form-label {
+       top: -1.1rem;
+
+      font-size: 1rem;
+
+    }
+  }
+
+  .btn1{
+       background-color: rgba(175, 187, 183, 0.534);
+       border: 1px solid;
+       width: 54%;
+       border-radius: 11px;
+       height: 27px;
+       margin-bottom: 9px;
+  }
+  .btn1:hover{
+         color: rgb(0, 97, 32);
+         background-color: rgba(201, 213, 209, 0.534);
+
+  }
+
+
+  .divSubmit{
+       display: flex;
+       justify-content: center;
+      
+  }
+  .btn2{
+       margin: 9px;
+       margin-top: 0px;
+       padding: 7px;
+       border: 0px solid;
+       background-color: rgb(255, 255, 255);
+       border-radius: 5px;
+  }
+  .btn2:hover{
+    
+    border: 0px solid;
+    background-color: rgba(161, 167, 163, 0.378);
+    
+}
+  .P_form{
+      font-family: cursive;
+      text-align: center;
+      margin-left: -10px;
+      margin-bottom: -10px;
+  }
+
+  input[type="checkbox"]:checked {
+        background-color: rgba(29, 140, 57, 0.805);
+  }
+
+  /*-------nav signUp------------- */
+  #linkUp{
+        color: black;
+        text-decoration: none;
+  }
+  #linkUp:hover{
+    color: darkgreen;
+    text-decoration: underline;
+}
+#h1First::first-letter{
+          font-size: 104px;
+          font-family: 'Times New Roman', Times, serif;
+          margin-right: -10px;
+}

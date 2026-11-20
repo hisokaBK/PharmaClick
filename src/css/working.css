@@ -1,0 +1,42 @@
+/* working.css */
+
+.on_work_in {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 70vh; /* Adjust height as needed */
+    font-size: 2rem;
+    font-weight: bold;
+    color: #333;
+    text-align: center;
+    padding: 20px;
+    background-color: #f8f9fa;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        opacity: 0.7;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0.7;
+    }
+}
+
+/* Optional: Add some responsive adjustments */
+@media (max-width: 768px) {
+    .on_work_in {
+        font-size: 1.5rem;
+        height: 60vh;
+    }
+}
+
+@media (max-width: 480px) {
+    .on_work_in {
+        font-size: 1.2rem;
+        padding: 15px;
+    }
+}

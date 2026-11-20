@@ -1,0 +1,122 @@
+.category-slider-container {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  background-color: #ffffff; 
+  padding: 20px 0;
+  border-radius: 12px;
+  box-sizing: border-box;
+  margin: 20px 0;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+  border: 1px solid #eaeaea;
+}
+
+.category-slider-track {
+   display: flex;
+  width: max-content;
+  white-space: nowrap;
+  animation: marquee 34s linear infinite;
+  gap: 40px; 
+  padding: 10px 0;
+}
+
+.category-card {
+  flex: 0 0 auto;
+  width: 220px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background: #ffffff;
+  border-radius: 10px;
+  padding: 8px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.05);
+}
+
+.category-title {
+  padding-top: 12px;
+  color: #333333;
+  transition: color 0.3s ease;
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-align: center;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.category-card:hover .category-title {
+  color: #11b92d; /* Blue text on hover */
+}
+
+.category-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+.category-image {
+  height: 140px;
+  width: 100%;
+  border-radius: 8px;
+  object-fit: cover;
+  transition: all 0.3s ease;
+  border: 1px solid #f0f0f0;
+}
+
+.category-card:hover .category-image {
+  filter: brightness(1.02);
+  border-color: #d0d0d0;
+}
+
+@keyframes slide {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(calc(-50% - 20px));
+  }
+}
+
+.category-slider-container:hover .category-slider-track {
+  animation-play-state: paused;
+}
+
+/* Responsive adjustments */
+/* @media (max-width: 768px) {
+  .category-slider-container {
+    padding: 15px 0;
+    border-radius: 8px;
+  }
+  
+  .category-slider-track {
+    gap: 40px;
+    animation-duration: 25s;
+    padding: 10px;
+  }
+  
+  .category-card {
+    width: 160px;
+    padding: 6px;
+  }
+  
+  .category-image {
+    height: 100px;
+  }
+  
+  .category-title {
+    font-size: 0.85rem;
+    padding-top: 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .category-slider-track {
+    gap: 15px;
+    animation-duration: 20s;
+  }
+  
+  .category-card {
+    width: 140px;
+  }
+  
+  .category-image {
+    height: 90px;
+  }
+} */

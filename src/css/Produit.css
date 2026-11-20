@@ -1,0 +1,129 @@
+.product-container {
+  display: flex;
+  padding: 0px;
+ 
+  padding-left: 190px ;
+  padding-right:190px ;
+  margin: 100px auto 0;
+  
+}
+
+.product-image-container {
+  text-align: center;
+
+}
+
+.product-image1 {
+ 
+  height: 260px;
+  object-fit: contain;
+  border-radius: 8px;
+ 
+}
+
+.product-details {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.product-title {
+  font-size: 2rem;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.product-description {
+  font-size: 1.1rem;
+  color: #666;
+}
+
+.price-container {
+  margin: 15px 0;
+}
+
+.product-price {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #2e7d32; 
+}
+
+.quantity-control {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  margin: 20px 0;
+}
+
+.quantity-input {
+  width: 60px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  text-align: center;
+}
+
+.add-to-bag-btn {
+  background-color: #2e7d32;
+  color: white;
+  border: none;
+  padding: 12px 25px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+
+.add-to-bag-btn:hover {
+  background-color: #1b5e20;
+}
+
+.full-description {
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid #eee;
+}
+
+.full-description h3 {
+  font-size: 1.3rem;
+  margin-bottom: 15px;
+  color: #333;
+}
+
+.full-description p {
+  color: #555;
+  line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+  .product-container {
+    flex-direction: column-reverse;
+    padding: 20px;
+  }
+  
+  .product-image1 {
+    max-height: 300px;
+  }
+}
+
+
+.price-container {
+  margin: 15px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.product-price {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #2e7d32;
+}
+
+.price-details {
+  font-size: 0.9rem;
+  color: #666;
+  font-style: italic;
+}
+

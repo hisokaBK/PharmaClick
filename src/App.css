@@ -1,0 +1,36 @@
+/* Base HTML and Body Styles */
+html {
+  height: 100%;
+}
+
+body {
+  height: 100%;
+  margin: 0;
+  overflow-x: hidden;
+ 
+ 
+}
+
+#root {
+  height: 100%;
+}
+
+/* Custom Scrollbar Styles (WebKit browsers) */
+body::-webkit-scrollbar {
+  width: 5px;
+}
+
+body::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+body::-webkit-scrollbar-thumb {
+  background: #0b8970;
+  border-radius: 10px;
+  transition: background-color 0.3s;
+}
+
+body::-webkit-scrollbar-thumb:hover {
+  background: #04b077; 
+}

@@ -1,0 +1,131 @@
+/* ProductSlider.css */
+
+.product-slider-container {
+  position: relative;
+  max-width: 100%; 
+  margin: 0 auto;
+  overflow: hidden;
+  padding: 30px;
+ 
+  background-color: rgba(216, 216, 216, 0.218);
+  margin-bottom: 62px;
+}
+
+.product-slider {
+  overflow: hidden;
+  width: 100%;
+}
+
+.product-slider-track {
+  display: flex;
+  transition: transform 0.5s ease;
+  width: 100%;
+  gap: 30px;
+}
+
+.product-card {
+  flex: 0 0 calc(20% - 20px); 
+  margin: 0 10px;
+  position: relative;
+  background: white;
+  border-radius: 8px;
+  padding: 15px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.product-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.product-image {
+  width: 100%;
+  height: 160px; 
+  object-fit: contain;
+  margin-bottom: 12px;
+}
+
+.product-name {
+  font-size: 0.95rem; 
+  margin: 8px 0;
+  color: #333;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.price-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.current-price {
+  font-weight: bold;
+  color: #2c3e50;
+  font-size: 1rem; 
+}
+
+.slider-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: white;
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  z-index: 10;
+  transition: all 0.3s ease;
+}
+
+.slider-arrow:hover {
+  background: #f8f9fa;
+  transform: translateY(-50%) scale(1.1);
+}
+
+.slider-arrow:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.left-arrow {
+  left: 0;
+}
+
+.right-arrow {
+  right: 0;
+}
+
+@media (max-width: 1024px) {
+  .product-card {
+    flex: 0 0 calc(25% - 20px); 
+  }
+}
+
+@media (max-width: 768px) {
+  .product-card {
+    flex: 0 0 calc(33.33% - 20px); 
+  }
+  
+  .product-name {
+    white-space: normal;
+  }
+}
+
+@media (max-width: 480px) {
+  .product-card {
+    flex: 0 0 calc(50% - 20px); 
+  }
+}
+
+@media (max-width: 360px) {
+  .product-card {
+    flex: 0 0 calc(100% - 20px); 
+  }
+}

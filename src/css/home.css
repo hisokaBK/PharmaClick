@@ -1,0 +1,209 @@
+
+.bcImg{
+    background-image: url('C:\Users\Admin\Desktop\fr_projet\react_r\public\images\back3.jpg');
+    background-size: 84%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    position: relative;
+    z-index: 0;
+    padding: 24px;
+ 
+  
+
+}
+
+#pHome{
+     width:70%;
+    padding-top:7%;
+    padding-left:19%;
+    font-size: 12px;
+    font-weight: 900;
+    color: rgb(22, 60, 9);
+       font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    margin-bottom: -34px;
+         letter-spacing: 2px;
+
+    
+}
+.h1Home{
+    width:70%;
+    
+    padding-left:6%;
+    font-size: 40px;
+    font-weight: 900;
+    color: rgba(64, 132, 41, 0.511);
+      font-family: Georgia, 'Times New Roman', Times, serif;
+    margin-right: -12px;
+    
+}
+.h1Home::first-letter{
+    font-size: 99px;
+    margin-right: -17px;
+
+    color: rgba(64, 132, 41, 0.262);
+}
+
+
+@media (max-width: 778px) {
+    .bcImg{
+       
+        background-size: 146%;
+        
+        background-position-x: center;
+   
+    }
+  }
+
+/*================-----hna kayn mo7tawa dyal bgImg---===============*/
+
+  /* ---------------- Animation Styles ---------------- */
+.fade-in {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 2s ease;
+  position: relative;
+}
+
+.fade-in.show {
+  opacity: 1;
+  transform: translateY(0);
+  z-index: 0;
+}
+
+.fade-in1 {
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: all 1.5s ease;
+}
+
+.fade-in1.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ---------------- Container Styles ---------------- */
+#div_home1{
+     max-Width: 59%;
+      padding-left: 34px;
+}
+#id_home1 {
+  border: 1px solid rgba(125, 160, 120, 0.322);
+  background-color: rgba(250, 252, 251, 0.449);
+  border-radius: 30px;
+  display: flex;
+  align-items: center;
+  font-family: 'Courier New', Courier, monospace;
+   text-shadow: 0px 0px 1px rgb(0, 0, 0) ;
+   font-weight: 500;
+  padding: 12px;
+  margin-bottom: 20px;
+  flex-direction: row;
+  gap: 15px;
+}
+
+#id_home1:hover {
+  border: 1px solid rgba(63, 246, 39, 0.786);
+  box-shadow: 0px 0px 6px cadetblue;
+  transition: 0.3s;
+}
+
+/* ---------------- Images ---------------- */
+#home_logo1 {
+  height: 67px;
+  filter: invert(0%) grayscale(0%) brightness(0.990);
+}
+
+#home_logo2,
+#home_logo3 {
+  height: 97px;
+  filter: invert(0%) grayscale(0%) brightness(0.990);
+  
+}
+
+/* ---------------- Buttons ---------------- */
+.homeButton {
+  background-color: rgba(240, 248, 255, 0);
+  border: 1px solid;
+  border-radius: 20px;
+  font-weight: 600;
+  padding: 5px 19px;
+}
+
+.homeButton:hover {
+  background-color: rgba(20, 185, 100, 0.115);
+  border: 1px solid;
+}
+
+#home_logo1,
+  #home_logo2,
+  #home_logo3 {
+ border-right: 1px solid rgba(197, 210, 195, 0.41);
+  }
+
+
+/* ---------------- Responsive Design ---------------- */
+@media (max-width: 1061px) {
+  #div_home1{
+     max-Width: 99%;
+     padding-left: 14px;
+     
+}
+.main-content.with-sidebar #div_home1{
+     max-Width: 99%;
+}
+
+
+  #id_home1 {
+    flex-direction: column;
+    text-align: center;
+    padding:7px;
+    padding-bottom: 12px;
+  }
+
+
+  #home_logo1,
+  #home_logo2,
+  #home_logo3 {
+    height: auto;
+    width: 100px;
+    margin: auto;
+
+    border-right: none;
+
+  }
+
+   
+ 
+
+  #pHome {
+    font-size: 0.6rem;
+     margin-left: 70px;
+     margin-bottom: -84px;
+     
+    
+  }
+
+  .h1Home {
+    font-size: 1.6rem;
+    text-align: center;
+    padding-top: 38px ;
+    
+  }
+
+  .bcImg {
+    padding: 20px 10px;
+  }
+
+  #row1 {
+    flex-direction: column;
+  }
+
+  .col {
+    width: 100% !important;
+    margin-bottom: 20px;
+
+  }
+
+}
+

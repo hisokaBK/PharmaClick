@@ -1,0 +1,192 @@
+
+.client-showcase {
+  padding: 60px 0;
+  background-color: #f8f9fa;
+  font-family: 'Poppins', 'Roboto', sans-serif;
+}
+
+.showcase-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.section-heading {
+  text-align: center;
+  font-size: 1.5rem;
+  color: #2c2c2c;
+  margin-bottom: 40px;
+}
+
+
+
+.client-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.client-icon {
+  font-size: 2.5rem;
+  color: #2e7d32;
+}
+
+.client-item span {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #555;
+}
+
+.divider {
+  height: 1px;
+  background-color: #e0e0e0;
+  margin: 60px 0;
+}
+
+.footer-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  
+  background-color: rgb(0, 0, 0);
+  border-radius: 20px;
+  padding: 30px;
+}
+
+.brand-section {
+     display: flex;
+     justify-content: space-between;
+     flex-direction: column;
+}
+
+.brand-name {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #2c2c2c;
+  margin-bottom: 10px;
+}
+
+.brand-tagline {
+  font-size: 1rem;
+  color: #555;
+  margin-bottom: 30px;
+}
+
+.newsletter h4 {
+  font-size: 1.25rem;
+  margin-bottom: 15px;
+  color: #2c2c2c;
+}
+
+.email-input {
+  display: flex;
+  gap: 10px;
+}
+
+.email-input input {
+  flex: 1;
+  padding: 12px 15px;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.email-input button {
+  background-color: #2e7d32;
+  color: white;
+  border: none;
+  padding: 0 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.3s;
+}
+
+.email-input button:hover {
+  background-color: #1b5e20;
+}
+
+.links-section {
+  display: flex;
+  
+  gap: 60px;
+  flex-direction: column;
+
+  
+}
+
+.links-column {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  flex-direction:column;
+}
+
+.footer-link {
+  color: #555;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.footer-link:hover {
+  color: #539657;
+}
+
+.foot_logo{
+     height: 123px;
+     margin-left: 40px;
+    
+}
+
+.mdy{  display: flex;
+         color: #e0e0e098;
+justify-content: space-around;       
+border: 1px solid ;
+       min-width: 68%;
+       padding: 7px;
+       border-radius: 47px ;
+
+}
+.mdy a{
+        padding: 5px;
+        border-radius: 40px;
+         color: #ffffff98;
+         border: 1.5px solid 
+            #6d5d5d98;
+
+         
+}
+.mdy a:hover{
+         border: 1.5px solid;
+
+}
+
+@media (max-width: 768px) {
+  .footer-content {
+    grid-template-columns: 1fr;
+  }
+  
+  .client-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .brand-section {
+     
+     flex-direction: row;
+}
+.foot_logo{
+    margin-left: 0px;
+    
+}
+}
+
+@media (max-width: 480px) {
+  .client-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .links-section {
+    grid-template-columns: 1fr;
+  }
+}
+

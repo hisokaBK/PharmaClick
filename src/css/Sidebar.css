@@ -1,0 +1,237 @@
+
+.app-container {
+    display: flex;
+    height: 100vh;
+    width: 100%;
+ 
+    
+  }
+  
+/*-----------sidebar---------------------!!*/
+  .sidebar {
+    background-color: #040404;
+    color: white;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    z-index: 1000;
+    transition: width 0.3s ease, padding 0.3s ease;
+    box-shadow: 1px 0px 14px #080808;
+  }
+  
+    /* -------- open ----------------- */
+  .open {
+    width: 205px;
+    padding: 10px;
+  }
+  
+.closed {
+    width: 0;
+    padding: 0px;
+    
+  }
+  
+  .divButton{
+      padding-top: 12px;
+      padding-left: 13px;
+      margin-bottom: -3px;
+  }
+  .toggle-button {
+    background: none;
+    color: white;
+    border: none;
+    font-size: 22px;
+    cursor: pointer;
+    z-index: 1000;
+   
+    
+    border-radius: 6px;
+
+  }
+  .toggle-button:active{
+    transform: rotateY(40deg);
+    margin-left: -5px;
+    padding-right: 16px;
+
+  }
+  .toggle-button:hover{
+    background-color: #383d3c6e;
+    }
+  
+  .floating-button {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    font-size: 22px;
+    background-color: #ffffff00;
+    color: rgb(0, 0, 0);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    z-index: 1000;
+  }
+  .floating-button:active{
+    transform: rotateY(40deg);
+    padding-right: 16px;
+    margin-left: -4px;
+
+  }
+  
+  .floating-button:hover{
+        color: #020504b4;  
+  }
+
+/*---------Main----------- */
+  .main-content {
+    transition: margin-left 0.3s ease;
+    padding: 0px;
+    width: 100%;
+    background-color: rgba(240, 240, 240, 0.168);
+    margin-top: 0px;
+    
+  }
+  
+  .main-content.with-sidebar {
+    margin-left: 205px;
+  }
+  
+  .main-content.full-width {
+    margin-left: 0;
+  }
+  /*--------logos----------*/
+
+  .logo1{
+        width: 110px;
+        margin-left: 30px;
+        border-radius: 40px;
+        filter: invert(0%) grayscale(100%) brightness(.490);
+       
+       
+  }
+  .logo3 {
+    height: 80px;
+    
+
+
+    
+  }
+   .main-content.with-sidebar{
+      margin-left: 0px;
+  }
+  #divSisebar_open{
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      height: 94%;
+      justify-content: space-between;
+      align-items: center;
+  }
+  
+  
+
+  /*-------scrols---------------*/
+  
+  .scrol{
+    overflow-y: auto;
+    max-height:330px ;
+    margin: 0;
+   
+  }
+ 
+  .scrol::-webkit-scrollbar {
+    
+    max-width: 2px;
+    max-height: 0px;
+  }
+  .scrol::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+  }
+  .scrol::-webkit-scrollbar-thumb {
+    background: #0b8970;
+    border-radius: 10px;
+  }
+
+  .scrol2{
+    
+    margin-left: 2px;
+    padding: 2px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .sidebar-links::-webkit-scrollbar {
+    max-width: 2px;
+    max-height: 0px;
+  }
+  .sidebar-links::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+  }
+  .sidebar-links::-webkit-scrollbar-thumb {
+    background: #0b8970;
+    border-radius: 10px;
+  }
+ /*----sidebar-links--icons---*/
+  .sidebar-links a {
+    color: #aaaaaa;
+    text-decoration: none;
+    
+    transition: background-color 0.2s;
+  }
+  
+  .li_icons_Sidebar:hover .icons_Sidebar  {
+      color:  rgb(4, 176, 119);
+  }
+
+  .li_icons_Sidebar:hover  a  {
+    color:  rgba(57, 132, 107, 0.707);
+}
+.li_icons_Sidebar:hover {
+  background-color: #9292921e;
+
+     border-radius: 10px;
+}
+  
+.icons_Sidebar{
+       padding: 3px; 
+       margin-bottom: 10px;
+}
+
+.li_icons_Sidebar{
+      list-style: none;
+      padding: 3px;
+      min-width:109px;
+      cursor: pointer;
+     
+}
+
+@media (min-height: 640px){
+  .scrol{
+   
+    max-height:100%;
+    z-index: 1000;
+   
+   
+  }
+   
+}
+
+/* @media (max-width: 769px){
+  
+   
+   
+   .main-content.with-sidebar{
+      margin-left: 0px;
+  }
+   
+  
+   
+} */
+
+/*------------pHome------*/
+
+

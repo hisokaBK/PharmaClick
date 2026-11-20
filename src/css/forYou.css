@@ -1,0 +1,253 @@
+.pharmacy-services-section {
+  padding: 5rem 0;
+  font-family: 'Poppins', 'Roboto', sans-serif;
+}
+
+.services-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.metrics-grid {
+    background-color: #8aab8815;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 2rem;
+  margin-bottom: 4rem;
+  padding: 30px;
+  padding-left: 80px;
+  padding-right: 80px;
+}
+
+.metric-card {
+  text-align: center;
+  padding: 4px ;
+  background-color: #f8faf9;
+  border-radius: 0.5rem;
+  box-shadow: 0 0.25rem 0.75rem rgba(46, 125, 50, 0.05);
+  transform: translateY(3rem);
+  opacity: 0;
+  transition: all 1s ease-out;
+}
+
+.metric-card.visible {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.metric-icon {
+  font-size: 2rem;
+  color: #2e7d32;
+  margin-bottom: 1rem;
+}
+
+.metric-value {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #2e7d32;
+  margin-bottom: 0.5rem;
+}
+
+.metric-label {
+  font-size: 1rem;
+  color: #555;
+  margin: 0;
+}
+
+.services-content {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.services-heading {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #2e7d32;
+  margin-bottom: 1.5rem;
+  position: relative;
+}
+
+.services-heading::after {
+  content: '';
+  position: absolute;
+  bottom: -0.625rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 5rem;
+  height: 0.1875rem;
+  background-color: #81c784;
+}
+
+.services-description {
+  margin-bottom: 3rem;
+}
+
+.services-description p {
+  font-size: 1rem;
+  color: #555;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+.highlights-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+
+.service-highlight {
+  text-align: left;
+  padding: 1.5rem;
+  background-color: #f8faf9;
+  border-radius: 0.5rem;
+  box-shadow: 0 0.25rem 0.75rem rgba(46, 125, 50, 0.05);
+  border-left: 0.25rem solid #81c784;
+  transform: translateX(2.6rem);
+  opacity: 0;
+  transition: all 1.3s ease-out;
+}
+
+.service-highlight.visible {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+.service-highlight:nth-child(even) {
+  transform: translateX(-2.5rem);
+}
+
+.service-highlight:nth-child(even).visible {
+  transform: translateX(0);
+}
+
+.highlight-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #2e7d32;
+  margin-bottom: 1rem;
+}
+
+.highlight-description {
+  font-size: 0.95rem;
+  color: #555;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.pharmacy-action-button {
+  background-color: #2e7d32;
+  color: white;
+  border: none;
+  padding: 0.75rem 2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  transform: scale(0.95);
+  opacity: 0;
+}
+
+.pharmacy-action-button.visible {
+  transform: scale(1);
+  opacity: 1;
+}
+
+.pharmacy-action-button:hover {
+  background-color: #1b5e20;
+  transform: scale(1.05);
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(46, 125, 50, 0.4);
+  }
+  70% {
+    transform: scale(1.05);
+    box-shadow: 0 0 0 10px rgba(46, 125, 50, 0);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(46, 125, 50, 0);
+  }
+}
+
+.pharmacy-action-button {
+  background-color: #2e7d32;
+  color: white;
+  border: none;
+  padding: 0.75rem 2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  transform: scale(0.95);
+  opacity: 0;
+}
+
+.pharmacy-action-button.visible {
+  transform: scale(1);
+  opacity: 1;
+  animation: pulse 2s infinite;
+}
+
+.pharmacy-action-button:hover {
+  background-color: #1b5e20;
+  transform: scale(1.05);
+  animation: none; /* Stop the pulse animation on hover */
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .metric-card,
+  .service-highlight,
+  .pharmacy-action-button {
+    transform: none !important;
+    opacity: 1 !important;
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .metrics-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .services-heading {
+    font-size: 1.75rem;
+  }
+
+  .highlights-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .metrics-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .metric-card {
+    padding: 1.5rem;
+  }
+
+  .services-heading {
+    font-size: 1.5rem;
+  }
+}
+
+
+@media (prefers-reduced-motion: reduce) {
+  .metric-card,
+  .service-highlight,
+  .pharmacy-action-button {
+    transform: none !important;
+    opacity: 1 !important;
+    transition: none !important;
+  }
+}
