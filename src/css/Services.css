@@ -113,3 +113,8 @@
 .service-page--botanical .hero-image-container { border: 3px solid #2e7d32; }
 .service-page--botanical .service-grid { --photo-ratio: 2 / 1; }
 .service-page--botanical .service-grid > article { background: #f8f8f8; }
+
+.service-page--quiet .hero-image-container { box-shadow: none; }
+.service-page--quiet .service-content { max-width: 1000px; }
+.service-page--quiet .service-split .service-panel { background: #f8f8f8; }
+.service-page--quiet .service-video { max-width: 780px; width: 100%; justify-self: center; }
