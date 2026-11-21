@@ -12,15 +12,7 @@
 }
 
 .product-slider {
-  overflow: hidden;
   width: 100%;
-}
-
-.product-slider-track {
-  display: flex;
-  transition: transform 0.5s ease;
-  width: 100%;
-  gap: 30px;
 }
 
 .product-card {
@@ -129,18 +121,15 @@
     flex: 0 0 calc(100% - 20px); 
   }
 }
-
 /* The shared Card renders eco-card-wrapper elements. Equal-width columns
    and shared grid rows align every content zone without restricting text. */
 .product-slider-track {
   display: grid;
   grid-auto-flow: column;
+  gap: 30px;
+  width: 100%;
   grid-auto-columns: calc((100% - 3 * 30px) / 4);
   grid-template-rows: repeat(6, auto);
-}
-
-@media (max-width: 1023px) {
-  .product-slider-track { grid-auto-columns: min(85%, 240px); }
 }
 
 /* Pass the six row sizes through the wrapper, product link and grouped
@@ -169,3 +158,33 @@
 
 .product-slider-track .eco-card-footer { margin-top: 0; }
 .product-slider-track .eco-btn { height: 100%; }
+
+/* Reserve separate arrow gutters so controls never obscure a card. Padding
+   inside the scrollport leaves room for card shadows and keyboard focus. */
+.product-slider-container { padding-inline: 44px; }
+.product-slider {
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: 4px;
+  overscroll-behavior-inline: contain;
+}
+.product-slider-track { padding: 6px 4px 12px; }
+.product-slider-track .eco-card-wrapper { scroll-snap-align: start; }
+
+/* Snap the last card to the right edge so the final arrow or swipe reveals it in full. */
+.product-slider-track .eco-card-wrapper:last-child { scroll-snap-align: end; }
+
+/* Tablets fit three equal cards; phones show one full card and a preview.
+   Compact arrow targets remain 44px without covering product content. */
+@media (max-width: 1023px) {
+  .product-slider-container { padding-inline: 46px; }
+  .product-slider-track {
+    gap: 12px;
+    grid-auto-columns: calc((100% - 2 * 12px) / 3);
+  }
+  .slider-arrow { width: 44px; height: 44px; }
+}
+
+@media (max-width: 600px) {
+  .product-slider-track { grid-auto-columns: min(85%, 260px); }
+}
