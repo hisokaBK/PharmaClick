@@ -54,7 +54,8 @@ const About = () => {
             viewport={{ once: true, margin: "-100px" }}
             variants={imageVariants}
           >
-            <img src='im0.jpg' alt="Anderson Cooper" className="pha-photo" />
+            {/* Resolve this public asset from the hosting root on direct route loads. */}
+            <img src='/im0.jpg' alt="Anderson Cooper" className="pha-photo" />
           </motion.div>
         </div>
       </div>

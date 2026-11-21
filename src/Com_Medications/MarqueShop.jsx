@@ -5,20 +5,21 @@ export default function MarqueeShop() {
   const navigate = useNavigate();
 
   const categories = [
-    { name: "All medications", image: "./images_marque/img_all.jpg" },
-    { name: "Multivitamins", image: "./images_marque/img_mltu.jpeg" },
-    { name: "Kids place", image: "./images_marque/img_kids.jpg" },
-    { name: "Nutritional supplements", image: "./images_marque/img_splm1.jpg" },
-    { name: "Herbal medicine", image: "./images_marque/img_hrb.jpg" },
-    { name: "Protect yourself", image: "./images_marque/img_prtY.jpg" },
-    { name: "Disinfectants & cleaners", image: "./images_marque/img_clien.jpg" },
-    { name: "All medications", image: "./images_marque/img_all.jpg" },
-    { name: "Multivitamins", image: "./images_marque/img_mltu.jpeg" },
-    { name: "Kids place", image: "./images_marque/img_kids.jpg" },
-    { name: "Nutritional supplements", image: "./images_marque/img_splm1.jpg" },
-    { name: "Herbal medicine", image: "./images_marque/img_hrb.jpg" },
-    { name: "Protect yourself", image: "./images_marque/img_prtY.jpg" },
-    { name: "Disinfectants & cleaners", image: "./images_marque/img_clien.jpg" },
+    // Keep public image paths stable when opening the shop route with a trailing slash.
+    { name: "All medications", image: "/images_marque/img_all.jpg" },
+    { name: "Multivitamins", image: "/images_marque/img_mltu.jpeg" },
+    { name: "Kids place", image: "/images_marque/img_kids.jpg" },
+    { name: "Nutritional supplements", image: "/images_marque/img_splm1.jpg" },
+    { name: "Herbal medicine", image: "/images_marque/img_hrb.jpg" },
+    { name: "Protect yourself", image: "/images_marque/img_prtY.jpg" },
+    { name: "Disinfectants & cleaners", image: "/images_marque/img_clien.jpg" },
+    { name: "All medications", image: "/images_marque/img_all.jpg" },
+    { name: "Multivitamins", image: "/images_marque/img_mltu.jpeg" },
+    { name: "Kids place", image: "/images_marque/img_kids.jpg" },
+    { name: "Nutritional supplements", image: "/images_marque/img_splm1.jpg" },
+    { name: "Herbal medicine", image: "/images_marque/img_hrb.jpg" },
+    { name: "Protect yourself", image: "/images_marque/img_prtY.jpg" },
+    { name: "Disinfectants & cleaners", image: "/images_marque/img_clien.jpg" },
   ];
 
   const handleCategoryClick = (index) => {

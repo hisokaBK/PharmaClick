@@ -42,8 +42,9 @@ export default function Medications() {
       <div className="medications-container">
         <div className="header-section">
           <div className="header-image-container">
+            {/* Load the hero image from the hosting root on direct shop visits. */}
             <img
-              src="./images/back5.jpeg"
+              src="/images/back5.jpeg"
               alt="Pharmacy Products"
               className="header-image"
             />

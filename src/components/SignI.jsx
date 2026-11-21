@@ -30,7 +30,8 @@ export default function SignIn() {
           </Link>
         </div>
         <div>
-          <img src="images/set_log1.jpg" alt="" style={{ height: "30px" }} />
+          {/* Resolve this public asset from the hosting root on direct route loads. */}
+          <img src="/images/set_log1.jpg" alt="" style={{ height: "30px" }} />
           <span style={{ fontFamily: "cursive" }}><span style={{fontSize:'24px'}}>P</span>harmaClick</span>
         </div>
       </nav>

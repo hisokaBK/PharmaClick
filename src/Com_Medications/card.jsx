@@ -76,8 +76,11 @@ const handleMoreToCart = (med) => {
                   loading="lazy"
                   className="eco-image"
                   onError={(e) => {
-                    e.target.onerror = null;
-                    e.target.src = "/path/to/default-image.jpg";
+                    // Use a shipped image and avoid retrying if the fallback also fails.
+                    const fallback = "/images/logo2.png";
+                    if (e.currentTarget.getAttribute("src") !== fallback) {
+                      e.currentTarget.src = fallback;
+                    }
                   }}
                 />
                 <div className="eco-card-body">

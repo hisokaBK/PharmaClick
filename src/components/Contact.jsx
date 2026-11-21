@@ -30,7 +30,8 @@ const Contact = () => {
             </li>
           </ul>
             <div style={{display:'flex',justifyContent:'center'}}>
-                 <img src="back7.jpg" alt="" style={{height:'350px'}} />
+                 {/* Resolve this public asset from the hosting root on direct route loads. */}
+                 <img src="/back7.jpg" alt="" style={{height:'350px'}} />
             </div>
         </div>
 
