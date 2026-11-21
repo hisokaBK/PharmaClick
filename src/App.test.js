@@ -37,3 +37,18 @@ test("scores and restarts the health quiz", () => {
   expect(within(quiz).queryByRole("heading", { name: "Score 3 out of 3" })).not.toBeInTheDocument();
   expect(within(quiz).getByRole("button", { name: "Check answers" })).toBeInTheDocument();
 });
+
+test("opens the Contact page from the global navigation", () => {
+  window.history.replaceState({}, "", "/Professional");
+  render(<App />);
+  const drawer = document.querySelector("#global-sidebar");
+  drawer.showModal = () => { drawer.open = true; };
+  drawer.close = () => { drawer.open = false; };
+
+  fireEvent.click(screen.getByRole("button", { name: "Open navigation menu" }));
+  fireEvent.click(within(drawer).getByRole("link", { name: "Contact" }));
+
+  expect(window.location.pathname).toBe("/contact");
+  expect(screen.getByRole("heading", { name: "Contact Us" })).toBeInTheDocument();
+  expect(drawer.open).toBe(false);
+});

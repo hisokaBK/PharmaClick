@@ -45,7 +45,7 @@ const App = () => {
         <Route element={<Sidebar />}>
           <Route element={<><Nav /><Outlet /></>}>
             <Route index element={<Home />} />
-            <Route path="tact" element={<Contact />} />
+            <Route path="/contact" element={<Contact />} />
             <Route path="/about" element={<About />} />
             <Route path="/FAQ" element={<FAQ />} />
             <Route path="/Delivery" element={<TrackingPage />} />
