@@ -104,3 +104,8 @@
 .service-page--market .hero-container { flex-direction: row-reverse; }
 .service-page--market .service-content > .service-split { background: #f8f8f8; border-radius: 12px; padding: 12px; }
 @media (max-width: 768px) { .service-page--market .hero-container { flex-direction: column; } }
+
+.service-page--magazine .hero-container { flex-direction: column; align-items: stretch; }
+.service-page--magazine .hero-image { aspect-ratio: 21 / 7; }
+.service-page--magazine .service-grid > article:first-child { border-top: 3px solid var(--primary); }
+@media (max-width: 768px) { .service-page--magazine .hero-image { aspect-ratio: 3 / 2; } }

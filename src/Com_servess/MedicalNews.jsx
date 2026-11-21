@@ -1,5 +1,6 @@
 import { useState } from "react";
 import ServicePage from "./ServicePage";
+import { ServicePhoto } from "./ServiceMedia";
 
 const articles = [
   { category: "Research", title: "What does a clinical trial compare?", summary: "Learn why the comparison group matters when reading a study.", detail: "Read how participants were assigned, what the comparison group received, and which outcome the researchers planned to measure. Check who participated and how long the study lasted before applying its findings to other groups." },
@@ -11,7 +12,15 @@ export default function MedicalNews() {
   const [category, setCategory] = useState("All topics");
 
   return (
-    <ServicePage title="Medical News" introduction="Explore sample articles about reading medical research and public health announcements. These are educational examples, not a current news feed." image="/images/services/medical-news.jpg" imageAlt="A clinician reviewing charts at a research desk">
+    <ServicePage layout="magazine" title="Medical News" introduction="Explore sample articles about reading medical research and public health announcements. These are educational examples, not a current news feed." image="/images/services/medical-news.jpg" imageAlt="A clinician reviewing charts at a research desk">
+      <section className="service-split" aria-labelledby="featured-reading">
+        <ServicePhoto file="news-research" alt="A researcher reviewing a chart on a clipboard" />
+        <div className="service-panel">
+          <h2 id="featured-reading">Featured explainer: From study to headline</h2>
+          <p>Start with the original research question, then look at the comparison, the people studied and the uncertainty around the finding.</p>
+          <a href="#news-category">Browse the demonstration articles</a>
+        </div>
+      </section>
       <section className="service-section">
         <h2>Browse sample articles</h2>
         <label htmlFor="news-category">Topic </label>
@@ -19,17 +28,28 @@ export default function MedicalNews() {
           <option>All topics</option><option>Research</option><option>Public health</option>
         </select>
       </section>
-      {articles.filter(article => category === "All topics" || category === article.category).map(article => (
-        <article className="service-section" key={article.title}>
-          <p>{article.category}</p>
-          <h2>{article.title}</h2>
-          <p>{article.summary}</p>
-          <details>
-            <summary>Read example</summary>
-            <p>{article.detail}</p>
-          </details>
-        </article>
-      ))}
+      <div className="service-grid">
+        {articles.filter(article => category === "All topics" || category === article.category).map(article => (
+          <article className="service-section" key={article.title}>
+            <p>{article.category}</p>
+            <h2>{article.title}</h2>
+            <p>{article.summary}</p>
+            <details>
+              <summary>Read example</summary>
+              <p>{article.detail}</p>
+            </details>
+          </article>
+        ))}
+      </div>
+      <div className="service-split">
+        <section className="service-panel">
+          <h2>Verify before sharing</h2>
+          <details><summary>How can I tell who published the information?</summary><p>Look for the named authors or organization, when the information was reviewed, and links to original sources.</p></details>
+          <details><summary>What if two articles sound contradictory?</summary><p>Compare the people studied, the outcomes measured and the time frame. They may be answering different questions.</p></details>
+          <a href="https://www.fda.gov/drugs/quick-tips-buying-medicines-over-internet/health-information-web">FDA guide to online health information</a>
+        </section>
+        <ServicePhoto file="news-sources" alt="A reader comparing printed resources in a library" />
+      </div>
     </ServicePage>
   );
 }
