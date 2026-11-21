@@ -3,11 +3,11 @@ import Footer from "../components/Footer";
 import "../css/Slep.css";
 import "../css/Services.css";
 
-export default function ServicePage({ title, introduction, image, imageAlt, children }) {
+export default function ServicePage({ title, introduction, image, imageAlt, layout, children }) {
   return (
     <>
       <Nav />
-      <main className="service-page">
+      <main className={layout ? `service-page service-page--${layout}` : "service-page"}>
         <section className="hero-container" aria-labelledby="service-title">
           <div className="hero-content">
             <h1 id="service-title" className="h1Home">{title}</h1>
