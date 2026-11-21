@@ -126,7 +126,9 @@
 .product-slider-track {
   display: grid;
   grid-auto-flow: column;
-  gap: 30px;
+  /* Card subgrids inherit row gaps. Apply spacing only between cards so
+     titles, brands and prices keep their existing internal rhythm. */
+  column-gap: 30px;
   width: 100%;
   grid-auto-columns: calc((100% - 3 * 30px) / 4);
   grid-template-rows: repeat(6, auto);
@@ -179,7 +181,7 @@
 @media (max-width: 1023px) {
   .product-slider-container { padding-inline: 46px; }
   .product-slider-track {
-    gap: 12px;
+    column-gap: 12px;
     grid-auto-columns: calc((100% - 2 * 12px) / 3);
   }
   .slider-arrow { width: 44px; height: 44px; }
