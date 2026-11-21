@@ -7,6 +7,7 @@ import {
 } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import "../css/SignUp.css";
+import "../css/SignIn.css";
 import ScrolToTop from "./scrolToTop";
 
 export default function SignIn() {
@@ -40,7 +41,8 @@ export default function SignIn() {
         </div>
       </div>
 
-      <section className="d-flex align-items-center justify-content-center ">
+      {/* Scope compact form spacing to this route without changing the desktop form. */}
+      <section className="sign-in-layout d-flex align-items-center justify-content-center ">
         <div className="container-fluid px-4 py-5 px-md-5 text-center text-lg-start ">
           <div
             className="row gx-4 align-items-center justify-content-center"
@@ -102,7 +104,9 @@ export default function SignIn() {
                       </label>
                     </div>
 
+                    {/* Let the existing sign-in options wrap when they need more room. */}
                     <div
+                      className="sign-in-options"
                       style={{
                         display: "flex",
                         justifyContent: "space-around",

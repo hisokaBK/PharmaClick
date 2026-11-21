@@ -207,3 +207,10 @@
 
 }
 
+
+/* MOBILE HOMEPAGE HERO:
+   Replace the phone's existing top padding with the shared fixed navbar
+   height so the decorative initial clears the header without a second offset. */
+@media (max-width: 600px) {
+  .bcImg { padding-top: var(--nav-height); }
+}

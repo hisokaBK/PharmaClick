@@ -9,7 +9,6 @@ import {
   FaCapsules,
   FaFlask,
   FaPumpSoap,
-  FaUserShield,
   FaChild,
   FaSprayCan,
   FaCartPlus,
@@ -38,18 +37,19 @@ export default function NavShop() {
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
-    window.addEventListener("scroll", () =>
-      requestAnimationFrame(handleScroll)
-    );
-    return () => window.removeEventListener("scroll", handleScroll);
+    // Pair the same listener on mount and unmount so compact-route transitions do not accumulate scroll work.
+    const onScroll = () => requestAnimationFrame(handleScroll);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   return (
     <nav className={`fixNav ${scrolled ? "scrolled" : ""}`}>
-      <div className="container">
-        <div className="nav__logo">
-          <img src="/images/set_log1.jpg" alt="Company" loading="lazy" />
-        </div>
+      <div className="container nav-layout">
+        {/* Link the navbar logo to Home while retaining its responsive alignment. */}
+        <Link className="nav__logo" to="/" aria-label="Go to homepage">
+          <img src="/images/set_log1.jpg" alt="" loading="lazy" />
+        </Link>
 
         {/* Search Bar - Updated */}
         <form onSubmit={handleSearch} style={{ display: "contents" }}>
@@ -61,6 +61,7 @@ export default function NavShop() {
           >
             <input
               type="search"
+              aria-label="Search products"
               placeholder="Search..."
               onFocus={handleFocus}
               onBlur={handleBlur}
@@ -68,7 +69,9 @@ export default function NavShop() {
               onChange={(e) => setSearchQuery(e.target.value)}
             />
             <button 
-              type="submit" 
+              type="submit"
+              className="nav-search-submit"
+              aria-label="Submit product search"
               style={{ background: "none", border: "none", padding: 0 }}
             >
               <FiSearch className="nav__search-icon" />
@@ -78,17 +81,18 @@ export default function NavShop() {
 
         {/* Rest of your existing code remains the same */}
         <ul className="ul1">
-          <li>
+          {/* Desktop route links move to the global drawer on compact screens. */}
+          <li className="nav-desktop-item">
             <Link className="listA" to="/">
               Home
             </Link>
           </li>
 
-          <li style={{ minWidth: "99px" }}>
-            <a className="listA" href="">
+          <li className="nav-desktop-item" style={{ minWidth: "99px" }}>
+            <Link className="listA" to="/Medications">
               Medications
               <FiChevronDown className="dropdown-icon" />
-            </a>
+            </Link>
 
             <div className="dropdown-menu" id="min1">
              <div className="row">
@@ -130,7 +134,7 @@ export default function NavShop() {
 
           <ServicesMenu />
           <li className="cart-link-item">
-            <Link to="/Medications/Shop" className="cart-link">
+            <Link to="/Medications/Shop" className="cart-link" aria-label={`Shopping cart, ${lengthState} products`}>
               <FaCartPlus className="cart-icon " size="29px" />
               <span className="cart-counter">{lengthState}</span>
             </Link>

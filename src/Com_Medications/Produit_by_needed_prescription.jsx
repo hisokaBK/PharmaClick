@@ -13,9 +13,10 @@ export default function Produit_by_needed_prescription(){
             
 
 
+    // The shared catalog grid owns responsive gutters for this filtered view.
     return(<>
         <NavShop/>     
-        <div style={{padding:'63px'}} className="cards-grid-container2"><Card medications={prods}/></div>
+        <div className="cards-grid-container2"><Card medications={prods}/></div>
         <Footer/>
         </>
     )

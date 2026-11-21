@@ -9,10 +9,11 @@ export default function ProduitFilter(){
             const {category}= useParams()
             const listFilter=data1.filter(elm=>elm.category===category)
             
-          return (
+    // The shared catalog grid owns responsive gutters for this filtered view.
+    return (
             <>
                   <NavShop/>
-                  <div className="cards-grid-container2" style={{padding:'63px'}}>
+                  <div className="cards-grid-container2">
                     <Card medications={listFilter}/>
                   </div>
                   <Footer/>

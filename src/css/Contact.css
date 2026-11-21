@@ -139,3 +139,8 @@
     font-size: 1.1rem;
   }
 }
+/* Keep contact artwork within its column when the form stacks on phones. */
+@media (max-width: 768px) {
+  .contact-info-section img { max-width: 100%; object-fit: contain; }
+  .contact-info-item { overflow-wrap: anywhere; }
+}

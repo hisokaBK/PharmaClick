@@ -166,3 +166,15 @@
     height: auto;
   }
 }
+/* Narrow carts keep quantity actions reachable and images proportional,
+   including a cart populated with long product names. */
+@media (max-width: 1023px) {
+  .cart-container > *, .item-details { min-width: 0; }
+  .cart-item .item-actions { flex-wrap: wrap; }
+  .cart-item .quantity-btn { min-width: 44px; min-height: 44px; }
+  .cart-item .remove-btn { min-height: 44px; }
+  .cart-item .item-title { overflow-wrap: anywhere; }
+}
+@media (max-width: 768px) {
+  .cart-item .item-image-container { height: 160px; }
+}

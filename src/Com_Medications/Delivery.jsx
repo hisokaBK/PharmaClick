@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import '../css/TrackingPage.css';
 import Footer from '../components/Footer';
+import MoroccoBranchMap from './MoroccoBranchMap';
 
 const TrackingPage = () => {
   const [delivery, setDelivery] = useState(null);
@@ -105,11 +106,8 @@ const TrackingPage = () => {
            
            <div className="map-section">
           <div className="map-visual">
-            <img 
-              src="/images_marque/Local4.png" 
-              alt="Delivery location map" 
-              className="map-image"
-            />
+            {/* Replace the placeholder image with a local geographic map while keeping the existing delivery summary below it. */}
+            <MoroccoBranchMap />
             <div className="map-overlay">
               <div className="eta-bubble">
                 <span>Estimated Delivery</span>

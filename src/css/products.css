@@ -183,3 +183,13 @@
   margin-left: auto;
 }
 
+
+/* Keep the catalog under the fixed compact navbar and let search and filter
+   controls shrink within their grid cells without clipping their contents. */
+@media (max-width: 1023px) {
+  .products-container { padding: 76px clamp(12px, 4vw, 40px) 30px; }
+  .products-container .filter-section > * { min-width: 0; }
+  .products-container .search-card { position: relative; }
+  .products-container .search-input { min-width: 0; padding-right: 24px; }
+  .products-container .categories-header { flex-wrap: wrap; gap: 4px; }
+}

@@ -24,14 +24,13 @@
   padding: 15px 15px 5px;
 }
 
+/* Let names occupy their natural height so catalog and carousel cards retain the full title. */
 .eco-brand {
   font-size: 1.1rem;
   font-weight: bold;
   color: #333;
   margin-bottom: 5px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  overflow-wrap: anywhere;
 }
 
 .eco-by {
@@ -53,14 +52,12 @@
  
 }
 
+/* Allow the complete description to contribute to the height of its content row. */
 .eco-description {
   color: #555;
   font-size: 0.9rem;
   margin-bottom: 10px;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  min-height:54px;
+  overflow-wrap: anywhere;
 }
 
 .eco-price {
@@ -92,3 +89,23 @@
 .eco-btn:hover {
   background-color: #1b5e20;
 }
+/* Shrink product cards inside narrow grid tracks and wrap long names so
+   the full product title and action remain available on touch screens. */
+@media (max-width: 1023px) {
+  .eco-card-wrapper { min-width: 0; }
+  .eco-brand { white-space: normal; overflow-wrap: anywhere; }
+  .eco-image { height: clamp(145px, 30vw, 200px); }
+  .eco-card-footer { margin-top: auto; }
+  .eco-btn { min-height: 44px; }
+}
+
+/* Preserve the card's original typography while giving its product link a
+   visible keyboard focus indicator on both compact and desktop layouts. */
+.eco-card .goToProdui { display: block; color: inherit; text-decoration: none; }
+.eco-card .goToProdui:focus-visible { outline: 2px solid var(--primary-dark); outline-offset: -2px; }
+
+/* The linked preview fills the card so the price sits just above the
+   bottom action in catalog rows, even when descriptions have different lengths. */
+.eco-card .goToProdui { display: flex; flex: 1; flex-direction: column; min-width: 0; }
+.eco-card .eco-card-body { display: flex; flex: 1; flex-direction: column; }
+.eco-card .eco-price { margin-top: auto; }

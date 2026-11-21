@@ -97,7 +97,8 @@ const About = () => {
     </div>
         <div style={{textAlign:'center',marginBottom:'27px'}}> <h3 className='section-title contact-title' style={{marginBottom:'35px'}} >Available payment methods :</h3>
          <div>
-          <img src="/images/by.png" alt="" />
+          {/* Scale the payment artwork independently of the About hero on narrow screens. */}
+          <img className="about-payment-image" src="/images/by.png" alt="" />
          </div></div>
         <Footer/>
 </div>

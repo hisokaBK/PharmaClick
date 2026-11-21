@@ -11,6 +11,12 @@ const links = [
   ["Supplements", "/Products/supplements"], ["Healthcare Cleaning Equipment", "/Products/cleaning"],
   ["Prescription Medicines", "/Products2/yes"], ["Sign in", "/signin"], ["Sign up", "/signup"],
 ];
+// Keep every desktop Medications submenu destination reachable by touch in the drawer.
+const medicationLinks = [
+  ["All Medicines", "/Products2/No"], ["Multivitamins", "/Products/multivitamins"],
+  ["Topical Products", "/Products/products_usf"],
+];
+
 export default function Sidebar() {
   const drawer = useRef(null);
   const { key } = useLocation();
@@ -34,6 +40,8 @@ export default function Sidebar() {
           <button className="global-menu-close" type="button" aria-label="Close navigation menu" onClick={() => drawer.current.close()}><FiX aria-hidden="true" /></button>
           <img src="/images/logo1.png" alt="PharmaClick" />
           <ul>{renderLinks(links)}</ul>
+          <h2>Medications</h2>
+          <ul>{renderLinks(medicationLinks)}</ul>
           {serviceGroups.map(group => (
             <section key={group.title}>
               <h2>{group.title}</h2>

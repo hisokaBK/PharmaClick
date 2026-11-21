@@ -1,0 +1,27 @@
+
+
+/* SIGN-IN SPACING ON PHONES AND TABLETS:
+   Override Bootstrap's spacing utilities within this form only. Wider fields,
+   shorter outer gutters and a taller submit target keep the form easy to use
+   while the document remains scrollable with the keyboard open. */
+@media (max-width: 1024px) {
+  .sign-in-layout > .container-fluid {
+    max-width: min(100%, 960px);
+    padding: clamp(14px, 3vw, 28px) clamp(12px, 3vw, 28px) !important;
+  }
+
+  .sign-in-layout .row { --bs-gutter-x: clamp(12px, 2vw, 24px); }
+  .sign-in-layout .card { max-width: 540px; margin-inline: auto; }
+  .sign-in-layout .card-body {
+    padding: clamp(22px, 4vw, 34px) clamp(16px, 4vw, 28px) !important;
+  }
+
+  .sign-in-layout .form-control {
+    min-height: 48px;
+    scroll-margin-block: 20px;
+  }
+
+  .sign-in-layout .sign-in-options { flex-wrap: wrap; column-gap: 16px; }
+  .sign-in-layout .btn1 { width: min(100%, 20rem); min-height: 44px; }
+  .sign-in-layout .btn2 { min-width: 44px; min-height: 44px; }
+}
