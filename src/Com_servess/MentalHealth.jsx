@@ -1,4 +1,4 @@
-﻿import ServicePage from "./ServicePage";
+import ServicePage from "./ServicePage";
 
 export default function MentalHealth() {
   return (

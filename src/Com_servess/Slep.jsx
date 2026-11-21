@@ -17,14 +17,14 @@ const Slep = () => {
         </div>
         <div className="hero-image-container">
           <img
-            src="/images/Slep.jpeg"
+            src="/images/slep.jpeg"
             alt="Modern apartment interior"
             className="hero-image"
           />
         </div>
       </section>
       <section id="sleep-stress-articles">
-        <article class="sleep-article">
+        <article className="sleep-article">
           <img src="/images/slep1.jpg" alt="Bedtime habits image" />
           <h2>7 Bedtime Habits That Help You Sleep Like a Baby</h2>
           <p>
@@ -34,7 +34,7 @@ const Slep = () => {
           </p>
         </article>
 
-        <article class="sleep-article">
+        <article className="sleep-article">
           <img src="/images/slep2.jpg" alt="Food and sleep image" />
           <h2>What to Eat for Better Sleep: Food Choices That Matter</h2>
           <p>
@@ -45,7 +45,7 @@ const Slep = () => {
           </p>
         </article>
 
-        <article class="sleep-article">
+        <article className="sleep-article">
           <img src="/images/slep3.jpg" alt="Screens before bed image" />
           <h2>Screens Before Bed: The Silent Sleep Killer</h2>
           <p>
@@ -56,7 +56,7 @@ const Slep = () => {
           </p>
         </article>
 
-        <article class="sleep-article">
+        <article className="sleep-article">
           <img src="/images/slep4.webp" alt="Stress and sleep image" />
           <h2>The Hidden Link Between Stress and Poor Sleep</h2>
           <p>
@@ -67,7 +67,7 @@ const Slep = () => {
           </p>
         </article>
 
-        <article class="sleep-article">
+        <article className="sleep-article">
           <img src="/images/slep5.jpg" alt="Sleep quality image" />
           <h2>Why Quantity Isn’t Quality: How Fragmented Sleep Exhausts You</h2>
           <p>
@@ -78,7 +78,7 @@ const Slep = () => {
           </p>
         </article>
 
-        <article class="sleep-article">
+        <article className="sleep-article">
           <img src="/images/slep6.webp" alt="Bedroom sanctuary image" />
           <h2>Transform Your Bedroom into a Sleep Sanctuary</h2>
           <p>
@@ -88,7 +88,7 @@ const Slep = () => {
             exclusively with rest.
           </p>
         </article>
-        <article class="sleep-article">
+        <article className="sleep-article">
           <img src="/images/slep7.jpg" alt="Exercise and sleep image" />
           <h2>How Regular Exercise Improves Your Sleep Quality</h2>
           <p>
@@ -98,7 +98,7 @@ const Slep = () => {
           </p>
         </article>
 
-        <article class="sleep-article">
+        <article className="sleep-article">
           <img src="/images/slep8.webp" alt="Mindfulness meditation image" />
           <h2>Using Mindfulness Meditation to Calm Your Mind Before Sleep</h2>
           <p>
@@ -108,7 +108,7 @@ const Slep = () => {
           </p>
         </article>
 
-        <article class="sleep-article">
+        <article className="sleep-article">
           <img src="/images/slep9.webp" alt="Avoiding caffeine image" />
           <h2>The Impact of Caffeine on Your Sleep and How to Manage It</h2>
           <p>
@@ -118,7 +118,7 @@ const Slep = () => {
           </p>
         </article>
 
-        <article class="sleep-article">
+        <article className="sleep-article">
           <img
             src="/images/slep10.webp"
             alt="Creating a bedtime routine image"

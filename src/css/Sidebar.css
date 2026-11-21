@@ -41,3 +41,7 @@ body:has(.global-sidebar[open]) { overflow-y: hidden; }
 .global-sidebar a:hover,
 .global-sidebar a[aria-current="page"] { background: #9292921e; color: var(--primary); }
 .global-menu-close { display: grid; place-items: center; width: 40px; height: 40px; border: 0; border-radius: 6px; background: transparent; color: inherit; font-size: 22px; }
+
+@media (max-width: 991.7px) {
+  body:has(.nav__search:focus-within) .global-menu-toggle { visibility: hidden; }
+}
