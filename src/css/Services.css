@@ -124,3 +124,8 @@
 .service-page--kitchen .service-grid { align-items: start; }
 .service-page--kitchen .service-grid > article { overflow: hidden; }
 .service-page--kitchen .service-grid .service-photo { margin-bottom: 16px; }
+
+.service-page--movement .hero-image { aspect-ratio: 16 / 8; }
+.service-page--movement .service-grid { --photo-ratio: 16 / 9; }
+.service-page--movement .service-grid > article { border-top: 3px solid var(--primary); }
+.service-page--movement .service-video { max-width: 800px; width: 100%; }
