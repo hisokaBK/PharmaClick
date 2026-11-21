@@ -1,3 +1,4 @@
+import ServicesMenu from "../components/ServicesMenu";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState, useRef } from "react";
@@ -5,23 +6,12 @@ import "../css/Nav.css";
 import { Pill, ShoppingBag, Cross } from "lucide-react";
 import { FiSearch, FiChevronDown } from "react-icons/fi";
 import {
-  FaHeartbeat,
-  FaAppleAlt,
-  FaNewspaper,
-  FaLeaf,
-  FaBrain,
-  FaBed,
-  FaDumbbell,
-  FaBell,
-  FaPoll,
-  FaQuestionCircle,
   FaCapsules,
   FaFlask,
   FaPumpSoap,
   FaUserShield,
   FaChild,
   FaSprayCan,
-  FaUtensils,
   FaCartPlus,
 } from "react-icons/fa";
 import { useSelector } from "react-redux";
@@ -101,7 +91,7 @@ export default function NavShop() {
             </a>
 
             <div className="dropdown-menu" id="min1">
-             <diveee className="row">
+             <div className="row">
                 <div className="col-6">
                   <h6 className="h4_Services">Medicine store</h6>
                   <Link className="a_Services" to="/Medications">
@@ -134,59 +124,11 @@ export default function NavShop() {
                     <FaSprayCan className="me-2" /> Topical Products
                   </Link>
                 </div>
-              </diveee>
-            </div>
-          </li>
-
-          <li id="services" style={{ minWidth: "99px" }}>
-            <Link className="listA" to="#">
-              Services
-              <FiChevronDown className="dropdown-icon" />
-            </Link>
-            <div className="dropdown-menu">
-              <div className="row">
-                <div className="col-6">
-                  <h6 className="h4_Services">Health</h6>
-                  <Link className="a_Services" to="/Professional">
-                    <FaHeartbeat className="me-2" /> Professional Guidelines
-                  </Link>
-                  <Link className="a_Services" to="/Nutrition">
-                    <FaAppleAlt className="me-2" /> Nutrition Programs
-                  </Link>
-                  <Link className="a_Services" to="/Medical_News">
-                    <FaNewspaper className="me-2" /> Medical News
-                  </Link>
-                  <Link className="a_Services" to="/Herbal">
-                    <FaLeaf className="me-2" /> Herbal Solutions
-                  </Link>
-                  <Link className="a_Services" to="/Mental">
-                    <FaBrain className="me-2" /> Mental Health
-                  </Link>
-                </div>
-                <div className="col-6">
-                  <h6 className="h4_Services">Wellness</h6>
-                  <Link className="a_Services" to="/Slep">
-                    <FaBed className="me-2" /> Sleep & Stress
-                  </Link>
-                  <Link className="a_Services" to="/Healthy">
-                    <FaUtensils className="me-2" /> Healthy Recipes
-                  </Link>
-                  <Link className="a_Services" to="/Sports">
-                    <FaDumbbell className="me-2" /> Sports & Health
-                  </Link>
-                  <Link className="a_Services" to="/Health_Alerts">
-                    <FaBell className="me-2" /> Health Alerts
-                  </Link>
-                  <Link className="a_Services" to="/Risk">
-                    <FaPoll className="me-2" /> Risk Assessments
-                  </Link>
-                  <Link className="a_Services" to="/Health_Quizzes">
-                    <FaQuestionCircle className="me-2" /> Health Quizzes
-                  </Link>
-                </div>
               </div>
             </div>
           </li>
+
+          <ServicesMenu />
           <li className="cart-link-item">
             <Link to="/Medications/Shop" className="cart-link">
               <FaCartPlus className="cart-icon " size="29px" />

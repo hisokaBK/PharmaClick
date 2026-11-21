@@ -346,3 +346,13 @@ color:rgba(13, 166, 95, 0.834);
 
 
 
+
+.services-trigger {
+  appearance: none;
+  background: transparent;
+  border: 0;
+  padding: 0;
+}
+
+#services .dropdown-menu[hidden] { display: none; }
+#services .dropdown-menu:not([hidden]) { display: block; }

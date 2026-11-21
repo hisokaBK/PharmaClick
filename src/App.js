@@ -1,6 +1,7 @@
 import "./App.css";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom";
 import Sidebar from "./components/Sidebar";
+import Nav from "./components/header";
 import Home from "./components/home";
 import SignUp from "./components/SignUp";
 import SignIn from "./components/SignI";
@@ -16,12 +17,20 @@ import { legacy_createStore } from "redux";
 import reducer from "./store/reducer";
 import Cart from "./Com_Medications/Cart";
 import Produit from "./Com_Medications/Preduit";
-import { useState } from "react";
 import FAQ from "./components/FAQ ";
 import TrackingPage from "./Com_Medications/Delivery";
 import Dashboard from "./Com_Medications/Dashboard";
 import Slep from "./Com_servess/Slep";
-import Working from "./Com_servess/test1";
+import ProfessionalGuidelines from "./Com_servess/ProfessionalGuidelines";
+import NutritionPrograms from "./Com_servess/NutritionPrograms";
+import MedicalNews from "./Com_servess/MedicalNews";
+import HerbalSolutions from "./Com_servess/HerbalSolutions";
+import MentalHealth from "./Com_servess/MentalHealth";
+import HealthyRecipes from "./Com_servess/HealthyRecipes";
+import SportsHealth from "./Com_servess/SportsHealth";
+import HealthAlerts from "./Com_servess/HealthAlerts";
+import RiskAssessments from "./Com_servess/RiskAssessments";
+import HealthQuizzes from "./Com_servess/HealthQuizzes";
 
 const App = () => {
         const store=legacy_createStore(reducer)
@@ -33,45 +42,35 @@ const App = () => {
       <ScrollToTop />
       
       <Routes>
-        <Route path="/" element={<Sidebar />}>
-          <Route index element={<Home />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/FAQ" element={<FAQ/>}/>
-          <Route path="/Delivery"  element={<TrackingPage/>}/>
+        <Route element={<Sidebar />}>
+          <Route element={<><Nav /><Outlet /></>}>
+            <Route index element={<Home />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/FAQ" element={<FAQ />} />
+            <Route path="/Delivery" element={<TrackingPage />} />
+          </Route>
+          <Route path="/Medications" element={<Medications />} />
+          <Route path="/Products" element={<Products />} />
+          <Route path="/Products/:category" element={<ProduitFilter />} />
+          <Route path="/Products2/:need" element={<Produit_by_needed_prescription />} />
+          <Route path="/Medications/Shop" element={<Cart />} />
+          <Route path="/Produit/:idP" element={<Produit />} />
+          <Route path="/Dashboard" element={<Dashboard />} />
+          <Route path="/Slep" element={<Slep />} />
+          <Route path="/Healthy" element={<HealthyRecipes />} />
+          <Route path="/Professional" element={<ProfessionalGuidelines />} />
+          <Route path="/Nutrition" element={<NutritionPrograms />} />
+          <Route path="/Medical_News" element={<MedicalNews />} />
+          <Route path="/Herbal" element={<HerbalSolutions />} />
+          <Route path="/Mental" element={<MentalHealth />} />
+          <Route path="/Sports" element={<SportsHealth />} />
+          <Route path="/Risk" element={<RiskAssessments />} />
+          <Route path="/Health_Alerts" element={<HealthAlerts />} />
+          <Route path="/Health_Quizzes" element={<HealthQuizzes />} />
         </Route>
-        
         <Route path="/signup" element={<SignUp />} />
         <Route path="/signin" element={<SignIn />} />
-
-        
-
-
-        <Route path="/Medications" element={<Medications />} >         
-        </Route>
-         
-         <Route path="/Products"  element={<Products/>}/>
-         <Route path="/Products/:category"  element={<ProduitFilter/>}/>
-         <Route path="/Products2/:need"  element={<Produit_by_needed_prescription/>}/>
-         <Route path="/Medications/Shop" element={<Cart/>}/>
-         <Route path="/Produit/:idP"  element={<Produit/>}/>
-         
-         <Route path="/Dashboard" element={<Dashboard/>}/>
-         <Route path="/Slep" element={<Slep/>}/>
-          <Route path="/Healthy" element={<Working/>}/>
-          <Route path="/Professional" element={<Working/>}/>
-          <Route path="/Nutrition" element={<Working/>}/>
-          <Route path="/Medical_News" element={<Working/>}/>
-          <Route path="/Herbal" element={<Working/>}/>
-          <Route path="/Mental" element={<Working/>}/>
-          <Route path="/Sports" element={<Working/>}/>
-          <Route path="/Risk" element={<Working/>}/>
-          <Route path="/Health_Alerts" element={<Working/>}/>
-          <Route path="/Health_Quizzes" element={<Working/>}/>
-          
-
-         
-
       </Routes>
     </BrowserRouter>
   </Provider>

@@ -6,7 +6,7 @@
 
 .dashboard-header{
     
-    background-image: url('C:\Users\Admin\Desktop\fr_projet\react_r\public\images\bacbimg.jpg');
+    background-image: url('../../public/images/bacbimg.jpg');
     background-size: 100%;
     z-index: 0;
     height: 260px;

@@ -2,10 +2,13 @@ import React from "react";
 import "../css/Slep.css";
 import Nav from "../components/header";
 import Footer from "../components/Footer";
+import { ServicePhoto, ServiceVideo } from "./ServiceMedia";
+import "../css/Services.css";
 const Slep = () => {
   return (
     <div>
       <Nav />
+      <main className="sleep-page">
       <section className="hero-container">
         <div className="hero-content">
           <h1 className="h1Home ">Sleep & Stress</h1>
@@ -17,120 +20,92 @@ const Slep = () => {
         </div>
         <div className="hero-image-container">
           <img
-            src="/images/Slep.jpeg"
-            alt="Modern apartment interior"
+            src="/images/slep.jpeg"
+            alt="Illustration of a person sitting on a bed, with the words Sleep Deprivation and Stress"
             className="hero-image"
           />
         </div>
       </section>
       <section id="sleep-stress-articles">
-        <article class="sleep-article">
-          <img src="/images/slep1.jpg" alt="Bedtime habits image" />
-          <h2>7 Bedtime Habits That Help You Sleep Like a Baby</h2>
-          <p>
-            Simple rituals—such as putting your phone away an hour before bed,
-            taking a warm shower, sipping a soothing herbal tea, and dimming the
-            lights—prime your brain to wind down naturally and drift off faster.
-          </p>
+        <article className="sleep-article">
+          <img src="/images/slep1.jpg" loading="lazy" decoding="async" alt="Bedtime habits" />
+          <h2>Build a wind-down routine</h2>
+          <p>Use the hour before bed for a quieter activity, such as reading or taking a warm bath. Dim the lights if you can and choose a wind-down routine you can repeat.</p>
         </article>
 
-        <article class="sleep-article">
-          <img src="/images/slep2.jpg" alt="Food and sleep image" />
-          <h2>What to Eat for Better Sleep: Food Choices That Matter</h2>
-          <p>
-            Nutrition has a direct impact on sleep quality. Discover which foods
-            (like bananas, almonds, and yogurt) boost melatonin and magnesium,
-            and why late-night caffeine, sugar, or heavy meals can sabotage
-            restorative rest.
-          </p>
+        <article className="sleep-article">
+          <img src="/images/slep2.jpg" loading="lazy" decoding="async" alt="Food and sleep" />
+          <h2>Food and caffeine near bedtime</h2>
+          <p>Avoid a large meal close to bedtime if it makes you uncomfortable. Notice which caffeinated drinks or foods you have late in the day and consider trying them earlier.</p>
         </article>
 
-        <article class="sleep-article">
-          <img src="/images/slep3.jpg" alt="Screens before bed image" />
-          <h2>Screens Before Bed: The Silent Sleep Killer</h2>
-          <p>
-            Blue light from phones, tablets, and TVs tricks your brain into
-            thinking it’s still daytime. Learn how reducing screen time—or using
-            night-shift filters—can shorten the time it takes to fall asleep and
-            improve REM cycles.
-          </p>
+        <article className="sleep-article">
+          <img src="/images/slep3.jpg" loading="lazy" decoding="async" alt="Screens before bed" />
+          <h2>Screens and bright light before bed</h2>
+          <p>Reduce bright light near bedtime. If it fits your routine, put the phone away and try a quiet activity without a screen.</p>
         </article>
 
-        <article class="sleep-article">
-          <img src="/images/slep4.webp" alt="Stress and sleep image" />
-          <h2>The Hidden Link Between Stress and Poor Sleep</h2>
-          <p>
-            Chronic stress keeps cortisol levels high long after sunset,
-            preventing deep sleep. This piece explains relaxation
-            techniques—like diaphragmatic breathing and mindfulness— that calm
-            the nervous system before bed.
-          </p>
+        <article className="sleep-article">
+          <img src="/images/slep4.webp" loading="lazy" decoding="async" alt="Stress and sleep" />
+          <h2>Stress and sleep</h2>
+          <p>If thoughts about tomorrow keep you awake, try writing them down earlier in the evening. A quiet breathing exercise is another option if it feels comfortable.</p>
         </article>
 
-        <article class="sleep-article">
-          <img src="/images/slep5.jpg" alt="Sleep quality image" />
-          <h2>Why Quantity Isn’t Quality: How Fragmented Sleep Exhausts You</h2>
-          <p>
-            Logging eight hours doesn’t guarantee you’ll wake refreshed.
-            Discover how interruptions, light pollution, and alcohol disrupt
-            sleep architecture, and get actionable tips to protect your
-            deep-sleep stages.
-          </p>
+        <article className="sleep-article">
+          <img src="/images/slep5.jpg" loading="lazy" decoding="async" alt="Sleep quality" />
+          <h2>Notice interruptions to your sleep</h2>
+          <p>If you often wake during the night, note when it happens and how you feel the next day. A short diary can help you describe the pattern if you speak with a clinician.</p>
         </article>
 
-        <article class="sleep-article">
-          <img src="/images/slep6.webp" alt="Bedroom sanctuary image" />
-          <h2>Transform Your Bedroom into a Sleep Sanctuary</h2>
-          <p>
-            Temperature, lighting, and even wall colors influence how quickly
-            you fall asleep. Follow these design tweaks—cooler air, blackout
-            curtains, calming hues—to create a space your body associates
-            exclusively with rest.
-          </p>
+        <article className="sleep-article">
+          <img src="/images/slep6.webp" loading="lazy" decoding="async" alt="Bedroom sanctuary" />
+          <h2>Create a comfortable sleep environment</h2>
+          <p>Try making the room quiet, dark and comfortably cool. An eye mask or curtains may help if the room has too much light.</p>
         </article>
-        <article class="sleep-article">
-          <img src="/images/slep7.jpg" alt="Exercise and sleep image" />
-          <h2>How Regular Exercise Improves Your Sleep Quality</h2>
-          <p>
-            Engaging in moderate physical activity during the day helps regulate
-            your sleep cycle, reduces anxiety, and promotes deeper, more
-            restorative sleep—just avoid intense workouts close to bedtime.
-          </p>
+        <article className="sleep-article">
+          <img src="/images/slep7.jpg" loading="lazy" decoding="async" alt="Exercise and sleep" />
+          <h2>Making time for daytime activity</h2>
+          <p>Make time for physical activity during the day. If vigorous activity near bedtime makes it harder for you to wind down, try moving it earlier.</p>
         </article>
 
-        <article class="sleep-article">
-          <img src="/images/slep8.webp" alt="Mindfulness meditation image" />
+        <article className="sleep-article">
+          <img src="/images/slep8.webp" loading="lazy" decoding="async" alt="Mindfulness meditation" />
           <h2>Using Mindfulness Meditation to Calm Your Mind Before Sleep</h2>
-          <p>
-            Practicing mindfulness meditation can lower stress hormones and
-            quiet racing thoughts, making it easier to relax and fall asleep
-            faster. Even a few minutes nightly can make a difference.
-          </p>
+          <p>Mindfulness can be a way to settle into a quieter activity before bed. Try following your breath gently or noticing how your body feels against the chair or bed.</p>
         </article>
 
-        <article class="sleep-article">
-          <img src="/images/slep9.webp" alt="Avoiding caffeine image" />
+        <article className="sleep-article">
+          <img src="/images/slep9.webp" loading="lazy" decoding="async" alt="Avoiding caffeine" />
           <h2>The Impact of Caffeine on Your Sleep and How to Manage It</h2>
-          <p>
-            Caffeine can stay in your system for hours, disrupting your ability
-            to fall asleep. Learn how to time your coffee intake to avoid
-            interference with your natural sleep rhythm.
-          </p>
+          <p>Caffeine can affect sleep for several hours. Try moving coffee, tea or other caffeinated drinks earlier and observe whether the change helps.</p>
         </article>
 
-        <article class="sleep-article">
+        <article className="sleep-article">
           <img
-            src="/images/slep10.webp"
-            alt="Creating a bedtime routine image"
+            src="/images/slep10.webp" loading="lazy" decoding="async"
+            alt="Creating a bedtime routine"
           />
           <h2>Creating a Consistent Bedtime Routine for Better Sleep</h2>
-          <p>
-            Establishing a regular schedule and relaxing pre-sleep rituals
-            trains your body to expect sleep at certain times, improving both
-            the quality and duration of your rest.
-          </p>
+          <p>If your schedule allows, try going to bed and getting up at roughly the same times. Keep the routine flexible enough to work around your everyday obligations.</p>
         </article>
       </section>
+      <section className="service-content sleep-enrichment" aria-label="Sleep resources">
+        <div className="service-split">
+          <ServicePhoto file="sleep-diary" alt="A blank sleep diary and clock on a bedside table" />
+          <section className="service-panel">
+            <h2>Use a simple sleep diary</h2>
+            <p>For a few days, note bedtime, wake time, long periods awake and how rested you felt. Add relevant details such as a late caffeine drink or a change in schedule.</p>
+            <a href="https://www.nhlbi.nih.gov/health/sleep-deprivation/healthy-sleep-habits">Read NHLBI’s healthy sleep habits guide</a>
+          </section>
+        </div>
+        <ServiceVideo id="zsaRRAk9a0E" title="Sleep Well for a Healthy Heart" source="NHLBI" resource="https://www.nhlbi.nih.gov/health/sleep-deprivation/healthy-sleep-habits" />
+        <section className="service-panel">
+          <h2>Frequently asked questions</h2>
+          <details><summary>What should I try first?</summary><p>Pick one manageable change, such as a quieter wind-down or a more consistent wake time, and observe how it fits your routine.</p></details>
+          <details><summary>When should I ask for support?</summary><p>If sleep problems keep recurring or disrupt your daytime activities, discuss them with a healthcare professional. Bring any notes about your sleep pattern.</p></details>
+        </section>
+      </section>
+      </main>
       <Footer />
     </div>
   );
