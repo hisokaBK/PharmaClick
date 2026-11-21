@@ -1,5 +1,5 @@
 import ServicePage from "./ServicePage";
-import { ServicePhoto } from "./ServiceMedia";
+import { ServicePhoto, ServiceVideo } from "./ServiceMedia";
 
 export default function NutritionPrograms() {
   return (
@@ -19,7 +19,7 @@ export default function NutritionPrograms() {
       </section>
       <section className="service-section">
         <h2>Choose a variety of foods</h2>
-        <ul>
+        <ul className="service-grid nutrition-food-groups">
           <li><strong>Vegetables and fruit.</strong> Try a mix of seasonal produce, and keep frozen options for busy days.</li>
           <li><strong>Whole grains.</strong> Oats, whole-wheat bread and brown rice make useful bases for meals.</li>
           <li><strong>Protein foods.</strong> Rotate lentils, chickpeas, eggs, fish or other foods that suit your preferences.</li>
@@ -43,6 +43,7 @@ export default function NutritionPrograms() {
           <p>Choose foods that fit your budget, preferences and any dietary guidance you follow.</p>
         </section>
       </div>
+      <ServiceVideo id="EBBQ03vkHnM" title="Add More Fruits and Vegetables" source="HappyHealthy · Mississippi State University Extension" resource="https://happyhealthy.extension.msstate.edu/tips-videos/add-more-fruits-and-vegetables-your-day" />
     </ServicePage>
   );
 }

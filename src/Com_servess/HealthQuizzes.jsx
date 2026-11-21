@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import ServicePage from "./ServicePage";
 import { ServicePhoto } from "./ServiceMedia";
 
@@ -45,7 +46,7 @@ export default function HealthQuizzes() {
           <button className="btn btn-outline-success" type="button" onClick={restart}>Restart quiz</button>
         </section>}
       </div>
-      <div className="service-split"><section className="service-panel"><h2>Keep learning after the quiz</h2><p>Use the answer explanations as prompts for checking claims. For an example, compare a headline with the organization?s original announcement and read what action it actually requests.</p><a href="/Medical_News">Explore the Medical News explainers</a></section><ServicePhoto file="quiz-review" alt="Hands sorting study cards into two stacks" /></div>
+      <div className="service-split"><section className="service-panel"><h2>Keep learning after the quiz</h2><p>Use the answer explanations as prompts for checking claims. For an example, compare a headline with the organization?s original announcement and read what action it actually requests.</p><Link to="/Medical_News">Explore the Medical News explainers</Link></section><ServicePhoto file="quiz-review" alt="Hands sorting study cards into two stacks" /></div>
     </ServicePage>
   );
 }

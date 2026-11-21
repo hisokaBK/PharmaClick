@@ -8,7 +8,7 @@ export default function MentalHealth() {
         <div className="service-panel">
           <h2>Make the next conversation easier</h2>
           <p>A short, specific request can be easier to make. Let someone you trust know whether you would like a listening ear, a check-in later or practical help.</p>
-          <details><summary>See an example of what to say</summary><p>?This week has felt harder than usual. Could we take a short walk together or talk this evening??</p></details>
+          <details><summary>See an example of what to say</summary><p>“This week has felt harder than usual. Could we take a short walk together or talk this evening?”</p></details>
         </div>
         <ServicePhoto file="mental-connection" alt="Two adults talking on a park bench" />
       </section>

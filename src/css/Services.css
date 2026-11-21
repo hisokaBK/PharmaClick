@@ -153,3 +153,15 @@
   .service-page .hero-image, .sleep-page .hero-image, .sleep-page .sleep-article { transition: none; }
   .service-page .hero-image:hover, .sleep-page .hero-image:hover, .sleep-page .sleep-article:hover { transform: none; }
 }
+
+.nutrition-food-groups {
+  list-style: none;
+  padding: 0;
+}
+.nutrition-food-groups li {
+  padding: 14px;
+  background: white;
+  border-radius: 8px;
+}
+.nutrition-food-groups strong { display: block; color: #1b5e20; }
+.service-video iframe { margin-top: 12px; }

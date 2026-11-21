@@ -1,11 +1,26 @@
 import { useState } from "react";
 import ServicePage from "./ServicePage";
-import { ServicePhoto } from "./ServiceMedia";
+import { ServicePhoto, ServiceVideo } from "./ServiceMedia";
 
 const recipes = [
-  { title: "Pear and yogurt oats", category: "Breakfast", time: "10 min", ingredients: ["Rolled oats", "Plain yogurt", "Pear", "Cinnamon"], instructions: "Stir the oats into yogurt in a bowl. Dice the pear, spoon it on top and finish with cinnamon. Add a splash of milk or water if you prefer a looser texture." },
-  { title: "Chickpea and cucumber salad", category: "Lunch", time: "15 min", ingredients: ["Cooked chickpeas", "Cucumber", "Tomatoes", "Lemon", "Olive oil"], instructions: "Drain the chickpeas and chop the cucumber and tomatoes. Toss with lemon juice and olive oil, then serve with bread if you like." },
-  { title: "White bean and vegetable soup", category: "Dinner", time: "30 min", ingredients: ["Cooked white beans", "Carrot", "Onion", "Vegetable stock", "Spinach"], instructions: "Dice and soften the onion and carrot in a saucepan. Add stock and beans and simmer until the carrot is tender. Stir in the spinach until wilted." },
+  {
+    title: "Pear and yogurt oats", category: "Breakfast", time: "10 min", serves: 1,
+    photo: "recipe-oats", alt: "Rolled oats with yogurt, diced pear and cinnamon",
+    ingredients: ["40 g rolled oats", "120 g plain yogurt", "1 ripe pear", "A pinch of cinnamon"],
+    steps: ["Stir the oats into the yogurt.", "Dice the pear and spoon it over the oats.", "Add the cinnamon. Loosen with a splash of milk or water if needed."],
+  },
+  {
+    title: "Chickpea and cucumber salad", category: "Lunch", time: "15 min", serves: 2,
+    photo: "recipe-chickpea", alt: "Chickpea, tomato and cucumber salad on a plate",
+    ingredients: ["240 g cooked chickpeas, drained", "Half a cucumber", "2 tomatoes", "Juice of half a lemon", "1 tablespoon olive oil"],
+    steps: ["Rinse the chickpeas and drain well.", "Dice the cucumber and tomatoes.", "Toss with the chickpeas, lemon juice and olive oil."],
+  },
+  {
+    title: "White bean and vegetable soup", category: "Dinner", time: "30 min", serves: 2,
+    photo: "recipe-soup", alt: "White bean and vegetable soup in a ceramic bowl",
+    ingredients: ["240 g cooked white beans, drained", "1 carrot", "1 small onion", "500 ml vegetable stock", "1 handful of spinach", "1 teaspoon olive oil"],
+    steps: ["Dice the onion and carrot. Soften the onion in the oil, then add the carrot.", "Add stock and beans and simmer until the carrot is tender.", "Stir in the spinach until wilted."],
+  },
 ];
 
 export default function HealthyRecipes() {
@@ -23,22 +38,25 @@ export default function HealthyRecipes() {
       <div className="service-grid">
         {recipes.filter(recipe => category === "All meals" || category === recipe.category).map(recipe => (
           <article className="service-section" key={recipe.title}>
-            {recipe.category === "Lunch" && <ServicePhoto file="recipe-chickpea" alt="Chickpea, tomato and cucumber salad on a plate" />}
-            {recipe.category === "Dinner" && <ServicePhoto file="recipe-soup" alt="White bean and vegetable soup in a ceramic bowl" />}
+            <ServicePhoto file={recipe.photo} alt={recipe.alt} />
             <h2>{recipe.title}</h2>
-            <p>{recipe.category} · {recipe.time}</p>
+            <p>{recipe.category} · {recipe.time} · Serves {recipe.serves}</p>
             <details>
               <summary>Ingredients and method</summary>
               <ul>{recipe.ingredients.map(ingredient => <li key={ingredient}>{ingredient}</li>)}</ul>
-              <p>{recipe.instructions}</p>
+              <ol>{recipe.steps.map(step => <li key={step}>{step}</li>)}</ol>
             </details>
           </article>
         ))}
       </div>
-      <section className="service-panel" id="recipe-substitutions">
+      <div className="service-split" id="recipe-substitutions">
+        <ServicePhoto file="recipe-prep" alt="Hands chopping cucumber beside a lemon and a bowl of chickpeas" />
+        <section className="service-panel">
         <h2>Swap what you already have</h2>
         <dl className="mb-0"><dt>Salad</dt><dd>Try cooked white beans instead of chickpeas or fresh herbs instead of extra dressing.</dd><dt>Soup</dt><dd>Stir in chopped kale instead of spinach and cook until tender.</dd><dt>Oats</dt><dd>Use diced apple instead of pear. Check any yogurt or milk alternative for ingredients you avoid.</dd></dl>
-      </section>
+        </section>
+      </div>
+      <ServiceVideo id="z7Bu-Fyg8rw" title="Chickpea Salad" source="HappyHealthy · Mississippi State University Extension" resource="https://happyhealthy.extension.msstate.edu/recipes/chickpea-salad" />
     </ServicePage>
   );
 }
