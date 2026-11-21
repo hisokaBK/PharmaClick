@@ -160,3 +160,15 @@
     font-size: 1rem;
   }
 }
+/* FAQ MOBILE AND TABLET OFFSET:
+   Replace the top margin with the shared navbar height and a single content
+   gap so the fixed header never covers the FAQ heading. */
+@media (max-width: 1024px) {
+  .faq-container {
+    margin-top: 0;
+    padding-top: calc(var(--nav-height) + clamp(16px, 2.5vw, 24px));
+  }
+
+  /* A flexible input leaves room for the existing search button at 320px. */
+  .faq-container .search-faq input { min-width: 0; }
+}
