@@ -45,3 +45,15 @@ body:has(.global-sidebar[open]) { overflow-y: hidden; }
 @media (max-width: 991.7px) {
   body:has(.nav__search:focus-within) .global-menu-toggle { visibility: hidden; }
 }
+
+.global-sidebar {
+  scrollbar-width: thin;
+  scrollbar-color: var(--primary) #040404;
+}
+
+.global-sidebar::-webkit-scrollbar { width: 5px; }
+.global-sidebar::-webkit-scrollbar-track { background: #040404; }
+.global-sidebar::-webkit-scrollbar-thumb {
+  background: var(--primary);
+  border-radius: 10px;
+}
