@@ -190,3 +190,16 @@ border: 1px solid ;
   }
 }
 
+
+/* Compact footer: remove doubled horizontal padding, shrink the single grid
+   track, and stack the brand beside its logo only when both have room. */
+@media (max-width: 768px) {
+  .footer-content { grid-template-columns: minmax(0, 1fr); padding-inline: 0; gap: 24px; }
+  .footer-content .brand-section, .footer-content .links-section { min-width: 0; }
+  .footer-content .links-section > div { flex-wrap: wrap; gap: 16px; }
+  .footer-content .brand-section > div { min-width: 0; }
+}
+@media (max-width: 480px) {
+  .footer-content .brand-section { flex-direction: column; }
+  .footer-content .foot_logo { height: auto; width: min(123px, 100%); }
+}

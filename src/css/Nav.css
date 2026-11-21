@@ -284,77 +284,42 @@ color:rgba(13, 166, 95, 0.834);
  
 }
 
-/*--------- media scr-----------------*/
+/* Keep the desktop menu available to keyboard users after its trigger receives focus. */
+.fixNav .nav-desktop-item:focus-within > .dropdown-menu { display: block; }
 
-  @media (max-width: 778px) {
-    .dropdown-menu {
-           right: 0px;
-      } 
-      #min1{
-        right: 20px;
-     }
+/* The public header only adds its cart below the desktop breakpoint. */
+.fixNav .nav-compact-cart { display: none; }
+
+/* MOBILE AND TABLET NAVIGATION: Reserve room for the fixed drawer button,
+   let search shrink between the logo and cart, and move desktop links to the drawer.
+   At 1024px the original desktop navigation takes over. */
+@media (max-width: 1023px) {
+  .fixNav { background: var(--nav-bg); }
+  .fixNav .nav-layout {
+    width: 100%;
+    max-width: none;
+    min-height: var(--nav-height);
+    padding-inline: 56px 12px;
+    gap: clamp(6px, 2vw, 20px);
   }
-
-
-@media (max-width: 991.7px) {
-    
-  .nav__search:focus-within {
-    position: fixed;
-    top: 5px;
-    left: 10px;
-    right: 10px;
-    width: calc(100% - 20px);
-    z-index: 1001;
-    background: white;
-    padding: 10px;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  .fixNav .nav-desktop-item,
+  .fixNav #services,
+  .fixNav .ul2 { display: none; }
+  .fixNav .nav__logo { flex: none; margin: 0; }
+  .fixNav .nav__logo img {
+    height: clamp(30px, 5vw, 35px);
+    max-width: 50px;
+    object-fit: contain;
+    margin: 0;
   }
-
-  .nav__search:focus-within input {
-    height: 40px;
-    font-size: 16px;
-  }
-
-  .nav__search:focus-within .nav__search-icon {
-    font-size: 20px;
-    right: 20px;
-  }
+  .fixNav .nav__search { flex: 1; min-width: 0; margin: 0; }
+  .fixNav .nav__search input { height: 44px; padding-inline: 10px 44px; font-size: 16px; }
+  .fixNav .nav-search-submit { position: absolute; top: 0; right: 0; width: 44px; height: 44px; }
+  .fixNav .nav-search-submit .nav__search-icon { right: 14px; }
+  .fixNav .ul1 { flex: none; gap: 0; margin: 0; padding: 0; }
+  .fixNav .cart-link-item { display: block; min-width: 0; margin: 0; }
+  .fixNav .cart-link { min-width: 44px; min-height: 44px; justify-content: center; margin: 0; }
 }
-
-@media (max-width: 868px) {
-   #services{
-     display: none ;
-    
-  }
-  #SignUp{
-      display: none;
-
-  }
-  #SignIn{
-       display: none;
-  }
-  .ul1 li{
-   
-    margin-right: -30px;
-}
-  .nav__logo img{
-      height: 33px;
-      margin-right: -53px;
-      margin-left: 40px;
-  }
-
-}
-@media (max-width: 440px) {
-    
-    .cart-link{
-          right: 63px;
-    }
-
-}
-
-
-
 
 .services-trigger {
   appearance: none;

@@ -395,3 +395,38 @@
     gap: 10px;
   }
 }
+/* Compact banner: let the existing image fill a text-sized hero so its copy
+   remains readable at 320px and never competes with the fixed header. */
+@media (max-width: 768px) {
+  .medications-container .header-image-container { display: grid; }
+  .medications-container .header-image,
+  .medications-container .header-text-overlay { grid-area: 1 / 1; }
+  .medications-container .header-image { height: 100%; min-height: 285px; }
+  .medications-container .header-text-overlay { position: relative; padding: 20px; }
+  .medications-container .header-title { font-size: clamp(1.45rem, 5vw, 2rem); margin: 0 0 12px; }
+  .medications-container .header-description { font-size: 1rem; }
+  .medications-container .pulse-button { margin-left: 0; max-width: 100%; }
+}
+
+/* Keep the compact hero readable throughout its reveal. A small shared
+   entrance offset prevents the two text lines from crossing on phones and
+   tablets, and the existing dark greens keep the button label legible. */
+@media (max-width: 1023px) {
+  .medications-container .header-text-overlay { background: rgba(0, 0, 0, 0.6); }
+  .medications-container .header-description { color: white; }
+  .medications-container .header-text-overlay .fade-in:not(.show),
+  .medications-container .header-text-overlay .fade-in1:not(.show) { transform: translateY(6px); }
+  .medications-container .pulse-button {
+    min-height: 44px;
+    color: white;
+    background: linear-gradient(to right, #2e7d32, #1b5e20);
+  }
+}
+
+/* Use the original desktop gutters for filtered catalogs, and smaller gutters
+   and shrinkable tracks on phones and tablets. */
+.cards-grid-container2 { padding: 63px; }
+@media (max-width: 1023px) {
+  .cards-grid-container2 { padding: 56px clamp(12px, 4vw, 40px) 24px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr)); }
+  .medications-grid { grid-template-columns: repeat(auto-fit, minmax(min(100%, 215px), 1fr)); }
+}

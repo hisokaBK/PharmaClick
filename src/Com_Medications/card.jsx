@@ -1,7 +1,7 @@
 import { FaShoppingCart, FaCartPlus } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { AddPanier, Addplus } from "../store/actions";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "../css/Card.css";
 
 export default function Card({ medications }) {
@@ -52,13 +52,6 @@ const handleMoreToCart = (med) => {
   }
 };
 
-   const navig = useNavigate();
-
-  const hundelGo =(med)=>{
-               navig(`/Produit/${med.id}`)
-          
-  }
-
   return (
     <>
       {medications.map((med) => {
@@ -69,7 +62,8 @@ const handleMoreToCart = (med) => {
         return (
           <div key={med.id} className="eco-card-wrapper">
             <div className="eco-card">
-              <div className="goToProdui" onClick={()=>hundelGo(med)}>
+              {/* A native link keeps the entire product preview reachable by touch and keyboard. */}
+              <Link className="goToProdui" to={`/Produit/${med.id}`}>
                 <div className="eco-card-header">
                   <h5 className="eco-brand">{med.title}</h5>
                   <div className="eco-by">
@@ -92,7 +86,7 @@ const handleMoreToCart = (med) => {
                     <strong>{med.price} Dhs</strong>
                   </p>
                 </div>
-              </div>
+              </Link>
               <div className="eco-card-footer">
                 {itemCount === 0 ? (
                   <button

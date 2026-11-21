@@ -251,3 +251,9 @@
     transition: none !important;
   }
 }
+/* Keep the original reveal but animate vertically on phones, where a
+   horizontal entrance carries the cards outside the viewport. */
+@media (max-width: 768px) and (prefers-reduced-motion: no-preference) {
+  .service-highlight:not(.visible),
+  .service-highlight:nth-child(even):not(.visible) { transform: translateY(20px); }
+}

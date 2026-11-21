@@ -89,6 +89,20 @@
 .eco-btn:hover {
   background-color: #1b5e20;
 }
+/* Shrink product cards inside narrow grid tracks and wrap long names so
+   the full product title and action remain available on touch screens. */
+@media (max-width: 1023px) {
+  .eco-card-wrapper { min-width: 0; }
+  .eco-brand { white-space: normal; overflow-wrap: anywhere; }
+  .eco-image { height: clamp(145px, 30vw, 200px); }
+  .eco-card-footer { margin-top: auto; }
+  .eco-btn { min-height: 44px; }
+}
+
+/* Preserve the card's original typography while giving its product link a
+   visible keyboard focus indicator on both compact and desktop layouts. */
+.eco-card .goToProdui { display: block; color: inherit; text-decoration: none; }
+.eco-card .goToProdui:focus-visible { outline: 2px solid var(--primary-dark); outline-offset: -2px; }
 
 /* The linked preview fills the card so the price sits just above the
    bottom action in catalog rows, even when descriptions have different lengths. */

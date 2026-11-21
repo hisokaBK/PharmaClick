@@ -41,11 +41,16 @@ test("scores and restarts the health quiz", () => {
 test("opens the Contact page from the global navigation", () => {
   window.history.replaceState({}, "", "/Professional");
   render(<App />);
-  const drawer = document.querySelector("#global-sidebar");
+  // Include the closed dialog so the test can model its native controls in jsdom.
+  const drawer = screen.getByRole("dialog", { hidden: true });
   drawer.showModal = () => { drawer.open = true; };
   drawer.close = () => { drawer.open = false; };
 
   fireEvent.click(screen.getByRole("button", { name: "Open navigation menu" }));
+  // Compact layouts depend on the drawer for both top-level links and medication categories.
+  expect(within(drawer).getByRole("link", { name: "Home" })).toHaveAttribute("href", "/");
+  expect(within(drawer).getByRole("link", { name: "Browse Medicines" })).toHaveAttribute("href", "/Medications");
+  expect(within(drawer).getByRole("link", { name: "Multivitamins" })).toHaveAttribute("href", "/Products/multivitamins");
   fireEvent.click(within(drawer).getByRole("link", { name: "Contact" }));
 
   expect(window.location.pathname).toBe("/contact");

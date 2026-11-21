@@ -127,3 +127,13 @@
   font-style: italic;
 }
 
+
+/* Tablet and phone: reduce the desktop side gutters and contain wide product
+   photos and quantity controls without altering the product information. */
+@media (max-width: 1023px) {
+  .product-container { padding-inline: clamp(16px, 4vw, 40px); gap: 20px; }
+  .product-details, .product-image-container { min-width: 0; }
+  .product-image1 { max-width: 100%; }
+  .product-container .quantity-control { flex-wrap: wrap; }
+  .product-container .add-to-bag-btn { min-height: 44px; }
+}

@@ -125,3 +125,12 @@
     display: none;
   }
 }
+/* Keep the checkout overlay inside short or narrow viewports and allow only
+   the invoice table to scroll when its columns need additional room. */
+@media screen and (max-width: 1023px) {
+  .commander-modal { z-index: 1020; }
+  .commander-content { width: calc(100% - 24px); max-height: 90dvh; padding: clamp(12px, 4vw, 30px); }
+  .commander-content .invoice-items { overflow-x: auto; }
+  .commander-content .invoice-info, .commander-content .invoice-actions { flex-wrap: wrap; gap: 10px; }
+  .commander-content .invoice-actions button { min-height: 44px; }
+}

@@ -239,3 +239,13 @@
     font-size: 0.9rem;
   }
 }
+/* Prevent the portrait and payment artwork from pushing About past the
+   viewport while its existing entrance animation runs on small screens. */
+@media (max-width: 768px) {
+  .about-container .pha-image { width: 100%; min-width: 0; }
+  .about-container img, .about-payment-image { max-width: 100%; height: auto; }
+}
+
+/* Bound the portrait's existing horizontal entrance to its animation region.
+   This prevents transient overflow on phones, tablets, and short desktops. */
+.about-container .pha-container { overflow-x: clip; }
