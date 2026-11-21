@@ -134,3 +134,8 @@
 .service-page--notice .hero-content { flex: 2; }
 .service-page--notice .service-content > .service-panel { border-left: 4px solid var(--primary-dark); }
 .service-page--notice .service-grid { --photo-ratio: 2 / 1; }
+
+.service-page--checkin .hero-image-container { flex: 0.65; }
+.service-page--checkin form { border: 1px solid #2e7d32; padding: clamp(16px,4vw,40px); }
+.service-page--checkin fieldset { border-bottom: 1px solid #1d6d5c3d; padding-bottom: 12px; }
+.service-page--checkin progress { width: min(100%, 32rem); accent-color: var(--primary-dark); }
