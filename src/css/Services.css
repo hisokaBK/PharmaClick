@@ -146,3 +146,10 @@
 .service-page--quiz fieldset legend { float: none; margin-bottom: 8px; }
 .service-page--quiz progress { width: min(100%, 32rem); accent-color: var(--primary-dark); }
 @media (max-width: 768px) { .service-page--quiz .hero-container { flex-direction: column; } }
+
+.sleep-enrichment { display: grid; gap: clamp(16px, 3vw, 30px); }
+.sleep-enrichment .service-video { max-width: 800px; width: 100%; }
+@media (prefers-reduced-motion: reduce) {
+  .service-page .hero-image, .sleep-page .hero-image, .sleep-page .sleep-article { transition: none; }
+  .service-page .hero-image:hover, .sleep-page .hero-image:hover, .sleep-page .sleep-article:hover { transform: none; }
+}
