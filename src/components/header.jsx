@@ -41,9 +41,10 @@ export default function Nav() {
   return (
     <nav className={`fixNav ${scrolled ? "scrolled" : ""}`}>
       <div className="container">
-        <div className="nav__logo">
-          <img src="/images/set_log1.jpg" alt="Company" loading="lazy" />
-        </div>
+        {/* Link the navbar logo to Home while retaining its responsive alignment. */}
+        <Link className="nav__logo" to="/" aria-label="Go to homepage">
+          <img src="/images/set_log1.jpg" alt="" loading="lazy" />
+        </Link>
 
         {/* --------Search Bar -----------------*/}
         <form onSubmit={handleSearch} style={{ display: "contents" }}>
