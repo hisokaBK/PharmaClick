@@ -135,3 +135,34 @@
           font-family: 'Times New Roman', Times, serif;
           margin-right: -10px;
 }
+
+/* SIGN-UP SPACING ON PHONES AND TABLETS:
+   Reclaim space from the nested Bootstrap gutters. Keep the name controls
+   stacked on phones and remove their duplicate margins in the name row. */
+@media (max-width: 1024px) {
+  .sign-up-layout > .container-fluid {
+    max-width: min(100%, 1000px);
+    padding: clamp(14px, 3vw, 28px) clamp(12px, 3vw, 28px) !important;
+  }
+
+  .sign-up-layout .row { --bs-gutter-x: clamp(12px, 2vw, 24px); }
+  .sign-up-layout .card { max-width: 600px; margin-inline: auto; }
+  .sign-up-layout .card-body {
+    padding: clamp(22px, 4vw, 34px) clamp(16px, 4vw, 28px) !important;
+  }
+
+  .sign-up-layout .card-body form > .row .form-group { margin-bottom: 0; }
+  .sign-up-layout .form-control {
+    min-height: 48px;
+    scroll-margin-block: 20px;
+  }
+
+  .sign-up-layout .btn1 { width: min(100%, 22rem); min-height: 44px; }
+  .sign-up-layout .btn2 { min-width: 44px; min-height: 44px; }
+}
+
+@media (max-width: 767px) {
+  /* Bring the registration form closer to the introductory copy on phones
+     without reordering the content or changing its typography. */
+  .sign-up-layout #h1First { margin-block: 1rem !important; }
+}
