@@ -190,3 +190,18 @@
 @media (max-width: 600px) {
   .product-slider-track { grid-auto-columns: min(85%, 260px); }
 }
+
+/* PRODUCT CAROUSEL SCROLLBAR:
+   Use the Pharmacy primary green on the native thumb and a quiet track.
+   Scope the colors to the carousel and leave scrollbar dimensions intact. */
+.product-slider {
+  scrollbar-color: var(--primary) #f1f1f1;
+}
+
+.product-slider::-webkit-scrollbar-track {
+  background-color: #f1f1f1;
+}
+
+.product-slider::-webkit-scrollbar-thumb {
+  background-color: var(--primary);
+}
