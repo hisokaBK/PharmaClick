@@ -1,5 +1,6 @@
 import { useState } from "react";
 import ServicePage from "./ServicePage";
+import { ServicePhoto } from "./ServiceMedia";
 
 const questions = [
   { id: "notice", prompt: "What should you check before sharing a health notice?", choices: ["How many times it was shared", "Its issuing authority, location and latest update", "Whether the headline is short"], correct: 1, explanation: "The original authority, location and update help establish whether the notice is relevant and current." },
@@ -18,9 +19,12 @@ export default function HealthQuizzes() {
   }
 
   return (
-    <ServicePage title="Health Quizzes" introduction="Check what you know about preparing for healthcare visits and reading health information. Each answer comes with a short explanation." image="/images/services/health-quizzes.jpg" imageAlt="An open notebook, pencil and green study cards">
-      <form className="service-section" onSubmit={event => { event.preventDefault(); setSubmitted(true); }}>
+    <ServicePage layout="quiz" title="Health Quizzes" introduction="Check what you know about preparing for healthcare visits and reading health information. Each answer comes with a short explanation." image="/images/services/health-quizzes.jpg" imageAlt="An open notebook, pencil and green study cards">
+      <section className="service-split"><ServicePhoto file="quiz-revision" alt="Flashcards and pencils arranged for a review session" /><section className="service-panel"><h2>How the quiz works</h2><p>Choose one answer per question. After submitting, compare your choices with the explanations, then restart to practise again.</p><a href="#health-information-quiz">Go to the quiz</a></section></section>
+      <form id="health-information-quiz" className="service-section" onSubmit={event => { event.preventDefault(); setSubmitted(true); }}>
         <h2>Everyday health information quiz</h2>
+        <label className="d-block" htmlFor="quiz-progress">{Object.keys(answers).length} of {questions.length} answered</label>
+        <progress id="quiz-progress" value={Object.keys(answers).length} max={questions.length} />
         {questions.map(question => (
           <fieldset className="mb-3" key={question.id} disabled={submitted}>
             <legend className="fs-6 fw-semibold">{question.prompt}</legend>
@@ -37,10 +41,11 @@ export default function HealthQuizzes() {
       <div aria-live="polite">
         {submitted && <section className="service-section">
           <h2>Score {score} out of {questions.length}</h2>
-          <ol>{questions.map(question => <li key={question.id}><strong>{question.choices[question.correct]}.</strong> {question.explanation}</li>)}</ol>
+          <ol>{questions.map(question => <li key={question.id}><span className="d-block">{answers[question.id] === question.correct ? "Correct" : "Review this answer"}</span><strong>{question.choices[question.correct]}.</strong> {question.explanation}</li>)}</ol>
           <button className="btn btn-outline-success" type="button" onClick={restart}>Restart quiz</button>
         </section>}
       </div>
+      <div className="service-split"><section className="service-panel"><h2>Keep learning after the quiz</h2><p>Use the answer explanations as prompts for checking claims. For an example, compare a headline with the organization?s original announcement and read what action it actually requests.</p><a href="/Medical_News">Explore the Medical News explainers</a></section><ServicePhoto file="quiz-review" alt="Hands sorting study cards into two stacks" /></div>
     </ServicePage>
   );
 }
