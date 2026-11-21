@@ -129,3 +129,8 @@
 .service-page--movement .service-grid { --photo-ratio: 16 / 9; }
 .service-page--movement .service-grid > article { border-top: 3px solid var(--primary); }
 .service-page--movement .service-video { max-width: 800px; width: 100%; }
+
+.service-page--notice .hero-container { gap: 24px; }
+.service-page--notice .hero-content { flex: 2; }
+.service-page--notice .service-content > .service-panel { border-left: 4px solid var(--primary-dark); }
+.service-page--notice .service-grid { --photo-ratio: 2 / 1; }
