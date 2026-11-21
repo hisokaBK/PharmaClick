@@ -109,3 +109,7 @@
 .service-page--magazine .hero-image { aspect-ratio: 21 / 7; }
 .service-page--magazine .service-grid > article:first-child { border-top: 3px solid var(--primary); }
 @media (max-width: 768px) { .service-page--magazine .hero-image { aspect-ratio: 3 / 2; } }
+
+.service-page--botanical .hero-image-container { border: 3px solid #2e7d32; }
+.service-page--botanical .service-grid { --photo-ratio: 2 / 1; }
+.service-page--botanical .service-grid > article { background: #f8f8f8; }
