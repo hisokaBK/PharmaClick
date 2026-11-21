@@ -129,3 +129,43 @@
     flex: 0 0 calc(100% - 20px); 
   }
 }
+
+/* The shared Card renders eco-card-wrapper elements. Equal-width columns
+   and shared grid rows align every content zone without restricting text. */
+.product-slider-track {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: calc((100% - 3 * 30px) / 4);
+  grid-template-rows: repeat(6, auto);
+}
+
+@media (max-width: 1023px) {
+  .product-slider-track { grid-auto-columns: min(85%, 240px); }
+}
+
+/* Pass the six row sizes through the wrapper, product link and grouped
+   content so all images, prices and actions start on the same horizontal lines. */
+.product-slider-track .eco-card-wrapper,
+.product-slider-track .eco-card {
+  display: grid;
+  grid-row: span 6;
+  grid-template-rows: subgrid;
+  height: auto;
+  min-width: 0;
+}
+
+.product-slider-track .eco-card .goToProdui {
+  display: grid;
+  grid-row: span 5;
+  grid-template-rows: subgrid;
+}
+
+.product-slider-track .eco-card-header,
+.product-slider-track .eco-card-body {
+  display: grid;
+  grid-row: span 2;
+  grid-template-rows: subgrid;
+}
+
+.product-slider-track .eco-card-footer { margin-top: 0; }
+.product-slider-track .eco-btn { height: 100%; }
