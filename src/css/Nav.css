@@ -231,8 +231,12 @@ color: #04b077;
   margin-left: 1rem;
 }
 
+/* Keep the icon and badge in one icon-sized grid cell. On compact screens
+   the 44px link remains the touch target, but its edges no longer anchor the badge. */
 .cart-link {
-  display: flex;
+  display: inline-grid;
+  grid-template: max-content / max-content;
+  align-content: center;
   align-items: center;
   text-decoration: none;
   color: #333;
@@ -242,25 +246,30 @@ color: #04b077;
 }
 
 .cart-icon {
+  grid-area: 1 / 1;
   color: #2c3e50;
   transition: all 0.3s ease;
   padding: 5px;
 }
 
+/* Align both one- and two-digit counts to the icon's upper-right corner. */
 .cart-counter {
+  grid-area: 1 / 1;
+  justify-self: end;
+  align-self: start;
+  translate: 2px -1px;
   background-color: #e74c3c;
   color: white;
   font-size: 0.75rem;
   font-weight: bold;
   border-radius: 50%;
-  width: 16px;
+  min-width: 16px;
   height: 16px;
+  padding-inline: 2px;
   display: flex;
   align-items: center;
   justify-content: center;
-  position: absolute;
-  top: -5px;
-  right: -2px;
+  pointer-events: none;
   transition: all 0.3s ease;
 }
 
