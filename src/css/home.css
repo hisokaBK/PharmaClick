@@ -1,6 +1,7 @@
 
 .bcImg{
-    background-image: url('../../public/images/back3.jpg');
+    --home-artwork: url('../../public/images/back3.jpg');
+    background-image: var(--home-artwork);
     background-size: 84%;
     background-position: center;
     background-repeat: no-repeat;
@@ -213,4 +214,82 @@
    height so the decorative initial clears the header without a second offset. */
 @media (max-width: 600px) {
   .bcImg { padding-top: var(--nav-height); }
+}
+
+.home-hero-content { display: contents; }
+.home-hero-heading { padding: 16px 20px; }
+
+[dir="rtl"] .home-hero {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-areas: "artwork content";
+  align-items: center;
+  gap: 24px;
+  padding-block-start: var(--nav-height);
+  background-image: none;
+}
+
+[dir="rtl"] .home-hero::after {
+  content: "";
+  grid-area: artwork;
+  justify-self: center;
+  inline-size: min(84%, 38rem);
+  aspect-ratio: 1309 / 1512;
+  /* The artwork occupies the right half of the existing 1309 × 756 image. */
+  background: var(--home-artwork) right center / 200% auto no-repeat;
+}
+
+[dir="rtl"] .home-hero-content {
+  display: block;
+  grid-area: content;
+  min-inline-size: 0;
+}
+
+[dir="rtl"] .home-hero-heading {
+  display: grid;
+  gap: 8px;
+  margin-block-end: 16px;
+  padding: 0;
+}
+
+[dir="rtl"] .home-hero :is(#pHome, .h1Home) {
+  inline-size: auto;
+  margin: 0;
+  padding: 0;
+  text-align: start;
+}
+
+[dir="rtl"] .home-hero #div_home1 {
+  max-inline-size: none;
+  padding-inline-start: 0;
+}
+
+[dir="rtl"] .home-hero #row1 {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin: 0;
+}
+
+[dir="rtl"] .home-hero #row1 > .col {
+  min-inline-size: 0;
+  margin: 0 !important;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+[dir="rtl"] .home-hero .p_home2 { text-align: start; }
+[dir="rtl"] .home-hero .homeButton { max-inline-size: 100%; }
+
+@media (max-width: 1061px) {
+  [dir="rtl"] .home-hero #row1 { grid-template-columns: minmax(0, 1fr); }
+}
+
+@media (max-width: 778px) {
+  [dir="rtl"] .home-hero {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas: "content" "artwork";
+  }
+
+  [dir="rtl"] .home-hero::after { inline-size: min(84%, 18rem); }
 }
