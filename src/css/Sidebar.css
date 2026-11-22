@@ -15,6 +15,7 @@
 }
 
 .global-sidebar {
+  --sidebar-surface: #040404;
   position: fixed;
   inset: 0 auto 0 0;
   width: min(270px, 100%);
@@ -26,7 +27,7 @@
   border: 0;
   overflow-y: auto;
   overscroll-behavior: contain;
-  background: #040404;
+  background: var(--sidebar-surface);
   color: white;
   box-shadow: 1px 0 14px #080808;
 }
@@ -42,9 +43,38 @@ body:has(.global-sidebar[open]) { overflow-y: hidden; }
 .global-sidebar img { display: block; width: 110px; border-radius: 40px; margin: 0 auto 12px; }
 .global-sidebar ul { list-style: none; padding: 0; margin: 0 0 12px; }
 .global-sidebar h2 { margin: 8px 8px 6px; color: var(--primary); font-size: 1rem; }
-.global-sidebar a { display: block; padding: 6px 8px; border-radius: 6px; color: #aaa; text-decoration: none; }
+.global-sidebar a { display: block; text-decoration: none; }
+.global-sidebar :is(a, .language-trigger, .language-option) {
+  padding: 6px 8px;
+  border-radius: 6px;
+  color: #aaa;
+}
 .global-sidebar a:hover,
-.global-sidebar a[aria-current="page"] { background: #9292921e; color: var(--primary); }
+.global-sidebar a[aria-current="page"],
+.global-sidebar .language-trigger:is(:hover, [aria-expanded="true"]),
+.global-sidebar .language-option:is(:hover, [aria-checked="true"]) {
+  background: #9292921e;
+  color: var(--primary);
+}
+
+.global-sidebar .language-selector { margin-block-end: 8px; }
+.global-sidebar .language-trigger,
+.global-sidebar .language-option {
+  inline-size: 100%;
+  min-block-size: 44px;
+  font: inherit;
+}
+.global-sidebar .language-chevron { margin-inline-start: auto; }
+.global-sidebar .language-panel {
+  inset-block-start: calc(100% + 4px);
+  inset-inline: 0;
+  inline-size: 100%;
+  padding: 4px;
+  border: 0;
+  background: var(--sidebar-surface);
+  box-shadow: none;
+}
+.global-sidebar :is(.language-trigger, .language-option):focus-visible { outline-color: var(--primary); }
 .global-menu-close { display: grid; place-items: center; width: 40px; height: 40px; border: 0; border-radius: 6px; background: transparent; color: inherit; font-size: 22px; }
 
 /* Keep the drawer and its close control easy to tap below the desktop breakpoint. */

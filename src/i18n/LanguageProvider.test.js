@@ -8,6 +8,13 @@ import en from "./en.json";
 import fr from "./fr.json";
 import ar from "./ar.json";
 
+const languageNames = { en: "English", fr: "Français", ar: "العربية" };
+
+function chooseLanguage(trigger, language) {
+  fireEvent.click(trigger);
+  fireEvent.click(within(screen.getByRole("menu")).getByRole("menuitemradio", { name: languageNames[language] }));
+}
+
 beforeEach(() => {
   localStorage.clear();
   window.scrollTo = jest.fn();
@@ -27,14 +34,14 @@ test("translations have equal coverage and support fallback, interpolation and p
 test("keeps the active news filter while localizing the expanded article in French and Arabic", () => {
   window.history.replaceState({}, "", "/Medical_News");
   render(<App />);
-  const selector = screen.getByRole("combobox", { name: "Language" });
-  fireEvent.change(selector, { target: { value: "fr" } });
+  const selector = screen.getByRole("button", { name: /Language.*English/ });
+  chooseLanguage(selector, "fr");
   fireEvent.change(screen.getByRole("combobox", { name: fr.Topic }), { target: { value: "Public health" } });
   const article = screen.getByRole("article");
   fireEvent.click(within(article).getByText(fr["Read example"]));
   expect(within(article).getByText(/Ouvrez la publication d’origine/)).toBeVisible();
 
-  fireEvent.change(selector, { target: { value: "ar" } });
+  chooseLanguage(selector, "ar");
   expect(screen.getByRole("combobox", { name: ar.Topic })).toHaveValue("Public health");
   expect(within(article).getByText(/افتح المنشور الأصلي/)).toBeVisible();
 });
@@ -49,13 +56,13 @@ test.each([
 ])("localizes the body copy on %s in all three languages", (route, passage) => {
   window.history.replaceState({}, "", route);
   render(<App />);
-  const selector = screen.getByRole("combobox", { name: "Language" });
+  const selector = screen.getByRole("button", { name: /Language.*English/ });
   if (route === "/Slep") fireEvent.click(screen.getByText("When should I ask for support?"));
   expect(screen.getByText(passage)).toBeVisible();
 
-  fireEvent.change(selector, { target: { value: "fr" } });
+  chooseLanguage(selector, "fr");
   expect(screen.getByText(fr[passage])).toBeVisible();
-  fireEvent.change(selector, { target: { value: "ar" } });
+  chooseLanguage(selector, "ar");
   expect(screen.getByText(ar[passage])).toBeVisible();
   expect(screen.queryByText(passage)).toBeNull();
 });
@@ -64,9 +71,9 @@ test.each([1, 3, 8, 11, 13, 14, 17, 44, 47, 65, 80, 144, 149, 151, 153, 155, 157
   const product = data1.find((entry) => entry.id === id);
   window.history.replaceState({}, "", `/Produit/${id}`);
   render(<App />);
-  const selector = screen.getByRole("combobox", { name: "Language" });
+  const selector = screen.getByRole("button", { name: /Language.*English/ });
   for (const [language, locale] of [["en", en], ["fr", fr], ["ar", ar]]) {
-    fireEvent.change(selector, { target: { value: language } });
+    chooseLanguage(selector, language);
     const heading = screen.getByRole("heading", { name: product.title.trim().replace(/\s+/g, " ") });
     expect(heading).toBeVisible();
     expect(heading.textContent).toBe(product.title);
@@ -134,15 +141,15 @@ test("keeps an edited description and leaves an empty field blank", () => {
 test("prevents the native validation popup and updates an active warning when changing languages", () => {
   window.history.replaceState({}, "", "/signin");
   render(<App />);
-  const selector = screen.getByRole("combobox", { name: "Language" });
+  const selector = screen.getByRole("button", { name: /Language.*English/ });
   const message = "Enter a valid email address and your password.";
-  fireEvent.change(selector, { target: { value: "fr" } });
+  chooseLanguage(selector, "fr");
   const email = screen.getByLabelText(fr["Email address"]);
   expect(fireEvent.invalid(email)).toBe(false);
   expect(email).toHaveFocus();
   expect(screen.getAllByText(fr[message])).toHaveLength(2);
 
-  fireEvent.change(selector, { target: { value: "ar" } });
+  chooseLanguage(selector, "ar");
   expect(document.documentElement.dir).toBe("rtl");
   expect(screen.getAllByText(ar[message])).toHaveLength(2);
 });
@@ -151,14 +158,14 @@ test("French and Arabic keep the search route and cart, persist on reload, and r
   const { unmount } = render(<App />);
   expect(document.documentElement.lang).toBe("en");
   const navigation = screen.getByRole("navigation");
-  const selector = within(navigation).getByRole("combobox", { name: "Language" });
+  const selector = within(navigation).getByRole("button", { name: /Language.*English/ });
   fireEvent.click(screen.getAllByRole("button", { name: "Add to cart" })[0]);
 
-  fireEvent.change(selector, { target: { value: "fr" } });
+  chooseLanguage(selector, "fr");
   expect(screen.getByRole("searchbox", { name: fr["Search products by name"] })).toHaveValue("Doliprane");
   expect(within(navigation).getByRole("link", { name: formatMessage("fr", "Shopping cart, {0} products", [1]) })).toBeInTheDocument();
   expect(document.documentElement.dir).toBe("ltr");
-  fireEvent.change(selector, { target: { value: "ar" } });
+  chooseLanguage(selector, "ar");
   expect(document.documentElement.lang).toBe("ar");
   expect(document.documentElement.dir).toBe("rtl");
   expect(window.location.search).toBe("?search=Doliprane");
@@ -166,9 +173,66 @@ test("French and Arabic keep the search route and cart, persist on reload, and r
   unmount();
 
   render(<App />);
-  const restored = within(screen.getByRole("navigation")).getByRole("combobox", { name: ar.Language });
-  expect(restored).toHaveValue("ar");
-  fireEvent.change(restored, { target: { value: "en" } });
+  const restored = within(screen.getByRole("navigation")).getByRole("button", { name: `${ar.Language} · ${languageNames.ar}` });
+  expect(restored).toHaveTextContent("ع");
+  chooseLanguage(restored, "en");
   expect(document.documentElement.dir).toBe("ltr");
   expect(document.documentElement.lang).toBe("en");
+});
+
+test("shows the current abbreviation and supports menu keyboard navigation", () => {
+  render(<App />);
+  const trigger = screen.getByRole("button", { name: /Language.*English/ });
+  expect(trigger).toHaveTextContent("ENG");
+  fireEvent.keyDown(trigger, { key: "ArrowDown" });
+  const [arabic, french, english] = screen.getAllByRole("menuitemradio");
+  expect(arabic).toHaveFocus();
+  expect(english).toHaveAttribute("aria-checked", "true");
+  fireEvent.keyDown(arabic, { key: "ArrowUp" });
+  expect(english).toHaveFocus();
+  fireEvent.keyDown(english, { key: "Home" });
+  expect(arabic).toHaveFocus();
+  fireEvent.keyDown(arabic, { key: "ArrowDown" });
+  expect(french).toHaveFocus();
+  fireEvent.click(french);
+  expect(trigger).toHaveFocus();
+  expect(trigger).toHaveTextContent("FR");
+  expect(trigger).toHaveAttribute("aria-expanded", "false");
+
+  fireEvent.click(trigger);
+  expect(french).toHaveFocus();
+  fireEvent.keyDown(french, { key: "Escape" });
+  expect(trigger).toHaveFocus();
+  expect(screen.queryByRole("menu")).not.toBeInTheDocument();
+  chooseLanguage(trigger, "ar");
+  expect(trigger).toHaveTextContent("ع");
+});
+
+test("shares the desktop menu state and closes the language menu on outside pointer input", () => {
+  render(<App />);
+  const trigger = screen.getByRole("button", { name: /Language.*English/ });
+  const medications = screen.getByRole("button", { name: "Medications" });
+  const services = screen.getByRole("button", { name: "Services" });
+  fireEvent.click(medications);
+  fireEvent.click(trigger);
+  expect(medications).toHaveAttribute("aria-expanded", "false");
+  expect(trigger).toHaveAttribute("aria-expanded", "true");
+  fireEvent.click(services);
+  expect(trigger).toHaveAttribute("aria-expanded", "false");
+  expect(services).toHaveAttribute("aria-expanded", "true");
+  fireEvent.click(trigger);
+  fireEvent.pointerDown(screen.getByRole("searchbox"));
+  expect(trigger).toHaveAttribute("aria-expanded", "false");
+});
+
+test("switches language from the responsive drawer without closing the drawer", () => {
+  render(<App />);
+  const drawer = screen.getByRole("dialog", { hidden: true });
+  drawer.showModal = () => { drawer.open = true; };
+  fireEvent.click(screen.getByRole("button", { name: "Open navigation menu" }));
+  const trigger = within(drawer).getByRole("button", { name: /Language.*English/ });
+  chooseLanguage(trigger, "ar");
+  expect(drawer.open).toBe(true);
+  expect(trigger).toHaveAttribute("aria-expanded", "false");
+  expect(document.documentElement.dir).toBe("rtl");
 });

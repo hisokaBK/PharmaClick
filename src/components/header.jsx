@@ -4,7 +4,7 @@ import { FaCartPlus } from "react-icons/fa";
 import ServicesMenu from "./ServicesMenu";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Link } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import "../css/Nav.css";
 import MedicationsMenu from "./MedicationsMenu";
 import { useI18n } from "../i18n/LanguageProvider";
@@ -14,6 +14,9 @@ export default function Nav() {
   const { t } = useI18n();
   const [scrolled, setScrolled] = useState(false);
   const [active, setActive] = useState(null);
+  const setLanguageMenuOpen = useCallback((open) => {
+    setActive((current) => open ? { name: "language" } : current?.name === "language" ? null : current);
+  }, []);
   const cartCount = useSelector(state => state.cardData.length);
 
   useEffect(() => {
@@ -52,7 +55,7 @@ export default function Nav() {
         </ul>
 
         <div className="nav-account-zone">
-          <LanguageSelector />
+          <LanguageSelector open={active?.name === "language"} onOpenChange={setLanguageMenuOpen} />
           <AccountMenu active={active} setActive={setActive} />
         </div>
       </div>

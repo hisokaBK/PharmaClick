@@ -112,6 +112,16 @@ test("registers, checks credentials, updates a profile, and restores isolated ca
   await screen.findByRole("heading", { name: "My Orders" }, cryptoWait);
   expect(screen.getByText(/No orders yet/)).toBeInTheDocument();
   expect(screen.getByRole("link", { name: "Shopping cart, 1 products" })).toBeInTheDocument();
+
+  const accountState = readDemo();
+  const languageTrigger = screen.getByRole("button", { name: /Language.*English/ });
+  for (const language of ["Français", "العربية", "English"]) {
+    fireEvent.click(languageTrigger);
+    fireEvent.click(screen.getByRole("menuitemradio", { name: language }));
+    expect(readDemo()).toEqual(accountState);
+    expect(window.location.pathname + window.location.search).toBe("/profile?tab=orders");
+    expect(screen.getByRole("button", { name: /Mohammed Amine El Idrissi/ })).toBeInTheDocument();
+  }
 }, 20000);
 
 test("account deletion is confirmed and preserves other accounts", async () => {
