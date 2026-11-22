@@ -2,8 +2,10 @@ import { useEffect, useRef, useState } from "react";
 import { ProfilePhotoError, prepareProfilePhoto } from "../store/profilePhotos";
 import { useDemoAuth } from "./DemoAuth";
 import { useFeedback } from "./Feedback";
+import { useI18n } from "../i18n/LanguageProvider";
 
 export default function ProfilePhoto() {
+  const { t } = useI18n();
   const { photoUrl, updatePhoto } = useDemoAuth();
   const { notify, requestConfirmation } = useFeedback();
   const picker = useRef(null);
@@ -49,11 +51,11 @@ export default function ProfilePhoto() {
 
   return (
     <section className="demo-profile-section demo-photo-section" aria-labelledby="profile-photo-title" aria-busy={busy}>
-      <h2 id="profile-photo-title">Profile photo</h2>
-      <p id="profile-photo-formats">JPEG, PNG, or WebP, up to 8 MB.</p>
-      <input ref={picker} type="file" accept="image/jpeg,image/png,image/webp" aria-label="Choose profile photo"
+      <h2 id="profile-photo-title">{t("Profile photo")}</h2>
+      <p id="profile-photo-formats">{t("JPEG, PNG, or WebP, up to 8 MB.")}</p>
+      <input ref={picker} type="file" accept="image/jpeg,image/png,image/webp" aria-label={t("Choose profile photo")}
         hidden disabled={busy} onChange={choose} />
-      {draft && preview && <img className="demo-photo-preview" src={preview} alt="Preview of your avatar" />}
+      {draft && preview && <img className="demo-photo-preview" src={preview} alt={t("Preview of your avatar")} />}
       <div className="demo-profile-actions">
         {draft ? (
           <>
@@ -61,13 +63,13 @@ export default function ProfilePhoto() {
               await updatePhoto(draft);
               setDraft(null);
               notify("success", "Your profile photo was saved.");
-            }, "Your profile photo could not be saved in this browser.")}>Save photo</button>
-            <button type="button" className="demo-secondary" disabled={busy} onClick={() => setDraft(null)}>Cancel preview</button>
+            }, "Your profile photo could not be saved in this browser.")}>{t("Save photo")}</button>
+            <button type="button" className="demo-secondary" disabled={busy} onClick={() => setDraft(null)}>{t("Cancel preview")}</button>
           </>
         ) : (
           <>
             <button type="button" className="demo-secondary" disabled={busy} ref={uploadButton} aria-describedby="profile-photo-formats"
-              onClick={() => picker.current.click()}>{photoUrl ? "Change photo" : "Upload photo"}</button>
+              onClick={() => picker.current.click()}>{photoUrl ? t("Change photo") : t("Upload photo")}</button>
             {photoUrl && (
               <button type="button" className="demo-danger" disabled={busy} onClick={(event) => requestConfirmation({
                 title: "Remove profile photo?",
@@ -79,7 +81,7 @@ export default function ProfilePhoto() {
                   await updatePhoto(null);
                   notify("success", "Your profile photo was removed.");
                 }, "Your profile photo could not be removed in this browser."),
-              })}>Remove photo</button>
+              })}>{t("Remove photo")}</button>
             )}
           </>
         )}

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import ServicePage from "./ServicePage";
 import { ServicePhoto, ServiceVideo } from "./ServiceMedia";
+import { useI18n } from "../i18n/LanguageProvider";
 
 const recipes = [
   {
@@ -24,39 +25,40 @@ const recipes = [
 ];
 
 export default function HealthyRecipes() {
+  const { t } = useI18n();
   const [category, setCategory] = useState("All meals");
   return (
-    <ServicePage layout="kitchen" title="Healthy Recipes" introduction="Find a simple breakfast, lunch or dinner using familiar ingredients. Adjust the quantities to the number of people you are feeding." image="/images/services/healthy-recipes.jpg" imageAlt="Bowls of oats, chickpea salad and vegetable soup">
-      <nav className="service-jump" aria-label="Recipe guide"><a href="#meal-category">Filter recipes</a><a href="#recipe-substitutions">Ingredient swaps</a></nav>
+    <ServicePage layout="kitchen" title={t("Healthy Recipes")} introduction={t("Find a simple breakfast, lunch or dinner using familiar ingredients. Adjust the quantities to the number of people you are feeding.")} image="/images/services/healthy-recipes.jpg" imageAlt={t("Bowls of oats, chickpea salad and vegetable soup")}>
+      <nav className="service-jump" aria-label={t("Recipe guide")}><a href="#meal-category">{t("Filter recipes")}</a><a href="#recipe-substitutions">{t("Ingredient swaps")}</a></nav>
       <section className="service-section">
-        <h2>Find a recipe</h2>
-        <label htmlFor="meal-category">Meal </label>
+        <h2>{t("Find a recipe")}</h2>
+        <label htmlFor="meal-category">{t("Meal")} </label>
         <select id="meal-category" value={category} onChange={event => setCategory(event.target.value)}>
-          <option>All meals</option><option>Breakfast</option><option>Lunch</option><option>Dinner</option>
+          {["All meals", "Breakfast", "Lunch", "Dinner"].map((meal) => <option key={meal} value={meal}>{t(meal)}</option>)}
         </select>
       </section>
       <div className="service-grid">
         {recipes.filter(recipe => category === "All meals" || category === recipe.category).map(recipe => (
           <article className="service-section" key={recipe.title}>
-            <ServicePhoto file={recipe.photo} alt={recipe.alt} />
-            <h2>{recipe.title}</h2>
-            <p>{recipe.category} · {recipe.time} · Serves {recipe.serves}</p>
+            <ServicePhoto file={recipe.photo} alt={t(recipe.alt)} />
+            <h2>{t(recipe.title)}</h2>
+            <p>{t("{0} · {1} · Serves {2}", [t(recipe.category), t(recipe.time), recipe.serves])}</p>
             <details>
-              <summary>Ingredients and method</summary>
-              <ul>{recipe.ingredients.map(ingredient => <li key={ingredient}>{ingredient}</li>)}</ul>
-              <ol>{recipe.steps.map(step => <li key={step}>{step}</li>)}</ol>
+              <summary>{t("Ingredients and method")}</summary>
+              <ul>{recipe.ingredients.map(ingredient => <li key={ingredient}>{t(ingredient)}</li>)}</ul>
+              <ol>{recipe.steps.map(step => <li key={step}>{t(step)}</li>)}</ol>
             </details>
           </article>
         ))}
       </div>
       <div className="service-split" id="recipe-substitutions">
-        <ServicePhoto file="recipe-prep" alt="Hands chopping cucumber beside a lemon and a bowl of chickpeas" />
+        <ServicePhoto file="recipe-prep" alt={t("Hands chopping cucumber beside a lemon and a bowl of chickpeas")} />
         <section className="service-panel">
-        <h2>Swap what you already have</h2>
-        <dl className="mb-0"><dt>Salad</dt><dd>Try cooked white beans instead of chickpeas or fresh herbs instead of extra dressing.</dd><dt>Soup</dt><dd>Stir in chopped kale instead of spinach and cook until tender.</dd><dt>Oats</dt><dd>Use diced apple instead of pear. Check any yogurt or milk alternative for ingredients you avoid.</dd></dl>
+        <h2>{t("Swap what you already have")}</h2>
+        <dl className="mb-0"><dt>{t("Salad")}</dt><dd>{t("Try cooked white beans instead of chickpeas or fresh herbs instead of extra dressing.")}</dd><dt>{t("Soup")}</dt><dd>{t("Stir in chopped kale instead of spinach and cook until tender.")}</dd><dt>{t("Oats")}</dt><dd>{t("Use diced apple instead of pear. Check any yogurt or milk alternative for ingredients you avoid.")}</dd></dl>
         </section>
       </div>
-      <ServiceVideo id="z7Bu-Fyg8rw" title="Chickpea Salad" source="HappyHealthy · Mississippi State University Extension" resource="https://happyhealthy.extension.msstate.edu/recipes/chickpea-salad" />
+      <ServiceVideo id="z7Bu-Fyg8rw" title={t("Chickpea Salad")} source="HappyHealthy · Mississippi State University Extension" resource="https://happyhealthy.extension.msstate.edu/recipes/chickpea-salad" />
     </ServicePage>
   );
 }

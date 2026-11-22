@@ -1,7 +1,9 @@
+import { useI18n } from "../i18n/LanguageProvider";
 import "../css/MarqueeShop.css";
 import { useNavigate } from "react-router-dom";
 
 export default function MarqueeShop() {
+  const { t } = useI18n();
   const navigate = useNavigate();
 
   const categories = [
@@ -53,10 +55,10 @@ export default function MarqueeShop() {
           >
             <img
               src={category.image}
-              alt={category.name}
+              alt={t(category.name)}
               className="category-image"
             />
-            <h4 className="category-title">{category.name}</h4>
+            <h4 className="category-title">{t(category.name)}</h4>
           </div>
         ))}
       </div>

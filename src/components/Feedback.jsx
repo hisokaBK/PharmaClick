@@ -2,6 +2,7 @@ import { createContext, useCallback, useContext, useEffect, useId, useMemo, useR
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { AlertCircle, AlertTriangle, CheckCircle2, Info, Trash2, X } from "lucide-react";
 import "../css/Feedback.css";
+import { useI18n } from "../i18n/LanguageProvider";
 
 const FeedbackContext = createContext(null);
 const icons = { success: CheckCircle2, error: AlertCircle, warning: AlertTriangle, info: Info };
@@ -13,6 +14,7 @@ export function useFeedback() {
 }
 
 function Toast({ toast, dismiss }) {
+  const { t } = useI18n();
   const card = useRef(null);
   const remaining = useRef(toastDuration);
   const [hovered, setHovered] = useState(false);
@@ -56,10 +58,10 @@ function Toast({ toast, dismiss }) {
       transition={{ duration: 0.16 }}
     >
       <Icon size={21} aria-hidden="true" />
-      <p aria-hidden="true">{toast.message}</p>
+      <p aria-hidden="true">{t(toast.message, toast.values)}</p>
       <button
         type="button"
-        aria-label="Dismiss notification"
+        aria-label={t("Dismiss notification")}
         onClick={() => dismiss(toast.id)}
         onFocus={() => setFocused(true)}
         onBlur={() => setFocused(false)}
@@ -71,6 +73,7 @@ function Toast({ toast, dismiss }) {
 }
 
 function ConfirmationDialog({ request, onComplete, notify }) {
+  const { t } = useI18n();
   const dialog = useRef(null);
   const cancelButton = useRef(null);
   const inProgress = useRef(false);
@@ -122,14 +125,14 @@ function ConfirmationDialog({ request, onComplete, notify }) {
       }}
     >
       <Trash2 className="feedback-dialog-icon" size={24} aria-hidden="true" />
-      <h2 id={titleId}>{request.title}</h2>
-      <p id={descriptionId}>{request.description}</p>
+      <h2 id={titleId}>{t(request.title)}</h2>
+      <p id={descriptionId}>{t(request.description, request.descriptionValues)}</p>
       <div className="feedback-dialog-actions">
         <button type="button" ref={cancelButton} disabled={pending} onClick={() => {
           if (!inProgress.current) close();
-        }}>Cancel</button>
+        }}>{t("Cancel")}</button>
         <button type="button" className="feedback-confirm-button" disabled={pending} onClick={runAction}>
-          {pending ? "Working…" : request.confirmLabel}
+          {pending ? t("Working…") : t(request.confirmLabel)}
         </button>
       </div>
     </dialog>
@@ -137,16 +140,18 @@ function ConfirmationDialog({ request, onComplete, notify }) {
 }
 
 export default function FeedbackProvider({ children }) {
+  const { t } = useI18n();
   const [toasts, setToasts] = useState([]);
   const [request, setRequest] = useState(null);
   const sequence = useRef(0);
   const confirmationOpen = useRef(false);
 
-  const notify = useCallback((type, message) => {
+  const notify = useCallback((type, message, values) => {
     const id = ++sequence.current;
+    const key = JSON.stringify([type, message, values]);
     setToasts((current) => {
-      if (current.some((toast) => toast.type === type && toast.message === message)) return current;
-      return [...current.slice(-1), { id, type, message }];
+      if (current.some((toast) => toast.key === key)) return current;
+      return [...current.slice(-1), { id, type, message, values, key }];
     });
   }, []);
 
@@ -161,14 +166,16 @@ export default function FeedbackProvider({ children }) {
   }, []);
   const feedback = useMemo(() => ({ notify, requestConfirmation }), [notify, requestConfirmation]);
 
+  const latestNotice = toasts.filter((toast) => !isUrgent(toast)).pop();
+  const latestAlert = toasts.filter(isUrgent).pop();
   return (
     <FeedbackContext.Provider value={feedback}>
       {children}
       <div className="visually-hidden" aria-live="polite" aria-atomic="true">
-        {toasts.filter((toast) => !isUrgent(toast)).pop()?.message}
+        {t(latestNotice?.message, latestNotice?.values)}
       </div>
       <div className="visually-hidden" aria-live="assertive" aria-atomic="true">
-        {toasts.filter(isUrgent).pop()?.message}
+        {t(latestAlert?.message, latestAlert?.values)}
       </div>
       <div className="feedback-toasts">
         <AnimatePresence>

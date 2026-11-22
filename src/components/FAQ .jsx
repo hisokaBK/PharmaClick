@@ -3,8 +3,10 @@ import '../css/FAQ.css';
 import { FaChevronDown, FaChevronUp, FaShippingFast, FaPills, FaQuestionCircle } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import Footer from './Footer';
+import { useI18n } from "../i18n/LanguageProvider";
 
 const FAQ = () => {
+  const { t } = useI18n();
   const [activeIndex, setActiveIndex] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
 
@@ -60,25 +62,25 @@ const FAQ = () => {
   const filteredCategories = faqCategories.map(category => ({
     ...category,
     questions: category.questions.filter(item => 
-      item.question.toLowerCase().includes(searchTerm.toLowerCase()) || 
-      item.answer.toLowerCase().includes(searchTerm.toLowerCase()))
+      t(item.question).toLowerCase().includes(searchTerm.toLowerCase()) ||
+      t(item.answer).toLowerCase().includes(searchTerm.toLowerCase()))
   })).filter(category => category.questions.length > 0);
 
   return (<>
     <div className="faq-container">
       <div className="faq-header">
-        <h1>Frequently Asked Questions</h1>
-        <p>Find answers to common questions about our products and services</p>
+        <h1>{t("Frequently Asked Questions")}</h1>
+        <p>{t("Find answers to common questions about our products and services")}</p>
       </div>
 
       <div className="search-faq">
         <input 
           type="text" 
-          placeholder="Search FAQs..." 
+          placeholder={t("Search FAQs...")}
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
-        <button>Search</button>
+        <button>{t("Search")}</button>
       </div>
 
       <div className="faq-content">
@@ -87,7 +89,7 @@ const FAQ = () => {
             <div key={catIndex} className="faq-category">
               <div className="category-header">
                 {category.icon}
-                <h2>{category.title}</h2>
+                <h2>{t(category.title)}</h2>
               </div>
               
               <div className="questions-list">
@@ -97,13 +99,13 @@ const FAQ = () => {
                       className="faq-question" 
                       onClick={() => toggleFAQ(`${catIndex}-${index}`)}
                     >
-                      <h3>{item.question}</h3>
+                      <h3>{t(item.question)}</h3>
                       {activeIndex === `${catIndex}-${index}` ? 
                         <FaChevronUp /> : <FaChevronDown />}
                     </div>
                     {activeIndex === `${catIndex}-${index}` && (
                       <div className="faq-answer">
-                        <p>{item.answer}</p>
+                        <p>{t(item.answer)}</p>
                       </div>
                     )}
                   </div>
@@ -113,14 +115,14 @@ const FAQ = () => {
           ))
         ) : (
           <div className="no-results">
-            <p>No questions found matching your search. Please try different keywords.</p>
+            <p>{t("No questions found matching your search. Please try different keywords.")}</p>
           </div>
         )}
       </div>
 
       <div className="contact-support">
-        <h3>Didn't find what you were looking for?</h3>
-        <Link to='/contact'><button className="contact-btn">Contact Customer Support</button></Link>
+        <h3>{t("Didn't find what you were looking for?")}</h3>
+        <Link to='/contact'><button className="contact-btn">{t("Contact Customer Support")}</button></Link>
       </div>
     </div>
     <Footer/>

@@ -10,8 +10,11 @@ import { Link } from 'react-router-dom';
 import { useFeedback } from "../components/Feedback";
 import { useDemoAuth } from "../components/DemoAuth";
 import { findSession, readDemo } from "../store/demoAccounts";
+import { useI18n } from "../i18n/LanguageProvider";
+import CatalogDescription from "./CatalogDescription";
 
 export default function Cart() {
+  const { t } = useI18n();
   
   const cartItems = useSelector((state) => state.cardData);
   const dispatch = useDispatch();
@@ -56,7 +59,8 @@ const handleDecrease = (item) => updateCartItem(item, -1);
   const handleRemove = (item, trigger) => {
     requestConfirmation({
       title: "Remove item?",
-      description: `Remove ${item.title} from your shopping cart?`,
+      description: "Remove {0} from your shopping cart?",
+      descriptionValues: [item.title],
       confirmLabel: "Remove item",
       trigger,
       fallbackFocus: () => cartRegion.current,
@@ -80,12 +84,12 @@ const handleDecrease = (item) => updateCartItem(item, -1);
   return (
     <>
       <NavShop/>
-      <main className="cart-container" ref={cartRegion} tabIndex={-1} aria-label="Shopping cart">
+      <main className="cart-container" ref={cartRegion} tabIndex={-1} aria-label={t("Shopping cart")}>
         {cartItems.length === 0 ? (
           <div className="empty-cart">
-            <h2>Your cart is empty</h2>
+            <h2>{t("Your cart is empty")}</h2>
             <Link to="/Products" className="continue-shopping">
-              Continue Shopping
+              {t("Continue Shopping")}
             </Link>
           </div>
         ) : (
@@ -98,51 +102,51 @@ const handleDecrease = (item) => updateCartItem(item, -1);
                   </div>
                   
                   <div className="item-details">
-                    <h3 className="item-title">{item.title}</h3>
-                    <p className="item-description">{item.shortDescription}</p>
+                    <h3 className="item-title"><bdi>{item.title}</bdi></h3>
+                    <p className="item-description"><CatalogDescription product={item} /></p>
                     
                     <div className="item-price">
-                      <span className="unit-price">{item.price} Dhs</span>
+                      <span className="unit-price">{item.price} {t("Dhs")}</span>
                       {item.times > 1 && (
-                        <span className="quantity-details">({item.times} × {item.price} Dhs)</span>
+                        <span className="quantity-details">({item.times} × {item.price} {t("Dhs")})</span>
                       )}
                     </div>
                     
                     <div className="item-actions">
                       <div className="quantity-control2">
-                        <button onClick={() => handleDecrease(item)} className="quantity-btn">-</button>
+                        <button aria-label={t("Decrease quantity")} onClick={() => handleDecrease(item)} className="quantity-btn">-</button>
                         <span className="quantity">{item.times}</span>
-                        <button onClick={() => handleIncrease(item)} className="quantity-btn">+</button>
+                        <button aria-label={t("Increase quantity")} onClick={() => handleIncrease(item)} className="quantity-btn">+</button>
                       </div>
                       <button 
                         onClick={(event) => handleRemove(item, event.currentTarget)}
                         className="remove-btn"
                       >
-                        Remove
+                        {t("Remove")}
                       </button>
                     </div>
                   </div>
                   
                   <div className="item-total">
-                    <span className="total-price">{(item.price * item.times).toFixed(2)} Dhs</span>
+                    <span className="total-price">{(item.price * item.times).toFixed(2)} {t("Dhs")}</span>
                   </div>
                 </div>
               ))}
             </div>
             
             <div className="cart-summary">
-              <h2 className="summary-title">SHOPPING CART SUMMARY</h2>
+              <h2 className="summary-title">{t("SHOPPING CART SUMMARY")}</h2>
               <div className="summary-row">
-                <span>Subtotal</span>
-                <span className="subtotal-price">{subtotal.toFixed(2)} Dhs</span>
+                <span>{t("Subtotal")}</span>
+                <span className="subtotal-price">{subtotal.toFixed(2)} {t("Dhs")}</span>
               </div>
               <div className="summary-row">
-                <span>Shipping</span>
-                <span className="shipping-price">30.00 Dhs</span>
+                <span>{t("Shipping")}</span>
+                <span className="shipping-price">30.00 {t("Dhs")}</span>
               </div>
               <div className="summary-row total">
-                <span>Total</span>
-                <span className="total-price">{(subtotal + 30).toFixed(2)} Dhs</span>
+                <span>{t("Total")}</span>
+                <span className="total-price">{(subtotal + 30).toFixed(2)} {t("Dhs")}</span>
               </div>
               <button 
                 className="checkout-btn" 
@@ -151,10 +155,10 @@ const handleDecrease = (item) => updateCartItem(item, -1);
                   notify("info", "This is an invoice preview. Online ordering is unavailable.");
                 }}
               >
-                Proceed to Checkout ({(subtotal + 30).toFixed(2)} Dhs)
+                {t("Proceed to Checkout ({0} {1})", [(subtotal + 30).toFixed(2), t("Dhs")])}
               </button>
               <button type="button" className="remove-btn" onClick={(event) => handleClearCart(event.currentTarget)}>
-                Clear cart
+                {t("Clear cart")}
               </button>
             </div>
           </>

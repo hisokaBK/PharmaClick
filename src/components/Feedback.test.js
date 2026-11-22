@@ -88,7 +88,7 @@ test("inventory deletion leaves the row in place when canceled", async () => {
 test("checkout opens the printable invoice and explains the demo workflow", () => {
   addProductAndOpenCart();
   fireEvent.click(screen.getByRole("button", { name: /proceed to checkout/i }));
-  expect(screen.getByRole("heading", { name: "فاتورة الشراء" })).toBeInTheDocument();
+  expect(screen.getByRole("heading", { name: "Purchase invoice" })).toBeInTheDocument();
   expect(screen.getAllByText("This is an invoice preview. Online ordering is unavailable.")).toHaveLength(2);
 });
 

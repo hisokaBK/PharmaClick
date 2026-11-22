@@ -48,8 +48,10 @@
   padding: 0;
 }
 
-.fixNav .nav-layout > .ul2,
-.fixNav .nav-layout > .demo-account-menu {
+.nav-account-zone {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
   justify-self: end;
 }
 

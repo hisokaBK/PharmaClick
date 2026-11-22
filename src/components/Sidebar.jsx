@@ -5,6 +5,8 @@ import { serviceGroups } from "./ServicesMenu";
 import { useDemoAuth } from "./DemoAuth";
 import { accountLinks } from "./AccountMenu";
 import "../css/Sidebar.css";
+import { useI18n } from "../i18n/LanguageProvider";
+import LanguageSelector from "../i18n/LanguageSelector";
 
 const links = [
   ["Home", "/"], ["Browse Medicines", "/Medications"], ["All Products", "/Products"],
@@ -20,6 +22,7 @@ const medicationLinks = [
 ];
 
 export default function Sidebar() {
+  const { t } = useI18n();
   const { user } = useDemoAuth();
   const drawer = useRef(null);
   const { key } = useLocation();
@@ -37,26 +40,27 @@ export default function Sidebar() {
   }, []);
 
   function renderLinks(items) {
-    return items.map(([name, route]) => <li key={route}><NavLink end to={route} onClick={() => drawer.current.close()}>{name}</NavLink></li>);
+    return items.map(([name, route]) => <li key={route}><NavLink end to={route} onClick={() => drawer.current.close()}>{t(name)}</NavLink></li>);
   }
 
   return (
     <>
-      <button className="global-menu-toggle" type="button" aria-label="Open navigation menu" aria-haspopup="dialog" aria-controls="global-sidebar" onClick={() => drawer.current.showModal()}>
+      <button className="global-menu-toggle" type="button" aria-label={t("Open navigation menu")} aria-haspopup="dialog" aria-controls="global-sidebar" onClick={() => drawer.current.showModal()}>
         <FiMenu aria-hidden="true" />
       </button>
-      <dialog id="global-sidebar" className="global-sidebar" aria-label="Site navigation" ref={drawer} onClick={event => {
+      <dialog id="global-sidebar" className="global-sidebar" aria-label={t("Site navigation")} ref={drawer} onClick={event => {
         if (event.target === event.currentTarget) drawer.current.close();
       }}>
-        <nav aria-label="Site menu">
-          <button className="global-menu-close" type="button" aria-label="Close navigation menu" onClick={() => drawer.current.close()}><FiX aria-hidden="true" /></button>
+        <nav aria-label={t("Site menu")}>
+          <button className="global-menu-close" type="button" aria-label={t("Close navigation menu")} onClick={() => drawer.current.close()}><FiX aria-hidden="true" /></button>
           <img src="/images/logo1.png" alt="PharmaClick" />
+          <LanguageSelector />
           <ul>{renderLinks([...links, ...(user ? accountLinks : [["Sign in", "/signin"], ["Sign up", "/signup"]])])}</ul>
-          <h2>Medications</h2>
+          <h2>{t("Medications")}</h2>
           <ul>{renderLinks(medicationLinks)}</ul>
           {serviceGroups.map(group => (
             <section key={group.title}>
-              <h2>{group.title}</h2>
+              <h2>{t(group.title)}</h2>
               <ul>{renderLinks(group.links)}</ul>
             </section>
           ))}

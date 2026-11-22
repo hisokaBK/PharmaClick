@@ -76,7 +76,7 @@
   border-radius: 8px;
   box-shadow: 0 3px 15px rgba(0,0,0,0.05);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  border-left: 4px solid #04b077;
+  border-inline-start: 4px solid #04b077;
   will-change: transform, opacity;
 }
 
@@ -86,11 +86,11 @@
 }
 
 .srv-card.warning {
-  border-left-color: #ff9800;
+  border-inline-start-color: #ff9800;
 }
 
 .srv-card.optional {
-  border-left-color: #9c27b0;
+  border-inline-start-color: #9c27b0;
 }
 
 .srv-icon {
@@ -141,7 +141,7 @@
 }
 
 .srv-card ul {
-  padding-left: 20px;
+  padding-inline-start: 20px;
   margin-top: 10px;
 }
 

@@ -5,8 +5,12 @@ import NavShop from './NavShop';
 import '../css/Dashboard.css'
 import { FaEdit, FaTrash, FaPlus, FaTimes } from 'react-icons/fa';
 import { useFeedback } from '../components/Feedback';
+import { useI18n } from "../i18n/LanguageProvider";
+import useLocalizedInvalid from "../i18n/useLocalizedInvalid";
 
 const Dashboard = () => {
+  const { t } = useI18n();
+  const onInvalid = useLocalizedInvalid("Check the highlighted medication fields.");
   const medicaments = useSelector(state => state.fullData);
   const dispatch = useDispatch();
   const addButton = useRef(null);
@@ -78,7 +82,8 @@ const Dashboard = () => {
   const handleDeleteMedicament = (medication, trigger) => {
     requestConfirmation({
       title: "Delete medication?",
-      description: `Delete ${medication.title} from the catalog?`,
+      description: "Delete {0} from the catalog?",
+      descriptionValues: [medication.title],
       confirmLabel: "Delete medication",
       trigger,
       fallbackFocus: () => addButton.current,
@@ -101,7 +106,7 @@ const Dashboard = () => {
         <div className="container">
           <h1 className="m-0">
            
-            PharmaClick Dashboard
+            {t("PharmaClick Dashboard")}
           </h1>
         </div>
       </header>
@@ -110,27 +115,27 @@ const Dashboard = () => {
         <div className="row">
           <main role="main" className="col-md-9 ml-sm-auto col-lg-10 px-md-4">
             <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-              <h2>Medicament Management</h2>
+              <h2>{t("Medicament Management")}</h2>
               <button 
                 className="btn btn-success"
                 ref={addButton}
                 onClick={handleAddMedicament}
               >
                 <FaPlus className="mr-2"/>
-                Add Medicament
+                {t("Add Medicament")}
               </button>
             </div>
             <div className="table-responsive">
               <table className="table table-striped table-hover">
                 <thead className="thead-dark">
                   <tr>
-                    <th>ID</th>
-                    <th>Title</th>
-                    <th>Price (Dhs)</th>
-                    <th>Category</th>
-                    <th>Prescription</th>
-                    <th>Stock</th>
-                    <th>Actions</th>
+                    <th>{t("ID")}</th>
+                    <th>{t("Title")}</th>
+                    <th>{t("Price (Dhs)")}</th>
+                    <th>{t("Category")}</th>
+                    <th>{t("Prescription")}</th>
+                    <th>{t("Stock")}</th>
+                    <th>{t("Actions")}</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -139,26 +144,26 @@ const Dashboard = () => {
                       <td>{med.id}</td>
                       <td>{med.title}</td>
                       <td>{med.price.toFixed(2)}</td>
-                      <td>{med.category}</td>
+                      <td>{t(med.category)}</td>
                       <td>
                         {med.needed_prescription==='yes' ? (
-                          <span className="">Required</span>
+                          <span className="">{t("Required")}</span>
                         ) : (
-                          <span className="">Not Required</span>
+                          <span className="">{t("Not Required")}</span>
                         )}
                       </td>
                       <td>{med.stock}</td>
                       <td>
                         <button 
                           className="btn12 btn-sm btn-outline-primary mr-2"
-                          aria-label={`Edit ${med.title}`}
+                          aria-label={t("Edit {0}", [med.title])}
                           onClick={() => handleEditMedicament(med)}
                         >
                           <FaEdit/>
                         </button>
                         <button 
                           className="btn12 btn-sm btn-outline-danger"
-                          aria-label={`Delete ${med.title}`}
+                          aria-label={t("Delete {0}", [med.title])}
                           onClick={(event) => handleDeleteMedicament(med, event.currentTarget)}
                         >
                           <FaTrash/>
@@ -180,17 +185,17 @@ const Dashboard = () => {
               <div className="modal-content">
                 <div className="modal-header bg-success text-white">
                   <h5 className="modal-title">
-                    {currentMedicament ? 'Edit Medicament' : 'Add New Medicament'}
+                    {currentMedicament ? t("Edit Medicament") : t("Add New Medicament")}
                   </h5>
                   <button type="button" className="closeAdd" onClick={handleCloseModal}>
                     <FaTimes/>
                   </button>
                 </div>
                 <div className="modal-body">
-                  <form onSubmit={handleSubmit} onInvalid={() => notify("warning", "Check the highlighted medication fields.")}>
+                  <form onSubmit={handleSubmit} onInvalid={onInvalid}>
                     <div className="form-row">
                       <div className="form-group col-md-6">
-                        <label>Title</label>
+                        <label>{t("Title")}</label>
                         <input
                           type="text"
                           className="form-control"
@@ -201,7 +206,7 @@ const Dashboard = () => {
                         />
                       </div>
                       <div className="form-group col-md-6">
-                        <label>Price (DHs)</label>
+                        <label>{t("Price (DHs)")}</label>
                         <input
                           type="number"
                           className="form-control"
@@ -217,7 +222,7 @@ const Dashboard = () => {
 
                     <div className="form-row">
                       <div className="form-group col-md-6">
-                        <label>Category</label>
+                        <label>{t("Category")}</label>
                         <select
                           className="form-control"
                           name="category"
@@ -225,15 +230,15 @@ const Dashboard = () => {
                           onChange={(e)=>setFormData({...formData,category:e.target.value})}
                           required
                         >
-                          <option value="">Select Category</option>
-                          <option value="multivitamins">Vitamins</option>
-                          <option value="products_usf">products_usf</option>
-                          <option value="cleaning">cleaning</option>
-                          <option value="supplements">supplements</option>
+                          <option value="">{t("Select Category")}</option>
+                          <option value="multivitamins">{t("Vitamins")}</option>
+                          <option value="products_usf">{t("products_usf")}</option>
+                          <option value="cleaning">{t("cleaning")}</option>
+                          <option value="supplements">{t("supplements")}</option>
                         </select>
                       </div>
                       <div className="form-group col-md-6">
-                        <label>Stock Quantity</label>
+                        <label>{t("Stock Quantity")}</label>
                         <input
                           type="number"
                           className="form-control"
@@ -247,14 +252,14 @@ const Dashboard = () => {
                     </div>
 
                      <div className="form-group col-md-6">
-                        <label>short Description</label>
+                        <label>{t("short Description")}</label>
                         <textarea name="" required onChange={(e)=>setFormData({...formData,shortDescription:e.target.value})} value={formData.shortDescription} className="form-control"  id="">
                         </textarea>
                         
                       </div>
 
                        <div className="form-group col-md-6">
-                        <label>Full Description</label>
+                        <label>{t("Full Description")}</label>
                         <textarea  required onChange={(e)=>setFormData({...formData,fullDescription:e.target.value})} value={formData.fullDescription} className="form-control"  id="">
                         </textarea>
                         
@@ -262,14 +267,14 @@ const Dashboard = () => {
 
                     <div className="form-row">
                       <div className="form-group col-md-6">
-                        <label>Image URL</label>
+                        <label>{t("Image URL")}</label>
                         <input
                           type="text"
                           className="form-control"
                           name="image"
                           value={formData.image}
                           onChange={(e)=>setFormData({...formData,image:e.target.value})}
-                          placeholder="Optional image URL"
+                          placeholder={t("Optional image URL")}
                         />
                       </div>
                       <div className="form-group col-md-6 d-flex align-items-end">
@@ -283,7 +288,7 @@ const Dashboard = () => {
                             id="prescriptionCheck"
                           />
                           <label className="form-check-label" htmlFor="prescriptionCheck">
-                            Prescription Required
+                            {t("Prescription Required")}
                           </label>
                         </div>
                       </div>
@@ -291,10 +296,10 @@ const Dashboard = () => {
 
                     <div className="modal-footer">
                       <button type="button" className="btn btn-secondary" onClick={handleCloseModal}>
-                        Cancel
+                        {t("Cancel")}
                       </button>
                       <button type="submit" className="btn btn-success">
-                        {currentMedicament ? 'Update Medicament' : 'Add Medicament'}
+                        {currentMedicament ? t("Update Medicament") : t("Add Medicament")}
                       </button>
                     </div>
                   </form>

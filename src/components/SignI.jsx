@@ -12,8 +12,13 @@ import ScrolToTop from "./scrolToTop";
 import { useFeedback } from "./Feedback";
 import { useDemoAuth } from "./DemoAuth";
 import useDemoForm from "./useDemoForm";
+import { useI18n } from "../i18n/LanguageProvider";
+import useLocalizedInvalid from "../i18n/useLocalizedInvalid";
+import LanguageSelector from "../i18n/LanguageSelector";
 
 export default function SignIn() {
+  const { t } = useI18n();
+  const onInvalid = useLocalizedInvalid("Enter a valid email address and your password.");
   const { notify } = useFeedback();
   const { user, signIn } = useDemoAuth();
   const navigate = useNavigate();
@@ -21,7 +26,7 @@ export default function SignIn() {
   const profile = { pathname: "/profile", search: state?.profileSearch || "" };
   const { pending, onSubmit } = useDemoForm(async ({ email, password }) => {
     const account = await signIn(email, password);
-    notify("success", `Welcome back, ${account.name}.`);
+    notify("success", "Welcome back, {0}.", [account.name]);
     navigate(profile, { replace: true });
   });
   const showSocialNotice = () => notify("info", "Social sign-in is unavailable in this demo.");
@@ -41,7 +46,7 @@ export default function SignIn() {
           <Link to="/" id="linkUp">
             <FaHome />
             <span style={{ fontFamily: "cursive", fontSize: "large" }}>
-              home
+              {t("home")}
             </span>
           </Link>
         </div>
@@ -50,6 +55,7 @@ export default function SignIn() {
           <img src="/images/set_log1.jpg" alt="" style={{ height: "30px" }} />
           <span style={{ fontFamily: "cursive" }}><span style={{fontSize:'24px'}}>P</span>harmaClick</span>
         </div>
+        <LanguageSelector />
       </nav>
 
       <div style={{ display: "flex", justifyContent: "center" }}>
@@ -80,7 +86,7 @@ export default function SignIn() {
                   <div>
                     <img
                       src="/images/set_log3.jpg"
-                      alt="Company"
+                      alt={t("Company")}
                       loading="lazy"
                       style={{ height: "120px", marginLeft: "-20px" }}
                     />
@@ -93,11 +99,11 @@ export default function SignIn() {
                     marginLeft: "-3px",
                   }}
                 >
-                  <p className="P_form">Welcome Back</p>
+                  <p className="P_form">{t("Welcome Back")}</p>
                 </div>
                 <div className="card-body px-4 py-5 px-md-5">
                   <form
-                    onInvalid={() => notify("warning", "Enter a valid email address and your password.")}
+                    onInvalid={onInvalid}
                     onSubmit={onSubmit}
                     aria-busy={pending}
                   >
@@ -113,7 +119,7 @@ export default function SignIn() {
                         placeholder=" "
                       />
                       <label className="form-label" htmlFor="form3Example3">
-                        Email address
+                        {t("Email address")}
                       </label>
                     </div>
 
@@ -129,7 +135,7 @@ export default function SignIn() {
                         placeholder=" "
                       />
                       <label className="form-label" htmlFor="form3Example4">
-                        Password
+                        {t("Password")}
                       </label>
                     </div>
 
@@ -146,19 +152,19 @@ export default function SignIn() {
                           event.preventDefault();
                           notify("info", "Password recovery is unavailable in this demo.");
                         }}>
-                          Forgot Password?
+                          {t("Forgot Password?")}
                         </Link>
                       </div>
                     </div>
 
                     <div className="divSubmit">
                       <button type="submit" className="btn1" disabled={pending}>
-                        {pending ? "Signing in…" : "Sign in"}
+                        {pending ? t("Signing in…") : t("Sign in")}
                       </button>
                     </div>
 
                     <div className="text-center">
-                      <p>or sign in with:</p>
+                      <p>{t("or sign in with:")}</p>
                       <button type="button" className="btn2" onClick={showSocialNotice}>
                         <FaFacebookF size={24} title="Facebook" />
                       </button>
@@ -173,13 +179,13 @@ export default function SignIn() {
                       </button>
                     </div>
                     <div style={{ textAlign: "center" }}>
-                      Don't have an Account?{" "}
+                      {t("Don't have an Account?")}{" "}
                       <Link to="/SignUp" style={{ color: "green" }}>
-                        Sign Up
+                        {t("Sign Up")}
                       </Link>
                     </div>
                   </form>
-                  <p className="demo-auth-note">Demo sign-in is local to this browser.</p>
+                  <p className="demo-auth-note">{t("Demo sign-in is local to this browser.")}</p>
                 </div>
               </div>
             </div>
@@ -192,22 +198,21 @@ export default function SignIn() {
                 style={{ color: "hsla(111, 55.00%, 76.50%, 0.43)" }}
                 id="h1First"
               >
-                Your health, our priority <br />
+                {t("Your health, our priority")} <br />
                 <span
                   style={{
                     color: "hsl(124, 44.80%, 46.90%) ",
                     fontFamily: "cursive",
                   }}
                 >
-                  A safer pharmacy experience begins with your login
+                  {t("A safer pharmacy experience begins with your login")}
                 </span>
               </h1>
               <p
                 className="mb-4 opacity-70"
                 style={{ color: "hsl(119, 100.00%, 21.80%)" }}
               >
-                Discover fast delivery, expert advice, and a wide range of
-                medications tailored for your needs.
+                {t("Discover fast delivery, expert advice, and a wide range of medications tailored for your needs.")}
               </p>
             </div>
           </div>

@@ -1,4 +1,5 @@
 import React from "react";
+import { useI18n } from "../i18n/LanguageProvider";
 
 // These city centers illustrate the network; they are not verified branch addresses.
 const branchCities = [
@@ -18,12 +19,13 @@ function project(latitude, longitude) {
 }
 
 export default function MoroccoBranchMap() {
+  const { t } = useI18n();
   const [destinationX, destinationY] = project(32.8627, -6.57359);
 
   return (
     <div className="morocco-network">
       {/* Keep numbered city markers distinct from the tracked destination. */}
-      <svg className="morocco-network-map" viewBox="0 0 440 380" role="img" aria-label="Map of Morocco with eight illustrative branch cities and the delivery destination Oued Zem">
+      <svg className="morocco-network-map" viewBox="0 0 440 380" role="img" aria-label={t("Map of Morocco with eight illustrative branch cities and the delivery destination Oued Zem")}>
         <image href="/images_marque/morocco-coverage.svg" width="440" height="380" />
         {branchCities.map(({ name, latitude, longitude }, index) => {
           const [x, y] = project(latitude, longitude);
@@ -39,15 +41,15 @@ export default function MoroccoBranchMap() {
 
       {/* Let city names remain readable in a separate legend on small screens. */}
       <div className="morocco-network-legend">
-        <h3>Morocco branch network</h3>
-        <p>Illustrative branch locations</p>
+        <h3>{t("Morocco branch network")}</h3>
+        <p>{t("Illustrative branch locations")}</p>
         <ol>
           {branchCities.map(({ name }, index) => (
-            <li key={name}><span aria-hidden="true">{index + 1}</span>{name}</li>
+            <li key={name}><span aria-hidden="true">{index + 1}</span>{t(name)}</li>
           ))}
         </ol>
-        <p className="morocco-destination-key">Delivery destination: Oued Zem</p>
-        <a href="https://www.naturalearthdata.com/downloads/50m-cultural-vectors/50m-admin-0-countries-2/">Map data: Natural Earth</a>
+        <p className="morocco-destination-key">{t("Delivery destination: Oued Zem")}</p>
+        <a href="https://www.naturalearthdata.com/downloads/50m-cultural-vectors/50m-admin-0-countries-2/">{t("Map data: Natural Earth")}</a>
       </div>
     </div>
   );

@@ -5,6 +5,7 @@ import { initialsFor } from "../store/demoAccounts";
 import { useDemoAuth } from "./DemoAuth";
 import { useFeedback } from "./Feedback";
 import "../css/DemoAccount.css";
+import { useI18n } from "../i18n/LanguageProvider";
 
 export const accountLinks = [
   ["My Profile", "/profile"],
@@ -23,6 +24,7 @@ export function AccountAvatar({ name, photoUrl }) {
 const closeAccount = (current) => current?.name === "account" ? null : current;
 
 export default function AccountMenu({ active, setActive }) {
+  const { t } = useI18n();
   const { user, signOut, photoUrl } = useDemoAuth();
   const { notify } = useFeedback();
   const navigate = useNavigate();
@@ -52,8 +54,8 @@ export default function AccountMenu({ active, setActive }) {
   if (!user) {
     return (
       <ul className="ul2 demo-nav-guest">
-        <li><Link className="listA" id="SignIn" to="/signin">Sign in</Link></li>
-        <li><Link className="listA" id="SignUp" to="/signup">Sign up</Link></li>
+        <li><Link className="listA" id="SignIn" to="/signin">{t("Sign in")}</Link></li>
+        <li><Link className="listA" id="SignUp" to="/signup">{t("Sign up")}</Link></li>
       </ul>
     );
   }
@@ -63,16 +65,16 @@ export default function AccountMenu({ active, setActive }) {
       if (event.relatedTarget && !event.currentTarget.contains(event.relatedTarget)) setActive(closeAccount);
     }}>
       <button type="button" className="demo-account-trigger" ref={trigger}
-        aria-label={`Account menu for ${user.name}`} aria-expanded={open} aria-controls={id}
+        aria-label={t("Account menu for {0}", [user.name])} aria-expanded={open} aria-controls={id}
         onClick={() => setActive((current) => current?.name === "account" ? null : { name: "account" })}>
         <AccountAvatar name={user.name} photoUrl={photoUrl} />
         <span className="demo-account-name">{user.name}</span>
         <ChevronDown size={16} aria-hidden="true" />
       </button>
       <div id={id} className="demo-account-panel" data-open={open} inert={!open} aria-hidden={!open}>
-        <div className="demo-account-identity"><strong>{user.name}</strong><span>{user.email}</span></div>
+        <div className="demo-account-identity"><strong><bdi>{user.name}</bdi></strong><span><bdi dir="ltr">{user.email}</bdi></span></div>
         {accountLinks.map(([label, target]) => (
-          <Link key={target} to={target} onClick={() => setActive(closeAccount)}>{label}</Link>
+          <Link key={target} to={target} onClick={() => setActive(closeAccount)}>{t(label)}</Link>
         ))}
         <button type="button" onClick={() => {
           try {
@@ -83,7 +85,7 @@ export default function AccountMenu({ active, setActive }) {
           } catch {
             notify("error", "Your session could not be updated in this browser.");
           }
-        }}>Logout</button>
+        }}>{t("Logout")}</button>
       </div>
     </div>
   );

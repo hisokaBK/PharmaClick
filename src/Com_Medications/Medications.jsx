@@ -13,7 +13,9 @@ import { useSelector } from "react-redux";
 import Card from "./card";
 import Footer from "../components/Footer";
 import { Link } from "react-router-dom";
+import { useI18n } from "../i18n/LanguageProvider";
 export default function Medications() {
+  const { t } = useI18n();
   const fullMedicat=useSelector(state=>state.fullData);
   const headerRef = useRef(null);
   const descriptionRef = useRef(null);
@@ -50,19 +52,18 @@ export default function Medications() {
             {/* Load the hero image from the hosting root on direct shop visits. */}
             <img
               src="/images/back5.jpeg"
-              alt="Pharmacy Products"
+              alt={t("Pharmacy Products")}
               className="header-image"
             />
             <div className="header-text-overlay">
               <h1 ref={headerRef} className="header-title fade-in">
-                We Help You Find the Right Medication
+                {t("We Help You Find the Right Medication")}
               </h1>
               <p ref={descriptionRef} className="header-description fade-in1">
-                Providing safe, effective medications with expert support and
-                seamless delivery — committed to your well-being.
+                {t("Providing safe, effective medications with expert support and seamless delivery — committed to your well-being.")}
               </p>
               <div>
-                <Link to='/Products'><button className="pulse-button">Browse Products</button></Link>
+                <Link to='/Products'><button className="pulse-button">{t("Browse Products")}</button></Link>
               </div>
             </div>
           </div>
@@ -77,19 +78,19 @@ export default function Medications() {
 
         {!query.trim() && (
           <>
-            <h1 className="medications-title">Multivitamins</h1>
+            <h1 className="medications-title">{t("Multivitamins")}</h1>
             <ProductSlider products={fullMedicat.filter(product => product.category === "multivitamins").slice(1, 12)} />
 
-            <h1 className="medications-title">Nutritional Products</h1>
+            <h1 className="medications-title">{t("Nutritional Products")}</h1>
             <div className="cards-grid-container2">
               <Card medications={fullMedicat.filter(product => product.category === "products_usf").slice(7, 15)} />
             </div>
 
             <MarqueeShop />
-            <h1 className="medications-title">Medical Supplements</h1>
+            <h1 className="medications-title">{t("Medical Supplements")}</h1>
             <ProductSlider products={fullMedicat.filter(product => product.category === "supplements").slice(0, 18)} />
 
-            <h1 className="medications-title">Topical Cleaning Supplies</h1>
+            <h1 className="medications-title">{t("Topical Cleaning Supplies")}</h1>
             <div className="cards-grid-container2">
               <Card medications={fullMedicat.filter(product => product.category === "cleaning").slice(5, 13)} />
             </div>

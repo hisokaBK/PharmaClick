@@ -16,7 +16,7 @@
 #pHome{
      width:70%;
     padding-top:7%;
-    padding-left:19%;
+    padding-inline-start:19%;
     font-size: 12px;
     font-weight: 900;
     color: rgb(22, 60, 9);
@@ -29,17 +29,17 @@
 .h1Home{
     width:70%;
     
-    padding-left:6%;
+    padding-inline-start:6%;
     font-size: 40px;
     font-weight: 900;
     color: rgba(64, 132, 41, 0.511);
       font-family: Georgia, 'Times New Roman', Times, serif;
-    margin-right: -12px;
+    margin-inline-end: -12px;
     
 }
 .h1Home::first-letter{
     font-size: 99px;
-    margin-right: -17px;
+    margin-inline-end: -17px;
 
     color: rgba(64, 132, 41, 0.262);
 }
@@ -85,7 +85,7 @@
 /* ---------------- Container Styles ---------------- */
 #div_home1{
      max-Width: 59%;
-      padding-left: 34px;
+      padding-inline-start: 34px;
 }
 #id_home1 {
   border: 1px solid rgba(125, 160, 120, 0.322);
@@ -138,7 +138,7 @@
 #home_logo1,
   #home_logo2,
   #home_logo3 {
- border-right: 1px solid rgba(197, 210, 195, 0.41);
+ border-inline-end: 1px solid rgba(197, 210, 195, 0.41);
   }
 
 
@@ -146,7 +146,7 @@
 @media (max-width: 1061px) {
   #div_home1{
      max-Width: 99%;
-     padding-left: 14px;
+     padding-inline-start: 14px;
      
 }
 .main-content.with-sidebar #div_home1{
@@ -169,7 +169,7 @@
     width: 100px;
     margin: auto;
 
-    border-right: none;
+    border-inline-end: none;
 
   }
 
@@ -178,7 +178,7 @@
 
   #pHome {
     font-size: 0.6rem;
-     margin-left: 70px;
+     margin-inline-start: 70px;
      margin-bottom: -84px;
      
     

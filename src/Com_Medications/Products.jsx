@@ -6,8 +6,10 @@ import {  useState, useMemo } from "react";
 import { FiFilter, FiX } from "react-icons/fi";
 import NavShop from './NavShop';
 import Footer from '../components/Footer';
+import { useI18n } from "../i18n/LanguageProvider";
 
 export default function Products() {
+  const { t } = useI18n();
 
   const products = useSelector(state => state.fullData);
   const [category, setCategory] = useState('all');
@@ -41,17 +43,17 @@ export default function Products() {
           <div className="categories-card">
             <div className="categories-header">
               <FiFilter className="filter-icon" />
-              <h3>Filter Products</h3>
+              <h3>{t("Filter Products")}</h3>
               {(category !== 'all' || searchTerm) && (
                 <button onClick={handleClearFilters} className="clear-filters">
-                  Clear all
+                  {t("Clear all")}
                 </button>
               )}
             </div>
             
             <div className="filter-controls">
               <div className="filter-group">
-                <label htmlFor="category-filter">Category</label>
+                <label htmlFor="category-filter">{t("Category")}</label>
                 <select
                   id="category-filter"
                   value={category}
@@ -60,7 +62,7 @@ export default function Products() {
                 >
                   {categories.map(cat => (
                     <option key={cat} value={cat}>
-                      {cat === 'all' ? 'All Categories' : cat.split(/(?=[A-Z])/).join(' ')}
+                      {cat === 'all' ? t("All Categories") : t(cat)}
                     </option>
                   ))}
                 </select>
@@ -71,16 +73,16 @@ export default function Products() {
               <div className="active-filters">
                 {category !== 'all' && (
                   <span className="active-filter">
-                    Category: {category}
-                    <button type="button" aria-label="Clear category filter" onClick={() => setCategory('all')}>
+                    {t("Category:")} {category}
+                    <button type="button" aria-label={t("Clear category filter")} onClick={() => setCategory('all')}>
                       <FiX size={12} />
                     </button>
                   </span>
                 )}
                 {searchTerm && (
                   <span className="active-filter">
-                    Search: "{searchTerm}"
-                    <button type="button" aria-label="Remove search filter" onClick={() => setSearchTerm('')}>
+                    {t("Search: \"")}{searchTerm}"
+                    <button type="button" aria-label={t("Remove search filter")} onClick={() => setSearchTerm('')}>
                       <FiX size={12} aria-hidden="true" />
                     </button>
                   </span>
@@ -92,13 +94,13 @@ export default function Products() {
         
         <div className="results-summary" role="status">
           <p>
-            Showing {filteredProducts.length} of {products.length} products
+            {t("Showing {0} of {1} products", [filteredProducts.length, products.length])}
             {(category !== 'all' || searchTerm) && (
               <>
-                {' '}matching{' '}
-                {category !== 'all' && <span>category "{category}"</span>}
-                {category !== 'all' && searchTerm && <span> and </span>}
-                {searchTerm && <span>search term "{searchTerm}"</span>}
+                {' '}{t("matching")}{' '}
+                {category !== 'all' && <span>{t("category \"")}{category}"</span>}
+                {category !== 'all' && searchTerm && <span> {t("and")} </span>}
+                {searchTerm && <span>{t("search term \"")}{searchTerm}"</span>}
               </>
             )}
           </p>
@@ -109,10 +111,10 @@ export default function Products() {
             <Card medications={filteredProducts} />
           ) : (
             <div className="no-results">
-              <h3>No products found</h3>
-              <p>Try adjusting your search or filter criteria</p>
+              <h3>{t("No products found")}</h3>
+              <p>{t("Try adjusting your search or filter criteria")}</p>
               <button type="button" className="clear-filters" onClick={handleClearFilters}>
-                Clear all filters
+                {t("Clear all filters")}
               </button>
             </div>
           )}

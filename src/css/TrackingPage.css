@@ -108,7 +108,7 @@
 .map-overlay {
  
   bottom: 1rem;
-  right: 1rem;
+  inset-inline-end: 1rem;
 }
 
 .eta-bubble {
@@ -136,14 +136,14 @@
 /* Timeline Section */
 .timeline {
   position: relative;
-  padding-left: 1.5rem;
+  padding-inline-start: 1.5rem;
   margin: 1.5rem 0;
 }
 
 .timeline:before {
   content: '';
   position: absolute;
-  left: 0.5rem;
+  inset-inline-start: 0.5rem;
   top: 0;
   bottom: 0;
   width: 2px;
@@ -157,7 +157,7 @@
 
 .timeline-marker {
   position: absolute;
-  left: -1.5rem;
+  inset-inline-start: -1.5rem;
   top: 0;
   width: 2rem;
   height: 2rem;
@@ -179,7 +179,7 @@
 }
 
 .timeline-content {
-  padding-left: 1rem;
+  padding-inline-start: 1rem;
 }
 
 .timeline-content h3 {

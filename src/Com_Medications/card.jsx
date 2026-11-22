@@ -4,8 +4,11 @@ import { AddPanier, Addplus } from "../store/actions";
 import { Link } from "react-router-dom";
 import "../css/Card.css";
 import { useFeedback } from "../components/Feedback";
+import { useI18n } from "../i18n/LanguageProvider";
+import CatalogDescription from "./CatalogDescription";
 
 export default function Card({ medications }) {
+  const { t } = useI18n();
   const dispatch = useDispatch();
   const cartItems = useSelector((state) => state.cardData);
   const { notify } = useFeedback();
@@ -28,7 +31,7 @@ const handleAddToCart = (med) => {
           times: 1,
         })
       );
-      notify("success", `${med.title} added to your cart.`);
+      notify("success", "{0} added to your cart.", [med.title]);
     }
   }
 };
@@ -69,9 +72,9 @@ const handleMoreToCart = (med) => {
               {/* A native link keeps the entire product preview reachable by touch and keyboard. */}
               <Link className="goToProdui" to={`/Produit/${med.id}`}>
                 <div className="eco-card-header">
-                  <h5 className="eco-brand">{med.title}</h5>
+                  <h5 className="eco-brand"><bdi>{med.title}</bdi></h5>
                   <div className="eco-by">
-                    BY {med.brand || "HiSoKa PharmaCy"}
+                    {t("BY")} <bdi>{med.brand || "HiSoKa PharmaCy"}</bdi>
                   </div>
                 </div>
                 <img
@@ -88,9 +91,9 @@ const handleMoreToCart = (med) => {
                   }}
                 />
                 <div className="eco-card-body">
-                  <p className="eco-description">{med.shortDescription}</p>
+                  <p className="eco-description"><CatalogDescription product={med} /></p>
                   <p className="eco-price">
-                    <strong>{med.price} Dhs</strong>
+                    <strong>{med.price} {t("Dhs")}</strong>
                   </p>
                 </div>
               </Link>
@@ -101,7 +104,7 @@ const handleMoreToCart = (med) => {
                     onClick={() => handleAddToCart(med)}
                   >
                     <FaShoppingCart className="me-2" />
-                    Add to cart
+                    {t("Add to cart")}
                   </button>
                 ) : (
                   <button
@@ -109,7 +112,7 @@ const handleMoreToCart = (med) => {
                     onClick={() => handleMoreToCart(med)}
                   >
                     <FaCartPlus className="me-2" />
-                    Add More ¦ {itemCount}
+                    {t("Add More ¦")} {itemCount}
                   </button>
                 )}
               </div>

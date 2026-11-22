@@ -7,8 +7,11 @@ import { AddPanier } from "../store/actions";
 import "../css/Produit.css";
 import Footer from "../components/Footer";
 import { useFeedback } from "../components/Feedback";
+import { useI18n } from "../i18n/LanguageProvider";
+import CatalogDescription from "./CatalogDescription";
 
 export default function Produit() {
+  const { t } = useI18n();
   const cartItems = useSelector((state) => state.fullData);
 
   const dispatch = useDispatch();
@@ -58,7 +61,8 @@ export default function Produit() {
         })
       );
     }
-    notify("success", NewProduit ? "Cart quantity updated." : `${produit.title} added to your cart.`);
+    if (NewProduit) notify("success", "Cart quantity updated.");
+    else notify("success", "{0} added to your cart.", [produit.title]);
   };
 
   let totalPrice = produit.price * more;
@@ -68,32 +72,33 @@ export default function Produit() {
       <NavShop />
       <div className="product-container">
         <div className="product-details">
-          <h1 className="product-title">{produit.title}</h1>
+          <h1 className="product-title"><bdi>{produit.title}</bdi></h1>
+          <p className="product-description"><CatalogDescription product={produit} /></p>
           <p className="product-description">
-            {produit.shortDescription} <strong>stock : </strong>
-            {produit.stock}
+            <strong>{t(produit.stock > 0 ? "Stock: {0}" : "Out of stock ({0})", [produit.stock])}</strong>
           </p>
 
           <div className="price-container">
-            <span className="product-price">{totalPrice.toFixed(2)} Dhs</span>
+            <span className="product-price"><bdi>{totalPrice.toFixed(2)}</bdi> {t("Dhs")}</span>
           </div>
 
           <div className="quantity-control">
             <input
               type="number"
+              aria-label={t("Quantity")}
               min={1}
               value={more}
               onChange={(e) => setMore(Math.max(1, e.target.value))}
               className="quantity-input"
             />
             <button onClick={handClick} className="add-to-bag-btn">
-              ADD TO BAG
+              {t("ADD TO BAG")}
             </button>
           </div>
 
           <div className="full-description">
-            <h3>Description</h3>
-            <p>{produit.fullDescription}</p>
+            <h3>{t("Description")}</h3>
+            <p><CatalogDescription product={produit} field="fullDescription" /></p>
           </div>
         </div>
         <div className="product-image-container">

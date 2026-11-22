@@ -7,8 +7,10 @@ import {
 import '../css/Footer.css';
 import Marquee from "./Marquee";
 import { Link } from "react-router-dom";
+import { useI18n } from "../i18n/LanguageProvider";
 
 const Footer = () => {
+  const { t } = useI18n();
   const links = [
     { title: "Our services" },
     { title: "About Us" },
@@ -23,7 +25,7 @@ const Footer = () => {
       <div className="showcase-container">
         <div className="clients-section">
           <h3 className="section-heading">
-           The Main Categories We Offer 
+           {t("The Main Categories We Offer")}
           </h3>
           <div className="main-con ">
             <Marquee />
@@ -43,11 +45,11 @@ const Footer = () => {
               <div>
                 <h2 className="brand-name">PharmaClick</h2>
                 <p className="brand-tagline">
-                  Your health at the press of a button
+                  {t("Your health at the press of a button")}
                 </p>
 
                 <h4 style={{ color: "rgba(255, 255, 255, 0.16)" }}>
-                  Subscribe to our newsletter
+                  {t("Subscribe to our newsletter")}
                 </h4>
               </div>
               <div>
@@ -69,25 +71,25 @@ const Footer = () => {
                 }}
               >
                 <div className="links-column">
-                  <h3>Help Center</h3>
-                   <Link className="footer-link" to="/Our_services">Our services</Link>
-                   <Link className="footer-link" to="/About">About Us</Link>
-                   <Link className="footer-link" to="/Contact">Contact Us</Link>
-                   <Link className="footer-link" to="/FAQ">FAQ</Link>
+                  <h3>{t("Help Center")}</h3>
+                   <Link className="footer-link" to="/Our_services">{t("Our services")}</Link>
+                   <Link className="footer-link" to="/About">{t("About Us")}</Link>
+                   <Link className="footer-link" to="/Contact">{t("Contact Us")}</Link>
+                   <Link className="footer-link" to="/FAQ">{t("FAQ")}</Link>
                 </div>
                 <div className="links-column">
-                  <h3>INFORMATION</h3>
+                  <h3>{t("INFORMATION")}</h3>
                     <Link  className="footer-link" to='/Medications'>
-                        Medications
+                        {t("Medications")}
                     </Link>
                     <Link  className="footer-link" to='/Delivery'>
-                        Delivery Tracking
+                        {t("Delivery Tracking")}
                     </Link>
                     <Link  className="footer-link" to='/Dashboard'>
-                        Dashboard
+                        {t("Dashboard")}
                     </Link>
                     <Link  className="footer-link" to='/products_usf'>
-                        Protect yourself
+                        {t("Protect yourself")}
                     </Link>
                 </div>
               </div>

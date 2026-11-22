@@ -1,7 +1,7 @@
 .service-page .h1Home {
   width: auto;
-  padding-left: 0;
-  margin-right: 0;
+  padding-inline-start: 0;
+  margin-inline-end: 0;
   line-height: 1.2;
 }
 
@@ -33,7 +33,7 @@
 @media (max-width: 768px) {
   .service-page .hero-container { padding-top: 80px; }
   .service-page .h1Home { font-size: 2rem; }
-  .service-page .h1Home::first-letter { font-size: 4rem; margin-right: -6px; }
+  .service-page .h1Home::first-letter { font-size: 4rem; margin-inline-end: -6px; }
   .service-content { padding-top: 12px; }
 }
 
@@ -132,7 +132,7 @@
 
 .service-page--notice .hero-container { gap: 24px; }
 .service-page--notice .hero-content { flex: 2; }
-.service-page--notice .service-content > .service-panel { border-left: 4px solid var(--primary-dark); }
+.service-page--notice .service-content > .service-panel { border-inline-start: 4px solid var(--primary-dark); }
 .service-page--notice .service-grid { --photo-ratio: 2 / 1; }
 
 .service-page--checkin .hero-image-container { flex: 0.65; }

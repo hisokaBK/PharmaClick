@@ -2,8 +2,10 @@ import React, { useEffect, useRef } from 'react';
 import '../css/forYou.css';
 import { Link } from 'react-router-dom';
 import { FaPrescriptionBottleAlt, FaUserMd, FaHeart } from 'react-icons/fa';
+import { useI18n } from "../i18n/LanguageProvider";
 
 const PharmacyServices = () => {
+  const { t } = useI18n();
   const healthMetrics = [
     { value: "2080+", label: "Medicines Delivered", icon: <FaPrescriptionBottleAlt /> },
     { value: "1760+", label: "Prescriptions Fulfilled", icon: <FaPrescriptionBottleAlt /> },
@@ -52,16 +54,16 @@ const PharmacyServices = () => {
             >
               <div className="metric-icon">{metric.icon}</div>
               <h3 className="metric-value">{metric.value}</h3>
-              <p className="metric-label">{metric.label}</p>
+              <p className="metric-label">{t(metric.label)}</p>
             </div>
           ))}
         </div>
 
         <div className="services-content">
-          <h2 className="section-title">Our Commitment to Your Health</h2>
+          <h2 className="section-title">{t("Our Commitment to Your Health")}</h2>
           <div className="services-description">
-            <p>We provide timely delivery of essential medications, prescription management, and access to certified pharmacists for trusted medical advice.</p>
-            <p>Our platform ensures safe and secure ordering with pharmaceutical-grade accuracy and patient-first service standards.</p>
+            <p>{t("We provide timely delivery of essential medications, prescription management, and access to certified pharmacists for trusted medical advice.")}</p>
+            <p>{t("Our platform ensures safe and secure ordering with pharmaceutical-grade accuracy and patient-first service standards.")}</p>
           </div>
 
           <div className="highlights-grid">
@@ -71,8 +73,8 @@ const PharmacyServices = () => {
                 className="service-highlight"
                 ref={el => elementRefs.current[healthMetrics.length + index] = el}
               >
-                <h3 className="highlight-title">{highlight.title}</h3>
-                <p className="highlight-description">{highlight.description}</p>
+                <h3 className="highlight-title">{t(highlight.title)}</h3>
+                <p className="highlight-description">{t(highlight.description)}</p>
               </div>
             ))}
           </div>
@@ -81,7 +83,7 @@ const PharmacyServices = () => {
             className="pharmacy-action-button"
             ref={el => elementRefs.current[healthMetrics.length + serviceHighlights.length] = el}
           >
-            Access medications easily →
+            {t("Access medications easily →")}
           </button></Link>
         </div>
       </div>

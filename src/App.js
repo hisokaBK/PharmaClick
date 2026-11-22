@@ -35,6 +35,7 @@ import HealthQuizzes from "./Com_servess/HealthQuizzes";
 import FeedbackProvider from "./components/Feedback";
 import DemoAuthProvider, { RequireDemoAccount } from "./components/DemoAuth";
 import Profile from "./components/Profile";
+import LanguageProvider from "./i18n/LanguageProvider";
 
 const App = () => {
   const [store] = useState(() => legacy_createStore(reducer));
@@ -42,6 +43,7 @@ const App = () => {
   return (
   <Provider store={store}>
     <BrowserRouter>
+      <LanguageProvider>
       <FeedbackProvider>
       <DemoAuthProvider>
    
@@ -81,6 +83,7 @@ const App = () => {
       </Routes>
       </DemoAuthProvider>
       </FeedbackProvider>
+      </LanguageProvider>
     </BrowserRouter>
   </Provider>
   );

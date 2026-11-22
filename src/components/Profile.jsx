@@ -7,8 +7,12 @@ import Footer from "./Footer";
 import ProfilePhoto from "./ProfilePhoto";
 import useDemoForm from "./useDemoForm";
 import { demoAccountNotice } from "../store/demoAccounts";
+import { useI18n } from "../i18n/LanguageProvider";
+import useLocalizedInvalid from "../i18n/useLocalizedInvalid";
 
 function PersonalInformation({ user, editing, setEditing }) {
+  const { t } = useI18n();
+  const onInvalid = useLocalizedInvalid("Enter your full name and a valid email address.");
   const { updateProfile } = useDemoAuth();
   const { notify } = useFeedback();
   const { pending, onSubmit } = useDemoForm(({ name, email }) => {
@@ -19,23 +23,23 @@ function PersonalInformation({ user, editing, setEditing }) {
 
   return (
     <section className="demo-profile-section" aria-labelledby="personal-title">
-      <h2 id="personal-title">Personal information</h2>
+      <h2 id="personal-title">{t("Personal information")}</h2>
       {editing ? (
         <form onSubmit={onSubmit} aria-busy={pending} className="demo-profile-form"
-          onInvalid={() => notify("warning", "Enter your full name and a valid email address.")}>
-          <label>Full name<input name="name" className="form-control" required maxLength={100}
+          onInvalid={onInvalid}>
+          <label>{t("Full name")}<input name="name" className="form-control" required maxLength={100}
             autoComplete="name" defaultValue={user.name} /></label>
-          <label>Email address<input name="email" type="email" className="form-control" required
+          <label>{t("Email address")}<input name="email" type="email" className="form-control" required
             autoComplete="email" maxLength={254} defaultValue={user.email} /></label>
           <div className="demo-profile-actions">
-            <button type="submit" className="demo-primary" disabled={pending}>Save changes</button>
-            <button type="button" className="demo-secondary" onClick={() => setEditing(false)}>Cancel</button>
+            <button type="submit" className="demo-primary" disabled={pending}>{t("Save changes")}</button>
+            <button type="button" className="demo-secondary" onClick={() => setEditing(false)}>{t("Cancel")}</button>
           </div>
         </form>
       ) : (
         <dl className="demo-profile-details">
-          <div><dt>Full name</dt><dd>{user.name}</dd></div>
-          <div><dt>Email address</dt><dd>{user.email}</dd></div>
+          <div><dt>{t("Full name")}</dt><dd>{user.name}</dd></div>
+          <div><dt>{t("Email address")}</dt><dd><bdi dir="ltr">{user.email}</bdi></dd></div>
         </dl>
       )}
     </section>
@@ -43,6 +47,7 @@ function PersonalInformation({ user, editing, setEditing }) {
 }
 
 export default function Profile() {
+  const { t } = useI18n();
   const { user, deleteAccount, photoUrl } = useDemoAuth();
   const { notify, requestConfirmation } = useFeedback();
   const [params] = useSearchParams();
@@ -56,13 +61,13 @@ export default function Profile() {
       <main className="demo-profile">
         <header className="demo-profile-header">
           <AccountAvatar name={user.name} photoUrl={photoUrl} />
-          <div className="demo-profile-heading"><h1>{user.name}</h1><p>{user.email}</p></div>
-          <Link className="demo-secondary" to="/profile" onClick={() => setEditing(true)}>Edit Profile</Link>
+          <div className="demo-profile-heading"><h1><bdi>{user.name}</bdi></h1><p><bdi dir="ltr">{user.email}</bdi></p></div>
+          <Link className="demo-secondary" to="/profile" onClick={() => setEditing(true)}>{t("Edit Profile")}</Link>
         </header>
-        <nav className="demo-profile-tabs" aria-label="Profile sections">
+        <nav className="demo-profile-tabs" aria-label={t("Profile sections")}>
           {accountLinks.map(([label, target], index) => (
             <Link key={target} to={target} aria-current={tab === tabs[index] ? "page" : undefined}
-              onClick={() => setEditing(false)}>{label}</Link>
+              onClick={() => setEditing(false)}>{t(label)}</Link>
           ))}
         </nav>
         {tab === "profile" && (
@@ -73,16 +78,16 @@ export default function Profile() {
         )}
         {tab === "orders" && (
           <section className="demo-profile-section">
-            <h2>My Orders</h2>
-            <p>No orders yet. Checkout previews invoices, and this demo does not submit orders.</p>
-            <Link to="/Products">Browse products</Link>
+            <h2>{t("My Orders")}</h2>
+            <p>{t("No orders yet. Checkout previews invoices, and this demo does not submit orders.")}</p>
+            <Link to="/Products">{t("Browse products")}</Link>
           </section>
         )}
         {tab === "settings" && (
           <section className="demo-profile-section">
-            <h2>Account Settings</h2>
-            <p>Account email <strong>{user.email}</strong></p>
-            <p>{demoAccountNotice}</p>
+            <h2>{t("Account Settings")}</h2>
+            <p>{t("Account email")} <strong>{user.email}</strong></p>
+            <p>{t(demoAccountNotice)}</p>
             <button type="button" className="demo-danger" onClick={(event) => requestConfirmation({
               title: "Delete demo account?",
               description: "This permanently removes this demo account, its photo, and its saved cart from this browser.",
@@ -92,7 +97,7 @@ export default function Profile() {
                 await deleteAccount();
                 notify("success", "Your demo account was deleted.");
               },
-            })}>Delete demo account</button>
+            })}>{t("Delete demo account")}</button>
           </section>
         )}
       </main>

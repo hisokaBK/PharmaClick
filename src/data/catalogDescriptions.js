@@ -1,0 +1,93 @@
+// Stable catalog IDs share copy only when their product type is the same.
+// Complete entries have sufficiently identified packaging or observable accessory features.
+// Unavailable entries have an ambiguous identity or conflicting catalog labels and images.
+// Entries pending review may have category copy, but no confirmed formulation or model.
+const complete = {
+  handcream: [158],
+  toothpaste: [148],
+  bodywash: [144],
+  etolFort: [151],
+  creatineGalvanize: [8, 85, 205],
+  wheyStrawberry: [17, 214],
+  listerineMint: [155],
+  thumbsplint: [172],
+  kinesiology: [185],
+  sleepmask: [191],
+  neckpillow: [193],
+  resistance: [195],
+  elution: [152],
+  toplexil: [157],
+  sisleyScrub: [160],
+  laroseeSerum: [163],
+  weledaLavender: [166],
+  rapidCold: [186],
+  plantarRing: [188],
+};
+
+const needsReview = {
+  zinc: [26, 28, 52, 223, 225, 249],
+  sunscreen: [4, 35, 53, 69, 95, 201, 232, 250],
+  yeast: [6, 87, 100, 103, 133, 136, 203],
+  vitd: [7, 16, 25, 120, 128, 204, 213, 222],
+  omega3Capsules: [80],
+  curcuminCapsules: [149],
+  bandageRoll: [173],
+  footSleeve: [178],
+  creatine: [96, 110, 112, 116, 139],
+  baby: [91],
+  vitc: [12, 38, 48, 62, 123, 209, 235, 245],
+  saline: [56, 59, 89, 118, 253],
+  whey: [47, 63, 79, 86, 88, 137, 244],
+  omega3: [20, 70, 72, 138, 217],
+  sanitizer: [37, 66, 234],
+  antiseptic: [50, 90, 126, 247],
+  calcium: [36, 58, 76, 233],
+  multi: [40, 49, 71, 75, 117, 127, 237, 246],
+  probiotic: [43, 51, 113, 240, 248],
+  iron: [54, 73, 251],
+  magb6: [64, 104, 115, 124, 140],
+  ginseng: [102, 108],
+  melatonin: [141],
+  nasal: [142],
+  k2: [143],
+  ashwagandha: [145],
+  b12: [147],
+  royaljelly: [150],
+  vite: [154],
+  collagen: [156],
+  omega7: [161],
+  spirulina: [164],
+  coolinggel: [165],
+  quercetin: [167],
+  wristwrap: [169],
+  compressionglove: [170],
+  anklebrace: [175],
+  insoles: [176],
+  sock: [179],
+  posture: [182],
+  heatpad: [183],
+  kneesleeve: [187],
+  thermometer: [189],
+  crutches: [190],
+  bpmonitor: [194],
+  nebulizer: [196],
+  physiodose: [14, 18, 31, 99, 211, 215, 228],
+  cattierLiniment: [57],
+  pediakidSpray: [13, 114],
+  pediakidOmega: [60, 134],
+  pediakidIron: [105],
+  pediakidImmuno: [107],
+  pediakidD3: [210],
+  surfaceGel: [44, 241],
+  aniosGel: [32, 34, 106, 229, 231],
+  backbelt: [181],
+  unavailable: [1, 2, 3, 5, 9, 10, 11, 15, 19, 21, 22, 23, 24, 27, 29, 30, 33, 39, 41, 42, 45, 46, 55, 61, 65, 67, 68, 74, 77, 78, 81, 82, 83, 84, 92, 93, 97, 98, 101, 109, 111, 119, 121, 122, 125, 129, 130, 131, 132, 135, 146, 153, 159, 162, 168, 171, 174, 177, 180, 184, 192, 198, 199, 200, 202, 206, 207, 208, 212, 216, 218, 219, 220, 221, 224, 226, 227, 230, 236, 238, 239, 242, 243, 252],
+};
+
+export const catalogById = new Map(
+  [["complete", complete], ["needs-review", needsReview]].flatMap(([status, profiles]) =>
+    Object.entries(profiles).flatMap(([profile, ids]) =>
+      ids.map((id) => [id, { profile, status }])
+    )
+  )
+);

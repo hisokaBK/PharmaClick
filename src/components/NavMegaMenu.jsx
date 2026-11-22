@@ -1,8 +1,10 @@
 import { useEffect, useId, useLayoutEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { FiChevronDown } from "react-icons/fi";
+import { useI18n } from "../i18n/LanguageProvider";
 
 export default function NavMegaMenu({ name, columns, active, setActive }) {
+  const { t, language } = useI18n();
   const id = useId();
   const root = useRef(null);
   const trigger = useRef(null);
@@ -56,7 +58,7 @@ export default function NavMegaMenu({ name, columns, active, setActive }) {
       controlsObserver.disconnect();
       window.removeEventListener("resize", position);
     };
-  }, [open]);
+  }, [open, language]);
 
   useEffect(() => {
     if (!open) return;
@@ -108,7 +110,7 @@ export default function NavMegaMenu({ name, columns, active, setActive }) {
             setActive({ name, pinned: true });
           }
         }}>
-        {name} <FiChevronDown className="dropdown-icon" aria-hidden="true" />
+        {t(name)} <FiChevronDown className="dropdown-icon" aria-hidden="true" />
       </button>
       <div className="dropdown-menu nav-mega-panel" id={id} hidden={!open} ref={panel}>
         <div className="nav-mega-columns">
@@ -116,10 +118,10 @@ export default function NavMegaMenu({ name, columns, active, setActive }) {
             <div key={sections[0].title}>
               {sections.map(({ title, links }) => (
                 <div className="nav-mega-section" key={title}>
-                  <h6 className="h4_Services">{title}</h6>
+                  <h6 className="h4_Services">{t(title)}</h6>
                   {links.map(([label, route, Icon]) => (
                     <Link className="a_Services" key={route} to={route} onClick={close}>
-                      <Icon className="me-2" aria-hidden="true" /> {label}
+                      <Icon className="me-2" aria-hidden="true" /> {t(label)}
                     </Link>
                   ))}
                 </div>

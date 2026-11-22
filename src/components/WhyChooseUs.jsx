@@ -3,8 +3,10 @@ import  { useEffect, useRef } from "react";
 import { FaTruck, FaCheckCircle, FaHandshake, FaCogs } from "react-icons/fa";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../css/WhyChooseUs.css";
+import { useI18n } from "../i18n/LanguageProvider";
 
 export default function WhyChooseUs() {
+  const { t } = useI18n();
   const features = [
     {
       icon: <FaTruck className="feature-icon" />,
@@ -55,10 +57,9 @@ export default function WhyChooseUs() {
   return (
     <section className="why-choose-us py-5">
       <div className="text-left mb-5" style={{ textAlign: "center" }}>
-        <h2 className="section-title mb-3">Why Choose Our Pharmacy?</h2>
+        <h2 className="section-title mb-3">{t("Why Choose Our Pharmacy?")}</h2>
         <p className="mb-0">
-          Committed to providing exceptional pharmaceutical services with
-          professionalism and care
+          {t("Committed to providing exceptional pharmaceutical services with professionalism and care")}
         </p>
       </div>
       <div className="container">
@@ -70,8 +71,8 @@ export default function WhyChooseUs() {
                 ref={(el) => (featureCardsRef.current[index] = el)}
               >
                 <div className="feature-icon-wrapper mb-3">{feature.icon}</div>
-                <h3 className="feature-title h5">{feature.title}</h3>
-                <p className="feature-text mb-0">{feature.description}</p>
+                <h3 className="feature-title h5">{t(feature.title)}</h3>
+                <p className="feature-text mb-0">{t(feature.description)}</p>
               </div>
             </div>
           ))}

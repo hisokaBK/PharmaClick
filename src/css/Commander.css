@@ -19,7 +19,6 @@
   max-width: 800px;
   max-height: 90vh;
   overflow-y: auto;
-  direction: rtl;
 }
 
 .close-btn {

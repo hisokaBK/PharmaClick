@@ -12,8 +12,13 @@ import { useFeedback } from "./Feedback";
 import { useDemoAuth } from "./DemoAuth";
 import useDemoForm from "./useDemoForm";
 import { createDemoAccount } from "../store/demoAccounts";
+import { useI18n } from "../i18n/LanguageProvider";
+import useLocalizedInvalid from "../i18n/useLocalizedInvalid";
+import LanguageSelector from "../i18n/LanguageSelector";
 
 export default function SignUp() {
+  const { t } = useI18n();
+  const onInvalid = useLocalizedInvalid("Complete the required fields and check your email address.");
   const { notify } = useFeedback();
   const { user } = useDemoAuth();
   const navigate = useNavigate();
@@ -40,7 +45,7 @@ export default function SignUp() {
           <Link to="/" id="linkUp">
             <FaHome />{" "}
             <span style={{ fontFamily: "cursive", fontSize: "large" }}>
-              home
+              {t("home")}
             </span>
           </Link>
         </div>
@@ -49,6 +54,7 @@ export default function SignUp() {
           <img src="/images/set_log1.jpg" alt="" style={{ height: "30px" }} />
           <span style={{ fontFamily: "cursive" }}><span style={{fontSize:'24px'}}>P</span>harmaClick</span>
         </div>
+        <LanguageSelector />
       </nav>
 
       <div style={{ display: "flex", justifyContent: "center" }}>
@@ -76,22 +82,21 @@ export default function SignUp() {
                 style={{ color: "hsla(111, 55.00%, 76.50%, 0.43)" }}
                 id="h1First"
               >
-                Your health, our priority <br />
+                {t("Your health, our priority")} <br />
                 <span
                   style={{
                     color: "hsl(124, 44.80%, 46.90%) ",
                     fontFamily: "cursive",
                   }}
                 >
-                  Your trusted pharmacy partner
+                  {t("Your trusted pharmacy partner")}
                 </span>
               </h1>
               <p
                 className="mb-4 opacity-70"
                 style={{ color: "hsl(119, 100.00%, 21.80%)" }}
               >
-                Discover fast delivery, expert advice, and a wide range of
-                medications tailored for your needs.
+                {t("Discover fast delivery, expert advice, and a wide range of medications tailored for your needs.")}
               </p>
             </div>
 
@@ -107,7 +112,7 @@ export default function SignUp() {
                   <div>
                     <img
                       src="/images/set_log4.jpg"
-                      alt="Company"
+                      alt={t("Company")}
                       loading="lazy"
                       style={{ height: "120px", marginLeft: "-20px" }}
                     />
@@ -120,18 +125,18 @@ export default function SignUp() {
                     marginLeft: "-3px",
                   }}
                 >
-                  <p className="P_form">Create an account</p>
+                  <p className="P_form">{t("Create an account")}</p>
                 </div>
                 <div className="card-body px-4 py-5 px-md-5">
                   <form
-                    onInvalid={() => notify("warning", "Complete the required fields and check your email address.")}
+                    onInvalid={onInvalid}
                     onSubmit={onSubmit}
                     aria-busy={pending}
                   >
                     <div className="form-group form-outline mb-4">
                       <input type="text" name="name" id="register-name" className="form-control"
                         autoComplete="name" maxLength={100} placeholder=" " required />
-                      <label className="form-label" htmlFor="register-name">Full name</label>
+                      <label className="form-label" htmlFor="register-name">{t("Full name")}</label>
                     </div>
 
                     <div className="form-group form-outline mb-4">
@@ -145,7 +150,7 @@ export default function SignUp() {
                         placeholder=" "
                       />
                       <label className="form-label" htmlFor="form3Example3">
-                        Email address
+                        {t("Email address")}
                       </label>
                     </div>
 
@@ -162,25 +167,25 @@ export default function SignUp() {
                         placeholder=" "
                       />
                       <label className="form-label" htmlFor="form3Example4">
-                        Password
+                        {t("Password")}
                       </label>
                     </div>
 
-                    <p className="demo-password-hint" id="demo-password-hint">Use 8 to 128 characters.</p>
+                    <p className="demo-password-hint" id="demo-password-hint">{t("Use 8 to 128 characters.")}</p>
                     <div className="form-group mb-4">
                       <input type="password" name="confirmation" id="register-confirmation"
                         className="form-control" autoComplete="new-password" maxLength={128} placeholder=" " required />
-                      <label className="form-label" htmlFor="register-confirmation">Confirm password</label>
+                      <label className="form-label" htmlFor="register-confirmation">{t("Confirm password")}</label>
                     </div>
 
                     <div className="divSubmit">
                       <button type="submit" className="btn1" disabled={pending}>
-                        {pending ? "Creating account…" : "Sign up"}
+                        {pending ? t("Creating account…") : t("Sign up")}
                       </button>
                     </div>
 
                     <div className="text-center">
-                      <p>or sign up with:</p>
+                      <p>{t("or sign up with:")}</p>
                       <button type="button" className="btn2" onClick={showSocialNotice}>
                         <FaFacebookF size={24} title="Facebook" />
                       </button>
@@ -195,13 +200,13 @@ export default function SignUp() {
                       </button>
                     </div>
                     <div style={{ textAlign: "center" }}>
-                      Already have an account?{" "}
+                      {t("Already have an account?")}{" "}
                       <Link to="/SignIn" style={{ color: "green" }}>
-                        Sign in
+                        {t("Sign in")}
                       </Link>
                     </div>
                   </form>
-                  <p className="demo-auth-note">Demo accounts stay in this browser. Use a password unique to this demo.</p>
+                  <p className="demo-auth-note">{t("Demo accounts stay in this browser. Use a password unique to this demo.")}</p>
                 </div>
               </div>
             </div>

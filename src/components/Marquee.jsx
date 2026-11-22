@@ -1,6 +1,8 @@
+import { useI18n } from "../i18n/LanguageProvider";
 import "../css/marquee.css";
 import { useNavigate } from "react-router-dom";
 export default function Marquee() {
+  const { t } = useI18n();
   const navig = useNavigate();
 
   const image_mrq = [
@@ -58,7 +60,7 @@ export default function Marquee() {
                 borderRight: "6px solid",
               }}
             />
-            <h4 className="h4_marquee">{elm.name}</h4>
+            <h4 className="h4_marquee">{t(elm.name)}</h4>
           </div>
         ))}
       </div>
