@@ -1,40 +1,23 @@
-import Card from './card';
-import '../css/products.css';
+import ProductSearch, { filterProductsByName, useProductSearch } from "./ProductSearch";
+import Card from "./card";
 
 import { useSelector } from 'react-redux';
 import {  useState, useMemo } from "react";
-import { useLocation } from "react-router-dom";
-import { FiSearch, FiFilter, FiX } from "react-icons/fi";
+import { FiFilter, FiX } from "react-icons/fi";
 import NavShop from './NavShop';
 import Footer from '../components/Footer';
 
 export default function Products() {
 
-  const fullMedicat=useSelector(state=>state.fullData);
-  const location = useLocation();
+  const products = useSelector(state => state.fullData);
   const [category, setCategory] = useState('all');
-  const [products] = useState(fullMedicat);
-  
-  const searchParams = useMemo(() => new URLSearchParams(location.search), [location.search]);
-  const searchTerm = searchParams.get('search') || '';
+  const [searchTerm, setSearchTerm] = useProductSearch();
 
   const filteredProducts = useMemo(() => {
-    let result = products;
-    
-    if (category !== 'all') {
-      result = result.filter(product => product.category === category);
-    }
-    
-    if (searchTerm) {
-      const term = searchTerm.toLowerCase();
-      result = result.filter(product => 
-        product.title.toLowerCase().includes(term) ||
-        (product.shortDescription && product.shortDescription.toLowerCase().includes(term)) ||
-        (product.longDescription && product.longDescription.toLowerCase().includes(term))
-      );
-    }
-    
-    return result;
+    const categoryProducts = category === 'all'
+      ? products
+      : products.filter(product => product.category === category);
+    return filterProductsByName(categoryProducts, searchTerm);
   }, [products, category, searchTerm]);
 
   const categories = useMemo(() => {
@@ -44,6 +27,7 @@ export default function Products() {
 
   const handleClearFilters = () => {
     setCategory('all');
+    setSearchTerm('');
   };
 
   return (
@@ -52,21 +36,7 @@ export default function Products() {
       
       <div className="products-container">
         <div className="filter-section">
-          <div className="search-card">
-            <FiSearch className="search-icon" />
-            <input
-              type="text"
-              placeholder="Search in products..."
-              value={searchTerm}
-              readOnly
-              className="search-input"
-            />
-            {searchTerm && (
-              <a href="/products" className="clear-search">
-                <FiX />
-              </a>
-            )}
-          </div>
+          <ProductSearch query={searchTerm} onChange={setSearchTerm} />
 
           <div className="categories-card">
             <div className="categories-header">
@@ -102,7 +72,7 @@ export default function Products() {
                 {category !== 'all' && (
                   <span className="active-filter">
                     Category: {category}
-                    <button onClick={() => setCategory('all')}>
+                    <button type="button" aria-label="Clear category filter" onClick={() => setCategory('all')}>
                       <FiX size={12} />
                     </button>
                   </span>
@@ -110,9 +80,9 @@ export default function Products() {
                 {searchTerm && (
                   <span className="active-filter">
                     Search: "{searchTerm}"
-                    <a href="/products" className="clear-filter-link">
-                      <FiX size={12} />
-                    </a>
+                    <button type="button" aria-label="Remove search filter" onClick={() => setSearchTerm('')}>
+                      <FiX size={12} aria-hidden="true" />
+                    </button>
                   </span>
                 )}
               </div>
@@ -120,7 +90,7 @@ export default function Products() {
           </div>
         </div>
         
-        <div className="results-summary">
+        <div className="results-summary" role="status">
           <p>
             Showing {filteredProducts.length} of {products.length} products
             {(category !== 'all' || searchTerm) && (
@@ -141,9 +111,9 @@ export default function Products() {
             <div className="no-results">
               <h3>No products found</h3>
               <p>Try adjusting your search or filter criteria</p>
-              <a href="/products" className="btn-primary">
+              <button type="button" className="clear-filters" onClick={handleClearFilters}>
                 Clear all filters
-              </a>
+              </button>
             </div>
           )}
         </div>

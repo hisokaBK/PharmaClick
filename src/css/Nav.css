@@ -30,6 +30,14 @@
   align-items: center;
   margin: 0 auto;
 }
+.fixNav .nav-layout {
+  padding-left: 44px;
+}
+
+.fixNav .nav-layout > .ul1 {
+  margin-left: auto;
+}
+
 .ul1 {
   display: flex;
   gap: 40px;
@@ -140,43 +148,6 @@
 }
 
 
-/*-----Search bar-----*/
-
-
-.nav__search {
-  position: relative;
-  flex: 0 1 400px;
-  margin-right: auto;
-}
-
-.nav__search input {
-  width: 100%;
-  height: 28px;
-  padding: 0 36px 0 16px;
-  border-radius: 18px;
-  border: 1px solid rgba(0, 0, 0, 0.08);
-  background: rgba(255, 255, 255, 0.9);
-  font-size: 14px;
-  transition: all 0.2s ease;
-}
-
-.nav__search input:focus {
-  outline: none;
-  border-color: var(--primary);
-  box-shadow: 0 0 0 2px rgba(4, 176, 119, 0.1);
-}
-
-.nav__search-icon {
-  position: absolute;
-  right: 12px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: var(--text-secondary);
-  stroke-width: 2px;
-  font-size: 16px;
-  cursor: pointer;
-
-}
 /*------Services---------*/
 
 .a_Services:hover .me-2{
@@ -291,7 +262,7 @@ color:rgba(13, 166, 95, 0.834);
 .fixNav .nav-compact-cart { display: none; }
 
 /* MOBILE AND TABLET NAVIGATION: Reserve room for the fixed drawer button,
-   let search shrink between the logo and cart, and move desktop links to the drawer.
+   align the logo and cart, and move desktop links to the drawer.
    At 1024px the original desktop navigation takes over. */
 @media (max-width: 1023px) {
   .fixNav { background: var(--nav-bg); }
@@ -312,11 +283,7 @@ color:rgba(13, 166, 95, 0.834);
     object-fit: contain;
     margin: 0;
   }
-  .fixNav .nav__search { flex: 1; min-width: 0; margin: 0; }
-  .fixNav .nav__search input { height: 44px; padding-inline: 10px 44px; font-size: 16px; }
-  .fixNav .nav-search-submit { position: absolute; top: 0; right: 0; width: 44px; height: 44px; }
-  .fixNav .nav-search-submit .nav__search-icon { right: 14px; }
-  .fixNav .ul1 { flex: none; gap: 0; margin: 0; padding: 0; }
+  .fixNav .nav-layout > .ul1 { flex: none; gap: 0; margin: 0 0 0 auto; padding: 0; }
   .fixNav .cart-link-item { display: block; min-width: 0; margin: 0; }
   .fixNav .cart-link { min-width: 44px; min-height: 44px; justify-content: center; margin: 0; }
 }

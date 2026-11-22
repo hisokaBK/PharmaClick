@@ -8,6 +8,12 @@ export default function reducer(state = {cardData:[],fullData:data1}, action) {
       return {...state,cardData:state.cardData.filter((elm, k) => elm.id !== action.payload)};
 
 
+    case "CLEAR_CART":
+      return { ...state, cardData: [] };
+
+    case "RESTORE_DEMO_CART":
+      return { ...state, cardData: action.payload };
+
     case "Plus":
       const exists = state.cardData.find((item) => item.id === action.payload.id);
       if (exists) {

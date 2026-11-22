@@ -17,27 +17,63 @@
 .search-card {
   display: flex;
   align-items: center;
-  padding: 15px;
+  gap: 12px;
+  min-width: 0;
+  padding: 10px 15px;
   background: rgba(255, 255, 255, 0.392);
   border-radius: 10px;
 }
 
 .search-icon {
-  margin-right: 15px;
+  flex: none;
   color: #2e7d32;
   font-size: 20px;
 }
 
 .search-input {
   flex: 1;
-  border: none;
-  font-size: 16px;
-  outline: none;
+  width: 100%;
+  min-width: 0;
+  min-height: 44px;
+  border: 0;
   border-bottom: 1px solid rgba(123, 216, 30, 0.552);
+  font-size: 16px;
 }
 
 .search-input:focus {
-  border-bottom: 2px solid rgba(78, 193, 52, 0.803);
+  outline: 2px solid #038a61;
+  outline-offset: 2px;
+}
+
+.search-input::-webkit-search-cancel-button {
+  display: none;
+}
+
+.clear-search {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  background: transparent;
+  color: #4a5568;
+}
+
+.clear-search:hover {
+  color: #038a61;
+}
+
+.product-search-list .search-card {
+  max-width: 640px;
+}
+
+.product-search-list .cards-grid-container2 {
+  padding: 0;
+}
+
+.medications-search {
+  padding: 20px clamp(12px, 4vw, 63px);
 }
 
 .categories-card {
@@ -86,45 +122,6 @@
   .products-container {
     padding: 30px 20px;
   }
-}
-
-.search-card.has-value {
-  border-color: var(--primary-color);
-}
-
-.search-input-container {
-  position: relative;
-  display: flex;
-  align-items: center;
-}
-
-.clear-search {
-  position: absolute;
-  right: 10px;
-  background: none;
-  border: none;
-  color: #999;
-  cursor: pointer;
-  padding: 5px;
-}
-
-.clear-search:hover {
-  color: #333;
-}
-
-.search-loading-indicator {
-  position: absolute;
-  bottom: -2px;
-  left: 0;
-  height: 2px;
-  background: var(--primary-color);
-  animation: loading 1s infinite;
-}
-
-@keyframes loading {
-  0% { width: 0; left: 0; }
-  50% { width: 100%; left: 0; }
-  100% { width: 0; left: 100%; }
 }
 
 .active-filters {
@@ -189,7 +186,5 @@
 @media (max-width: 1023px) {
   .products-container { padding: 76px clamp(12px, 4vw, 40px) 30px; }
   .products-container .filter-section > * { min-width: 0; }
-  .products-container .search-card { position: relative; }
-  .products-container .search-input { min-width: 0; padding-right: 24px; }
   .products-container .categories-header { flex-wrap: wrap; gap: 4px; }
 }

@@ -6,6 +6,7 @@ import { AddMore } from "../store/actions";
 import { AddPanier } from "../store/actions";
 import "../css/Produit.css";
 import Footer from "../components/Footer";
+import { useFeedback } from "../components/Feedback";
 
 export default function Produit() {
   const cartItems = useSelector((state) => state.fullData);
@@ -17,6 +18,7 @@ export default function Produit() {
   );
   const produit = cartItems.find((med) => med.id == idP);
   const [more, setMore] = useState(1);
+  const { notify } = useFeedback();
 
   const handClick = () => {
     const targetProduct = NewProduit || produit;
@@ -25,7 +27,7 @@ export default function Produit() {
    
 
     if (targetProduct.stock < quantity) {
-      alert("No Stock");
+      notify("warning", "There is not enough stock for that quantity.");
       return;
     }
 
@@ -56,6 +58,7 @@ export default function Produit() {
         })
       );
     }
+    notify("success", NewProduit ? "Cart quantity updated." : `${produit.title} added to your cart.`);
   };
 
   let totalPrice = produit.price * more;

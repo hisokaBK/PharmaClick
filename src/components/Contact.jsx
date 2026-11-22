@@ -1,8 +1,10 @@
 import { FaPhone, FaEnvelope, FaMapMarkerAlt } from "react-icons/fa";
 import Footer from "./Footer";
+import { useFeedback } from "./Feedback";
 import "../css/Contact.css";
 
 const Contact = () => {
+  const { notify } = useFeedback();
   return (<div>
     <div className="contact-page-container">
       <div style={{textAlign:'center'}}><h1 className="section-title contact-title ">Contact Us</h1></div>
@@ -36,7 +38,14 @@ const Contact = () => {
         </div>
 
         <div className="contact-form-section">
-          <form className="pharmacy-contact-form">
+          <form
+            className="pharmacy-contact-form"
+            onInvalid={() => notify("warning", "Check the highlighted contact fields.")}
+            onSubmit={(event) => {
+              event.preventDefault();
+              notify("error", "The contact form cannot send messages. Please use the email address shown on this page.");
+            }}
+          >
             <div className="form-group">
               <input type="text" placeholder="First Name" required />
             </div>

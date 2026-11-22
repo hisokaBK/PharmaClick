@@ -1,11 +1,12 @@
+import AccountMenu from "./AccountMenu";
 import { useSelector } from "react-redux";
 import { FaCartPlus } from "react-icons/fa";
 import ServicesMenu from "./ServicesMenu";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Link, useNavigate } from "react-router-dom";
-import { useEffect, useState, useRef } from "react";
+import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
 import "../css/Nav.css";
-import { FiSearch, FiChevronDown } from "react-icons/fi";
+import { FiChevronDown } from "react-icons/fi";
 import { Pill, ShoppingBag, Cross } from "lucide-react";
 import {
   FaCapsules,
@@ -17,22 +18,8 @@ import {
 
 export default function Nav() {
   const [scrolled, setScrolled] = useState(false);
-  const [searchQuery, setSearchQuery] = useState("");
-  const navigate = useNavigate();
   // Read the shared cart count for the compact header without changing desktop navigation.
   const cartCount = useSelector(state => state.cardData.length);
-
-  const searchRef = useRef(null);
-  const [isSearchFocused, setIsSearchFocused] = useState(false);
-  const handleFocus = () => setIsSearchFocused(true);
-  const handleBlur = () => setIsSearchFocused(false);
-
-  const handleSearch = (e) => {
-    e.preventDefault();
-    if (searchQuery.trim()) {
-      navigate(`/products?search=${encodeURIComponent(searchQuery)}`);
-    }
-  };
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
@@ -49,34 +36,6 @@ export default function Nav() {
         <Link className="nav__logo" to="/" aria-label="Go to homepage">
           <img src="/images/set_log1.jpg" alt="" loading="lazy" />
         </Link>
-
-        {/* --------Search Bar -----------------*/}
-        <form onSubmit={handleSearch} style={{ display: "contents" }}>
-          <div
-            className={`nav__search ${
-              isSearchFocused ? "nav__search--focused" : ""
-            }`}
-            ref={searchRef}
-          >
-            <input
-              type="search"
-              aria-label="Search products"
-              placeholder="Search..."
-              onFocus={handleFocus}
-              onBlur={handleBlur}
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-            />
-            <button
-              type="submit"
-              className="nav-search-submit"
-              aria-label="Submit product search"
-              style={{ background: "none", border: "none", padding: 0 }}
-            >
-              <FiSearch className="nav__search-icon" />
-            </button>
-          </div>
-        </form>
 
         <ul className="ul1">
           {/* Desktop route links move to the global drawer on compact screens. */}
@@ -140,15 +99,7 @@ export default function Nav() {
           </li>
         </ul>
 
-        <ul className="ul2">
-          <Link className="listA" to="/SignIn" style={{ textAlign: "center" }}>
-            <li id="SignIn">Sign in</li>
-          </Link>
-
-          <Link className="listA" to="/SignUp" style={{ textAlign: "center" }}>
-            <li id="SignUp">Sign up</li>
-          </Link>
-        </ul>
+        <AccountMenu />
       </div>
     </nav>
   );

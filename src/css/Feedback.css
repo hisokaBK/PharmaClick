@@ -1,0 +1,96 @@
+.feedback-toasts {
+  position: fixed;
+  inset: auto max(12px, env(safe-area-inset-right)) max(12px, env(safe-area-inset-bottom)) auto;
+  z-index: 1100;
+  display: grid;
+  gap: 8px;
+  width: min(25rem, calc(100% - 24px));
+  pointer-events: none;
+}
+
+.feedback-toast {
+  --feedback-accent: #038a61;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 6px 8px 12px;
+  border: 1px solid #e0e0e0;
+  border-inline-start: 4px solid var(--feedback-accent);
+  border-radius: 10px;
+  background: white;
+  color: #2d3748;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.14);
+}
+
+.feedback-error { --feedback-accent: #be0000; }
+.feedback-warning { --feedback-accent: #4a5568; }
+.feedback-info { --feedback-accent: #0b8970; }
+.feedback-toast > svg { color: var(--feedback-accent); }
+.feedback-toast p { margin: 0; overflow-wrap: anywhere; }
+
+.feedback-toast button {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: #4a5568;
+  pointer-events: auto;
+}
+
+.feedback-dialog {
+  width: min(27rem, calc(100% - 24px));
+  max-height: calc(100% - 24px);
+  margin: auto;
+  padding: clamp(16px, 5vw, 26px);
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  background: white;
+  color: #2d3748;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2);
+  opacity: 0;
+  translate: 0 6px;
+}
+
+.feedback-dialog[open] { opacity: 1; translate: 0; }
+.feedback-dialog::backdrop { background: rgba(0, 0, 0, 0.35); }
+.feedback-dialog-icon { color: #be0000; margin-bottom: 10px; }
+.feedback-dialog h2 { margin: 0 0 8px; font-size: 1.25rem; }
+.feedback-dialog p { margin: 0 0 20px; overflow-wrap: anywhere; }
+.feedback-dialog-actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 8px; }
+
+.feedback-dialog-actions button {
+  min-height: 44px;
+  padding: 8px 14px;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  background: white;
+  color: #2d3748;
+}
+
+.feedback-dialog-actions .feedback-confirm-button {
+  border-color: #be0000;
+  background: #be0000;
+  color: white;
+}
+
+.feedback-dialog-actions button:disabled { opacity: 0.65; }
+.feedback-dialog-actions button:focus-visible,
+.feedback-toast button:focus-visible { outline: 2px solid #038a61; outline-offset: 2px; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .feedback-dialog {
+    transition: opacity 160ms, translate 160ms, display 160ms allow-discrete, overlay 160ms allow-discrete;
+  }
+
+  @starting-style {
+    .feedback-dialog[open] { opacity: 0; translate: 0 6px; }
+  }
+}
+
+@media print {
+  .feedback-toasts, .feedback-dialog { display: none !important; }
+}

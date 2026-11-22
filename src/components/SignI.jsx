@@ -5,12 +5,28 @@ import {
   FaMicrosoft,
   FaHome,
 } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import "../css/SignUp.css";
 import "../css/SignIn.css";
 import ScrolToTop from "./scrolToTop";
+import { useFeedback } from "./Feedback";
+import { useDemoAuth } from "./DemoAuth";
+import useDemoForm from "./useDemoForm";
 
 export default function SignIn() {
+  const { notify } = useFeedback();
+  const { user, signIn } = useDemoAuth();
+  const navigate = useNavigate();
+  const { state } = useLocation();
+  const profile = { pathname: "/profile", search: state?.profileSearch || "" };
+  const { pending, onSubmit } = useDemoForm(async ({ email, password }) => {
+    const account = await signIn(email, password);
+    notify("success", `Welcome back, ${account.name}.`);
+    navigate(profile, { replace: true });
+  });
+  const showSocialNotice = () => notify("info", "Social sign-in is unavailable in this demo.");
+  if (user) return <Navigate to={profile} replace />;
+
   return (
     <div>
       <nav
@@ -80,10 +96,18 @@ export default function SignIn() {
                   <p className="P_form">Welcome Back</p>
                 </div>
                 <div className="card-body px-4 py-5 px-md-5">
-                  <form>
+                  <form
+                    onInvalid={() => notify("warning", "Enter a valid email address and your password.")}
+                    onSubmit={onSubmit}
+                    aria-busy={pending}
+                  >
                     <div className="form-group form-outline mb-4">
                       <input
                         type="email"
+                        name="email"
+                        autoComplete="email"
+                        defaultValue={state?.registeredEmail || ""}
+                        required
                         id="form3Example3"
                         className="form-control"
                         placeholder=" "
@@ -96,6 +120,10 @@ export default function SignIn() {
                     <div className="form-group  mb-4">
                       <input
                         type="password"
+                        name="password"
+                        maxLength={128}
+                        autoComplete="current-password"
+                        required
                         id="form3Example4"
                         className="form-control"
                         placeholder=" "
@@ -113,44 +141,34 @@ export default function SignIn() {
                         justifyContent: "space-around",
                       }}
                     >
-                      <div className="form-check d-flex justify-content-center mb-4">
-                        <input
-                          className="form-check-input me-2"
-                          type="checkbox"
-                          id="form2Example33"
-                        />
-                        <label
-                          className="form-check-label"
-                          htmlFor="form2Example33"
-                        >
-                          Remember Me ?
-                        </label>
-                      </div>
                       <div>
-                        <Link to="/forgPass" style={{ color: "green" }}>
+                        <Link to="/forgPass" style={{ color: "green" }} onClick={(event) => {
+                          event.preventDefault();
+                          notify("info", "Password recovery is unavailable in this demo.");
+                        }}>
                           Forgot Password?
                         </Link>
                       </div>
                     </div>
 
                     <div className="divSubmit">
-                      <button type="submit" className="btn1">
-                        Sign in
+                      <button type="submit" className="btn1" disabled={pending}>
+                        {pending ? "Signing in…" : "Sign in"}
                       </button>
                     </div>
 
                     <div className="text-center">
                       <p>or sign in with:</p>
-                      <button type="button" className="btn2">
+                      <button type="button" className="btn2" onClick={showSocialNotice}>
                         <FaFacebookF size={24} title="Facebook" />
                       </button>
-                      <button type="button" className="btn2">
+                      <button type="button" className="btn2" onClick={showSocialNotice}>
                         <FaGithub size={24} title="GitHub" />
                       </button>
-                      <button type="button" className="btn2">
+                      <button type="button" className="btn2" onClick={showSocialNotice}>
                         <FaGoogle size={24} title="Google" />
                       </button>
-                      <button type="button" className="btn2">
+                      <button type="button" className="btn2" onClick={showSocialNotice}>
                         <FaMicrosoft size={24} title="Microsoft" />
                       </button>
                     </div>
@@ -161,6 +179,7 @@ export default function SignIn() {
                       </Link>
                     </div>
                   </form>
+                  <p className="demo-auth-note">Demo sign-in is local to this browser.</p>
                 </div>
               </div>
             </div>

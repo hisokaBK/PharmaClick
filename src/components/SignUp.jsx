@@ -5,11 +5,26 @@ import {
   FaMicrosoft,
   FaHome,
 } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import "../css/SignUp.css";
 import ScrolToTop from "./scrolToTop";
+import { useFeedback } from "./Feedback";
+import { useDemoAuth } from "./DemoAuth";
+import useDemoForm from "./useDemoForm";
+import { createDemoAccount } from "../store/demoAccounts";
 
 export default function SignUp() {
+  const { notify } = useFeedback();
+  const { user } = useDemoAuth();
+  const navigate = useNavigate();
+  const { pending, onSubmit } = useDemoForm(async (fields) => {
+    await createDemoAccount(fields);
+    notify("success", "Demo account created. You can now sign in.");
+    navigate("/signin", { replace: true, state: { registeredEmail: fields.email.trim() } });
+  });
+  const showSocialNotice = () => notify("info", "Social sign-up is unavailable in this demo.");
+  if (user) return <Navigate to="/profile" replace />;
+
   return (
     <div>
       <nav
@@ -108,39 +123,23 @@ export default function SignUp() {
                   <p className="P_form">Create an account</p>
                 </div>
                 <div className="card-body px-4 py-5 px-md-5">
-                  <form>
-                    <div className="row">
-                      <div className="col-md-6 mb-4">
-                        <div className="form-group form-outline">
-                          <input
-                            type="text"
-                            id="form3Example1"
-                            className="form-control"
-                            placeholder=" "
-                          />
-                          <label className="form-label" htmlFor="form3Example1">
-                            First name
-                          </label>
-                        </div>
-                      </div>
-                      <div className="col-md-6 mb-4">
-                        <div className="form-group form-outline">
-                          <input
-                            type="text"
-                            id="form3Example2"
-                            className="form-control"
-                            placeholder=" "
-                          />
-                          <label className="form-label" htmlFor="form3Example2">
-                            Last name
-                          </label>
-                        </div>
-                      </div>
+                  <form
+                    onInvalid={() => notify("warning", "Complete the required fields and check your email address.")}
+                    onSubmit={onSubmit}
+                    aria-busy={pending}
+                  >
+                    <div className="form-group form-outline mb-4">
+                      <input type="text" name="name" id="register-name" className="form-control"
+                        autoComplete="name" maxLength={100} placeholder=" " required />
+                      <label className="form-label" htmlFor="register-name">Full name</label>
                     </div>
 
                     <div className="form-group form-outline mb-4">
                       <input
                         type="email"
+                        name="email"
+                        autoComplete="email"
+                        required
                         id="form3Example3"
                         className="form-control"
                         placeholder=" "
@@ -153,6 +152,11 @@ export default function SignUp() {
                     <div className="form-group  mb-4">
                       <input
                         type="password"
+                        name="password"
+                        maxLength={128}
+                        autoComplete="new-password"
+                        aria-describedby="demo-password-hint"
+                        required
                         id="form3Example4"
                         className="form-control"
                         placeholder=" "
@@ -162,38 +166,31 @@ export default function SignUp() {
                       </label>
                     </div>
 
-                    <div className="form-check d-flex justify-content-center mb-4">
-                      <input
-                        className="form-check-input me-2"
-                        type="checkbox"
-                        id="form2Example33"
-                      />
-                      <label
-                        className="form-check-label"
-                        htmlFor="form2Example33"
-                      >
-                        Subscribe to our newsletter
-                      </label>
+                    <p className="demo-password-hint" id="demo-password-hint">Use 8 to 128 characters.</p>
+                    <div className="form-group mb-4">
+                      <input type="password" name="confirmation" id="register-confirmation"
+                        className="form-control" autoComplete="new-password" maxLength={128} placeholder=" " required />
+                      <label className="form-label" htmlFor="register-confirmation">Confirm password</label>
                     </div>
 
                     <div className="divSubmit">
-                      <button type="submit" className="btn1">
-                        Sign up
+                      <button type="submit" className="btn1" disabled={pending}>
+                        {pending ? "Creating account…" : "Sign up"}
                       </button>
                     </div>
 
                     <div className="text-center">
                       <p>or sign up with:</p>
-                      <button type="button" className="btn2">
+                      <button type="button" className="btn2" onClick={showSocialNotice}>
                         <FaFacebookF size={24} title="Facebook" />
                       </button>
-                      <button type="button" className="btn2">
+                      <button type="button" className="btn2" onClick={showSocialNotice}>
                         <FaGithub size={24} title="GitHub" />
                       </button>
-                      <button type="button" className="btn2">
+                      <button type="button" className="btn2" onClick={showSocialNotice}>
                         <FaGoogle size={24} title="Google" />
                       </button>
-                      <button type="button" className="btn2">
+                      <button type="button" className="btn2" onClick={showSocialNotice}>
                         <FaMicrosoft size={24} title="Microsoft" />
                       </button>
                     </div>
@@ -204,6 +201,7 @@ export default function SignUp() {
                       </Link>
                     </div>
                   </form>
+                  <p className="demo-auth-note">Demo accounts stay in this browser. Use a password unique to this demo.</p>
                 </div>
               </div>
             </div>

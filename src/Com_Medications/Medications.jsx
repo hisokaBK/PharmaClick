@@ -3,6 +3,11 @@ import "../css/Medications.css";
 import NavShop from "./NavShop";
 import MarqueeShop from "./MarqueShop";
 import ProductSlider from "./ProductSlider";
+import ProductSearch, {
+  filterProductsByName,
+  ProductSearchResults,
+  useProductSearch,
+} from "./ProductSearch";
 
 import { useSelector } from "react-redux";
 import Card from "./card";
@@ -34,7 +39,7 @@ export default function Medications() {
     };
   }, []);
 
-  const medications = fullMedicat;
+  const [query, setQuery] = useProductSearch();
   return (
     <div>
       <NavShop />
@@ -63,22 +68,33 @@ export default function Medications() {
           </div>
         </div>
 
-        <h1 className="medications-title">Multivitamins</h1>
-        <ProductSlider products={fullMedicat.filter((elm)=>elm.category==='multivitamins').slice(1,12)} />
+        <div className="medications-search product-search-list">
+          <ProductSearch query={query} onChange={setQuery} />
+          {query.trim() && (
+            <ProductSearchResults products={filterProductsByName(fullMedicat, query)} query={query} />
+          )}
+        </div>
 
-         <h1 className="medications-title">Nutritional Products</h1>
-         <div className="cards-grid-container2">
-        <Card medications={fullMedicat.filter(elm=>elm.category==='products_usf').slice(7,15)}/>
-        </div>
-        <MarqueeShop/>
-       <h1 className="medications-title">Medical Supplements</h1>
-        
-        <ProductSlider products={fullMedicat.filter(elm=>elm.category==='supplements').slice(0,18)} />
-         <h1 className="medications-title">Topical Cleaning Supplies</h1>
-         <div className="cards-grid-container2">
-        <Card medications={medications.filter(elm=>elm.category==='cleaning').slice(5,13)}/>
-        </div>
- 
+        {!query.trim() && (
+          <>
+            <h1 className="medications-title">Multivitamins</h1>
+            <ProductSlider products={fullMedicat.filter(product => product.category === "multivitamins").slice(1, 12)} />
+
+            <h1 className="medications-title">Nutritional Products</h1>
+            <div className="cards-grid-container2">
+              <Card medications={fullMedicat.filter(product => product.category === "products_usf").slice(7, 15)} />
+            </div>
+
+            <MarqueeShop />
+            <h1 className="medications-title">Medical Supplements</h1>
+            <ProductSlider products={fullMedicat.filter(product => product.category === "supplements").slice(0, 18)} />
+
+            <h1 className="medications-title">Topical Cleaning Supplies</h1>
+            <div className="cards-grid-container2">
+              <Card medications={fullMedicat.filter(product => product.category === "cleaning").slice(5, 13)} />
+            </div>
+          </>
+        )}
       </div>
       <Footer/>
     </div>

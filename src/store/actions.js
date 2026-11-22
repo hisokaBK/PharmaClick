@@ -10,6 +10,10 @@ export  function RemovePanier (produit){
        )
 };
 
+export function clearCart() {
+  return { type: "CLEAR_CART" };
+}
+
 export function Addplus(produit){
         return(
                {type:'Plus',payload:produit}

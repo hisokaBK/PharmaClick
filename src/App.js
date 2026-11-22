@@ -1,4 +1,5 @@
 import "./App.css";
+import { useState } from "react";
 import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom";
 import Sidebar from "./components/Sidebar";
 import Nav from "./components/header";
@@ -31,13 +32,18 @@ import SportsHealth from "./Com_servess/SportsHealth";
 import HealthAlerts from "./Com_servess/HealthAlerts";
 import RiskAssessments from "./Com_servess/RiskAssessments";
 import HealthQuizzes from "./Com_servess/HealthQuizzes";
+import FeedbackProvider from "./components/Feedback";
+import DemoAuthProvider, { RequireDemoAccount } from "./components/DemoAuth";
+import Profile from "./components/Profile";
 
 const App = () => {
-        const store=legacy_createStore(reducer)
+  const [store] = useState(() => legacy_createStore(reducer));
 
   return (
   <Provider store={store}>
     <BrowserRouter>
+      <FeedbackProvider>
+      <DemoAuthProvider>
    
       <ScrollToTop />
       
@@ -49,6 +55,7 @@ const App = () => {
             <Route path="/about" element={<About />} />
             <Route path="/FAQ" element={<FAQ />} />
             <Route path="/Delivery" element={<TrackingPage />} />
+            <Route path="/profile" element={<RequireDemoAccount><Profile /></RequireDemoAccount>} />
           </Route>
           <Route path="/Medications" element={<Medications />} />
           <Route path="/Products" element={<Products />} />
@@ -72,6 +79,8 @@ const App = () => {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/signin" element={<SignIn />} />
       </Routes>
+      </DemoAuthProvider>
+      </FeedbackProvider>
     </BrowserRouter>
   </Provider>
   );

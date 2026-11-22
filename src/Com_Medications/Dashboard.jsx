@@ -1,13 +1,16 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { addMedicament, deleteMedicament, updateMedicament } from '../store/actions';
 import NavShop from './NavShop';
 import '../css/Dashboard.css'
-import { FaClinicMedical, FaEdit, FaTrash, FaPlus, FaTimes } from 'react-icons/fa';
+import { FaEdit, FaTrash, FaPlus, FaTimes } from 'react-icons/fa';
+import { useFeedback } from '../components/Feedback';
 
 const Dashboard = () => {
   const medicaments = useSelector(state => state.fullData);
   const dispatch = useDispatch();
+  const addButton = useRef(null);
+  const { notify, requestConfirmation } = useFeedback();
 
   const [showModal, setShowModal] = useState(false);
   const [currentMedicament, setCurrentMedicament] = useState(null);
@@ -33,8 +36,10 @@ const Dashboard = () => {
 
     if (currentMedicament) {
       dispatch(updateMedicament(medicamentData));
+      notify("success", "Medication updated.");
     } else {
       dispatch(addMedicament(medicamentData));
+      notify("success", "Medication added.");
     }
 
     handleCloseModal();
@@ -70,10 +75,18 @@ const Dashboard = () => {
     setShowModal(true);
   };
 
-  const handleDeleteMedicament = (id) => {
-    if (window.confirm('Are you sure you want to delete this medicament?')) {
-        dispatch(deleteMedicament(id));
-    }
+  const handleDeleteMedicament = (medication, trigger) => {
+    requestConfirmation({
+      title: "Delete medication?",
+      description: `Delete ${medication.title} from the catalog?`,
+      confirmLabel: "Delete medication",
+      trigger,
+      fallbackFocus: () => addButton.current,
+      onConfirm: () => {
+        dispatch(deleteMedicament(medication.id));
+        notify("success", "Medication deleted.");
+      },
+    });
   };
 
   const handleCloseModal = () => {
@@ -100,6 +113,7 @@ const Dashboard = () => {
               <h2>Medicament Management</h2>
               <button 
                 className="btn btn-success"
+                ref={addButton}
                 onClick={handleAddMedicament}
               >
                 <FaPlus className="mr-2"/>
@@ -137,13 +151,15 @@ const Dashboard = () => {
                       <td>
                         <button 
                           className="btn12 btn-sm btn-outline-primary mr-2"
+                          aria-label={`Edit ${med.title}`}
                           onClick={() => handleEditMedicament(med)}
                         >
                           <FaEdit/>
                         </button>
                         <button 
                           className="btn12 btn-sm btn-outline-danger"
-                          onClick={() => handleDeleteMedicament(med.id)}
+                          aria-label={`Delete ${med.title}`}
+                          onClick={(event) => handleDeleteMedicament(med, event.currentTarget)}
                         >
                           <FaTrash/>
                         </button>
@@ -171,7 +187,7 @@ const Dashboard = () => {
                   </button>
                 </div>
                 <div className="modal-body">
-                  <form onSubmit={handleSubmit}>
+                  <form onSubmit={handleSubmit} onInvalid={() => notify("warning", "Check the highlighted medication fields.")}>
                     <div className="form-row">
                       <div className="form-group col-md-6">
                         <label>Title</label>

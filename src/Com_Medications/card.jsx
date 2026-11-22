@@ -3,16 +3,18 @@ import { useDispatch, useSelector } from "react-redux";
 import { AddPanier, Addplus } from "../store/actions";
 import { Link } from "react-router-dom";
 import "../css/Card.css";
+import { useFeedback } from "../components/Feedback";
 
 export default function Card({ medications }) {
   const dispatch = useDispatch();
   const cartItems = useSelector((state) => state.cardData);
+  const { notify } = useFeedback();
 const handleAddToCart = (med) => {
   const alreadyInCart = cartItems.some((item) => item.id === med.id);
 
   if (!alreadyInCart) {
     if (med.stock < 1) {
-      alert('No stock');
+      notify("warning", "There is not enough stock for that quantity.");
     } else {
       dispatch(
         AddPanier({
@@ -26,6 +28,7 @@ const handleAddToCart = (med) => {
           times: 1,
         })
       );
+      notify("success", `${med.title} added to your cart.`);
     }
   }
 };
@@ -35,7 +38,7 @@ const handleMoreToCart = (med) => {
   const currentCount = itemInCart ? itemInCart.times : 0;
 
   if (med.stock <= currentCount) {
-    alert('No stock');
+    notify("warning", "There is not enough stock for that quantity.");
   } else {
     dispatch(
       Addplus({
@@ -49,6 +52,7 @@ const handleMoreToCart = (med) => {
         stock: med.stock - 1 
       })
     );
+    notify("success", "Cart quantity updated.");
   }
 };
 

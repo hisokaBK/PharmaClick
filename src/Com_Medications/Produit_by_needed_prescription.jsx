@@ -1,23 +1,18 @@
 import { useParams } from "react-router-dom";
 import { data1 } from "../data/data1";
-import Card from "./card";
 import NavShop from "./NavShop";
+import { SearchableProductList } from "./ProductSearch";
 import Footer from "../components/Footer";
 
-export default function Produit_by_needed_prescription(){
+export default function Produit_by_needed_prescription() {
+  const { need } = useParams();
+  const products = data1.filter(product => product.needed_prescription === need);
 
-             const {need} =useParams()
-
-            
-                   const prods =data1.filter(elm=>elm.needed_prescription===need)
-            
-
-
-    // The shared catalog grid owns responsive gutters for this filtered view.
-    return(<>
-        <NavShop/>     
-        <div className="cards-grid-container2"><Card medications={prods}/></div>
-        <Footer/>
-        </>
-    )
+  return (
+    <>
+      <NavShop />
+      <SearchableProductList products={products} />
+      <Footer />
+    </>
+  );
 }

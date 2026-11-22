@@ -1,18 +1,33 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { useSelector, useDispatch } from "react-redux";
 import { Addplus } from "../store/actions";
-import { RemovePanier } from "../store/actions";
+import { RemovePanier, clearCart } from "../store/actions";
 import '../css/Cart.css'; 
 import NavShop from "./NavShop";
 import Footer from "../components/Footer";
 import Commander from './Commander';
 import { Link } from 'react-router-dom';
+import { useFeedback } from "../components/Feedback";
+import { useDemoAuth } from "../components/DemoAuth";
+import { findSession, readDemo } from "../store/demoAccounts";
 
 export default function Cart() {
   
   const cartItems = useSelector((state) => state.cardData);
   const dispatch = useDispatch();
   const [showCommander, setShowCommander] = useState(false);
+  const cartRegion = useRef(null);
+  const { notify, requestConfirmation } = useFeedback();
+  const { user } = useDemoAuth();
+
+  function updateConfirmedCart(action, message) {
+    if ((findSession(readDemo())?.id || null) !== (user?.id || null)) {
+      notify("warning", "The active account changed. Review your cart before trying again.");
+      return;
+    }
+    dispatch(action);
+    notify("success", message);
+  }
 
 const updateCartItem = (item, quantityChange) => {
   const newTimes = item.times + quantityChange;
@@ -20,7 +35,7 @@ const updateCartItem = (item, quantityChange) => {
 
   if (newTimes < 0) return;  
   if (quantityChange > 0 && newTimes > item.stock) {
-    alert('No stock available');
+    notify("warning", "There is not enough stock for that quantity.");
     return;
   }
 
@@ -31,17 +46,33 @@ const updateCartItem = (item, quantityChange) => {
       stock: newStock,
     })
   );
+  notify("success", "Cart quantity updated.");
 };
 
 const handleIncrease = (item) => updateCartItem(item, 1);
 const handleDecrease = (item) => updateCartItem(item, -1);
 
 
-  const handleRemove = (id) => {
-    const isConfirmed = window.confirm("Are you sure you want to remove this item from the cart?");
-    if (isConfirmed) {
-      dispatch(RemovePanier(id));
-    }
+  const handleRemove = (item, trigger) => {
+    requestConfirmation({
+      title: "Remove item?",
+      description: `Remove ${item.title} from your shopping cart?`,
+      confirmLabel: "Remove item",
+      trigger,
+      fallbackFocus: () => cartRegion.current,
+      onConfirm: () => updateConfirmedCart(RemovePanier(item.id), "Item removed from your cart."),
+    });
+  };
+
+  const handleClearCart = (trigger) => {
+    requestConfirmation({
+      title: "Clear your cart?",
+      description: "This will remove all items from your shopping cart.",
+      confirmLabel: "Clear cart",
+      trigger,
+      fallbackFocus: () => cartRegion.current,
+      onConfirm: () => updateConfirmedCart(clearCart(), "Your cart was cleared."),
+    });
   };
 
   const subtotal = cartItems.reduce((sum, item) => sum + (item.price * item.times), 0);
@@ -49,7 +80,7 @@ const handleDecrease = (item) => updateCartItem(item, -1);
   return (
     <>
       <NavShop/>
-      <div className="cart-container">
+      <main className="cart-container" ref={cartRegion} tabIndex={-1} aria-label="Shopping cart">
         {cartItems.length === 0 ? (
           <div className="empty-cart">
             <h2>Your cart is empty</h2>
@@ -84,7 +115,7 @@ const handleDecrease = (item) => updateCartItem(item, -1);
                         <button onClick={() => handleIncrease(item)} className="quantity-btn">+</button>
                       </div>
                       <button 
-                        onClick={() => handleRemove(item.id)} 
+                        onClick={(event) => handleRemove(item, event.currentTarget)}
                         className="remove-btn"
                       >
                         Remove
@@ -115,14 +146,20 @@ const handleDecrease = (item) => updateCartItem(item, -1);
               </div>
               <button 
                 className="checkout-btn" 
-                onClick={() => setShowCommander(true)}
+                onClick={() => {
+                  setShowCommander(true);
+                  notify("info", "This is an invoice preview. Online ordering is unavailable.");
+                }}
               >
                 Proceed to Checkout ({(subtotal + 30).toFixed(2)} Dhs)
+              </button>
+              <button type="button" className="remove-btn" onClick={(event) => handleClearCart(event.currentTarget)}>
+                Clear cart
               </button>
             </div>
           </>
         )}
-      </div>
+      </main>
       
       {showCommander && (
         <Commander 

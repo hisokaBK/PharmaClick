@@ -57,3 +57,39 @@ test("opens the Contact page from the global navigation", () => {
   expect(screen.getByRole("heading", { name: "Contact Us" })).toBeInTheDocument();
   expect(drawer.open).toBe(false);
 });
+
+test("filters the catalog by name and category and clears search without resetting the cart", () => {
+  window.history.replaceState({}, "", "/Products?search=vitamine+d+974mg");
+  render(<App />);
+  const search = screen.getByRole("searchbox", { name: "Search products by name" });
+  const category = screen.getByLabelText("Category");
+
+  expect(within(screen.getByRole("navigation")).queryByRole("searchbox")).toBeNull();
+  expect(screen.getAllByRole("heading", { name: "Vitamine D 974mg" }).length).toBeGreaterThan(0);
+  fireEvent.click(screen.getAllByRole("button", { name: "Add to cart" })[0]);
+  fireEvent.change(category, { target: { value: "multivitamins" } });
+  fireEvent.change(search, { target: { value: "  dOLIPrane 757mg  " } });
+  expect(screen.getByRole("heading", { name: "No products found" })).toBeInTheDocument();
+
+  fireEvent.click(screen.getByRole("button", { name: "Clear product search" }));
+  expect(search).toHaveValue("");
+  expect(search).toHaveFocus();
+  expect(category).toHaveValue("multivitamins");
+  expect(screen.getByRole("link", { name: "Shopping cart, 1 products" })).toBeInTheDocument();
+  expect(screen.getAllByRole("heading", { name: "Vitamine D 974mg" }).length).toBeGreaterThan(0);
+  expect(screen.queryByRole("heading", { name: "Doliprane 757mg" })).toBeNull();
+});
+
+test.each([
+  ["/Products/multivitamins", "Vitamine D 974mg", "Doliprane 757mg"],
+  ["/Products2/yes", "Doliprane 757mg", "Vitamine D 974mg"],
+])("keeps search scoped to the selected listing at %s", (route, included, excluded) => {
+  window.history.replaceState({}, "", `${route}?search=${encodeURIComponent(included.toUpperCase())}`);
+  render(<App />);
+  const search = screen.getByRole("searchbox");
+  expect(screen.getAllByRole("heading", { name: included }).length).toBeGreaterThan(0);
+
+  fireEvent.change(search, { target: { value: excluded } });
+  expect(screen.getByRole("status")).toHaveTextContent("No products found");
+  expect(screen.queryByRole("heading", { name: excluded })).toBeNull();
+});
