@@ -2,6 +2,10 @@
 
 🌐 **Live Demo:** [Explore PharmaClick](https://pharma-click.netlify.app/)
 
+## 📸 Project Screenshot
+
+![PharmaClick homepage](docs/images/pharmaclick-home.webp)
+
 **PharmayClick** is a front-end web application built using **React**, **HTML**, **CSS**, and **Bootstrap**, designed to simulate an online pharmacy experience.
 
 ## 🧩 Features
