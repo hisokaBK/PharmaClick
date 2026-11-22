@@ -2,7 +2,7 @@
   command = "npm run build"
   publish = "build"
 
-[build.environment]
-  # CRA treats existing lint warnings as build errors in CI. Keep warnings visible
-  # while allowing compilation to finish. Run lint and tests separately.
-  CI = "false"
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
