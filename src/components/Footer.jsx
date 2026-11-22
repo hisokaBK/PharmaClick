@@ -83,8 +83,8 @@ const Footer = () => {
                     <Link  className="footer-link" to='/Delivery'>
                         Delivery Tracking
                     </Link>
-                    <Link  className="footer-link" to='/Herbal'>
-                        Herbal Solutions
+                    <Link  className="footer-link" to='/Dashboard'>
+                        Dashboard
                     </Link>
                     <Link  className="footer-link" to='/products_usf'>
                         Protect yourself

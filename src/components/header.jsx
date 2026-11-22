@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 import "../css/Nav.css";
 import MedicationsMenu from "./MedicationsMenu";
 
-export default function Nav({ shop = false }) {
+export default function Nav() {
   const [scrolled, setScrolled] = useState(false);
   const [active, setActive] = useState(null);
   const cartCount = useSelector(state => state.cardData.length);
@@ -27,6 +27,7 @@ export default function Nav({ shop = false }) {
         {/* Link the navbar logo to Home while retaining its responsive alignment. */}
         <Link className="nav__logo" to="/" aria-label="Go to homepage">
           <img src="/images/set_log1.jpg" alt="" loading="lazy" />
+          <span>PharmaClick</span>
         </Link>
 
         <ul className="ul1">
@@ -39,7 +40,7 @@ export default function Nav({ shop = false }) {
 
           <MedicationsMenu active={active} setActive={setActive} />
           <ServicesMenu active={active} setActive={setActive} />
-          <li className={shop ? "cart-link-item" : "cart-link-item nav-compact-cart"}>
+          <li className="cart-link-item">
             <Link to="/Medications/Shop" className="cart-link" aria-label={`Shopping cart, ${cartCount} products`}>
               <FaCartPlus className="cart-icon" size={29} aria-hidden="true" />
               <span className="cart-counter">{cartCount}</span>

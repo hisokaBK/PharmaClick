@@ -26,6 +26,15 @@ export default function Sidebar() {
   useEffect(() => {
     if (drawer.current.open) drawer.current.close();
   }, [key]);
+  useEffect(() => {
+    const desktop = window.matchMedia?.("(min-width: 1024px)");
+    if (!desktop) return;
+    const closeOnDesktop = () => {
+      if (desktop.matches && drawer.current?.open) drawer.current.close();
+    };
+    desktop.addEventListener("change", closeOnDesktop);
+    return () => desktop.removeEventListener("change", closeOnDesktop);
+  }, []);
 
   function renderLinks(items) {
     return items.map(([name, route]) => <li key={route}><NavLink end to={route} onClick={() => drawer.current.close()}>{name}</NavLink></li>);

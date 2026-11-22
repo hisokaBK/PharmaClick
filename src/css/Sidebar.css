@@ -31,6 +31,11 @@
   box-shadow: 1px 0 14px #080808;
 }
 
+@media (min-width: 1024px) {
+  .global-menu-toggle,
+  .global-sidebar { display: none; }
+}
+
 .global-sidebar::backdrop { background: rgba(0, 0, 0, 0.35); }
 body:has(.global-sidebar[open]) { overflow-y: hidden; }
 .global-sidebar nav { min-height: 100%; padding: 12px; }
