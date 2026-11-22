@@ -24,6 +24,28 @@ test("excludes the global navigation from sign in", () => {
   expect(screen.queryByRole("button", { name: "Open navigation menu" })).not.toBeInTheDocument();
 });
 
+test("opens the Medications menu from the keyboard and keeps one mega menu open", () => {
+  window.history.replaceState({}, "", "/Professional");
+  render(<App />);
+  const medications = screen.getByRole("button", { name: "Medications" });
+  const services = screen.getByRole("button", { name: "Services" });
+
+  fireEvent.keyDown(medications, { key: "ArrowDown" });
+  expect(medications).toHaveAttribute("aria-expanded", "true");
+  const firstLink = screen.getByRole("link", { name: "Browse Medicines" });
+  expect(firstLink).toHaveFocus();
+  fireEvent.keyDown(firstLink, { key: "Escape" });
+  expect(medications).toHaveAttribute("aria-expanded", "false");
+  expect(medications).toHaveFocus();
+
+  fireEvent.click(medications);
+  fireEvent.click(services);
+  expect(medications).toHaveAttribute("aria-expanded", "false");
+  expect(services).toHaveAttribute("aria-expanded", "true");
+  fireEvent.pointerDown(screen.getByRole("heading", { name: "Professional Guidelines" }));
+  expect(services).toHaveAttribute("aria-expanded", "false");
+});
+
 test("scores and restarts the health quiz", () => {
   window.history.replaceState({}, "", "/Health_Quizzes");
   render(<App />);

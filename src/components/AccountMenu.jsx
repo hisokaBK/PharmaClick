@@ -1,4 +1,4 @@
-import { useEffect, useId, useRef, useState } from "react";
+import { useEffect, useId, useRef } from "react";
 import { ChevronDown } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { initialsFor } from "../store/demoAccounts";
@@ -12,15 +12,21 @@ export const accountLinks = [
   ["Account Settings", "/profile?tab=settings"],
 ];
 
-export function AccountAvatar({ name }) {
-  return <span className="demo-avatar" aria-hidden="true">{initialsFor(name)}</span>;
+export function AccountAvatar({ name, photoUrl }) {
+  return (
+    <span className="demo-avatar" aria-hidden="true">
+      {photoUrl ? <img src={photoUrl} alt="" /> : initialsFor(name)}
+    </span>
+  );
 }
 
-export default function AccountMenu() {
-  const { user, signOut } = useDemoAuth();
+const closeAccount = (current) => current?.name === "account" ? null : current;
+
+export default function AccountMenu({ active, setActive }) {
+  const { user, signOut, photoUrl } = useDemoAuth();
   const { notify } = useFeedback();
   const navigate = useNavigate();
-  const [open, setOpen] = useState(false);
+  const open = active?.name === "account";
   const root = useRef(null);
   const trigger = useRef(null);
   const id = useId();
@@ -28,11 +34,11 @@ export default function AccountMenu() {
   useEffect(() => {
     if (!open) return;
     const closeOutside = (event) => {
-      if (!root.current?.contains(event.target)) setOpen(false);
+      if (!root.current?.contains(event.target)) setActive(closeAccount);
     };
     const closeOnEscape = (event) => {
       if (event.key !== "Escape") return;
-      setOpen(false);
+      setActive(closeAccount);
       trigger.current?.focus();
     };
     document.addEventListener("pointerdown", closeOutside);
@@ -41,7 +47,7 @@ export default function AccountMenu() {
       document.removeEventListener("pointerdown", closeOutside);
       document.removeEventListener("keydown", closeOnEscape);
     };
-  }, [open]);
+  }, [open, setActive]);
 
   if (!user) {
     return (
@@ -54,24 +60,24 @@ export default function AccountMenu() {
 
   return (
     <div className="demo-account-menu" ref={root} onBlur={(event) => {
-      if (event.relatedTarget && !event.currentTarget.contains(event.relatedTarget)) setOpen(false);
+      if (event.relatedTarget && !event.currentTarget.contains(event.relatedTarget)) setActive(closeAccount);
     }}>
       <button type="button" className="demo-account-trigger" ref={trigger}
         aria-label={`Account menu for ${user.name}`} aria-expanded={open} aria-controls={id}
-        onClick={() => setOpen((current) => !current)}>
-        <AccountAvatar name={user.name} />
+        onClick={() => setActive((current) => current?.name === "account" ? null : { name: "account" })}>
+        <AccountAvatar name={user.name} photoUrl={photoUrl} />
         <span className="demo-account-name">{user.name}</span>
         <ChevronDown size={16} aria-hidden="true" />
       </button>
       <div id={id} className="demo-account-panel" data-open={open} inert={!open} aria-hidden={!open}>
         <div className="demo-account-identity"><strong>{user.name}</strong><span>{user.email}</span></div>
         {accountLinks.map(([label, target]) => (
-          <Link key={target} to={target} onClick={() => setOpen(false)}>{label}</Link>
+          <Link key={target} to={target} onClick={() => setActive(closeAccount)}>{label}</Link>
         ))}
         <button type="button" onClick={() => {
           try {
             signOut();
-            setOpen(false);
+            setActive(closeAccount);
             notify("success", "You signed out of your demo account.");
             navigate("/", { replace: true });
           } catch {

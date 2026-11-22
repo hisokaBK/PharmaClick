@@ -4,6 +4,7 @@ import { AccountAvatar, accountLinks } from "./AccountMenu";
 import { useDemoAuth } from "./DemoAuth";
 import { useFeedback } from "./Feedback";
 import Footer from "./Footer";
+import ProfilePhoto from "./ProfilePhoto";
 import useDemoForm from "./useDemoForm";
 import { demoAccountNotice } from "../store/demoAccounts";
 
@@ -42,7 +43,7 @@ function PersonalInformation({ user, editing, setEditing }) {
 }
 
 export default function Profile() {
-  const { user, deleteAccount } = useDemoAuth();
+  const { user, deleteAccount, photoUrl } = useDemoAuth();
   const { notify, requestConfirmation } = useFeedback();
   const [params] = useSearchParams();
   const value = params.get("tab");
@@ -54,7 +55,7 @@ export default function Profile() {
     <>
       <main className="demo-profile">
         <header className="demo-profile-header">
-          <AccountAvatar name={user.name} />
+          <AccountAvatar name={user.name} photoUrl={photoUrl} />
           <div className="demo-profile-heading"><h1>{user.name}</h1><p>{user.email}</p></div>
           <Link className="demo-secondary" to="/profile" onClick={() => setEditing(true)}>Edit Profile</Link>
         </header>
@@ -64,7 +65,12 @@ export default function Profile() {
               onClick={() => setEditing(false)}>{label}</Link>
           ))}
         </nav>
-        {tab === "profile" && <PersonalInformation key={user.id} user={user} editing={editing} setEditing={setEditing} />}
+        {tab === "profile" && (
+          <div className="demo-profile-content" key={user.id}>
+            <PersonalInformation user={user} editing={editing} setEditing={setEditing} />
+            <ProfilePhoto />
+          </div>
+        )}
         {tab === "orders" && (
           <section className="demo-profile-section">
             <h2>My Orders</h2>
@@ -79,11 +85,11 @@ export default function Profile() {
             <p>{demoAccountNotice}</p>
             <button type="button" className="demo-danger" onClick={(event) => requestConfirmation({
               title: "Delete demo account?",
-              description: "This permanently removes this demo account and its saved cart from this browser.",
+              description: "This permanently removes this demo account, its photo, and its saved cart from this browser.",
               confirmLabel: "Delete account",
               trigger: event.currentTarget,
-              onConfirm: () => {
-                deleteAccount();
+              onConfirm: async () => {
+                await deleteAccount();
                 notify("success", "Your demo account was deleted.");
               },
             })}>Delete demo account</button>

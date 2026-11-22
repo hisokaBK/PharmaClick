@@ -1,6 +1,4 @@
-import { useId, useRef, useState } from "react";
-import { Link } from "react-router-dom";
-import { FiChevronDown } from "react-icons/fi";
+import NavMegaMenu from "./NavMegaMenu";
 import {
   FaAppleAlt, FaBed, FaBell, FaBrain, FaDumbbell, FaHeartbeat, FaLeaf,
   FaNewspaper, FaPoll, FaQuestionCircle, FaUtensils,
@@ -24,45 +22,8 @@ export const serviceGroups = [
   ] },
 ];
 
-export default function ServicesMenu() {
-  const panelId = useId();
-  const trigger = useRef(null);
-  const [open, setOpen] = useState(false);
+const columns = serviceGroups.map((group) => [group]);
 
-  return (
-    <li id="services" style={{ minWidth: "99px" }}
-      onMouseEnter={() => setOpen(true)}
-      onMouseLeave={event => {
-        if (!event.currentTarget.contains(document.activeElement)) setOpen(false);
-      }}
-      onBlur={event => {
-        if (!event.currentTarget.contains(event.relatedTarget)) setOpen(false);
-      }}
-      onKeyDown={event => {
-        if (event.key === "Escape" && open) {
-          event.preventDefault();
-          setOpen(false);
-          trigger.current.focus();
-        }
-      }}>
-      <button type="button" className="listA services-trigger" ref={trigger} aria-expanded={open} aria-controls={panelId} onClick={event => setOpen(current => event.detail > 0 || !current)}>
-        Services <FiChevronDown className="dropdown-icon" aria-hidden="true" />
-      </button>
-      <div className="dropdown-menu" id={panelId} hidden={!open}>
-        <div className="row">
-          {serviceGroups.map(group => (
-            <div className="col-6" key={group.title}>
-              <h6 className="h4_Services">{group.title}</h6>
-              {group.links.map(([label, route, Icon]) => (
-                <Link className="a_Services" key={route} to={route} onClick={() => setOpen(false)}>
-                  <Icon className="me-2" aria-hidden="true" /> {label}
-                </Link>
-              ))}
-            </div>
-          ))}
-        </div>
-      </div>
-    </li>
-  );
+export default function ServicesMenu(props) {
+  return <NavMegaMenu name="Services" columns={columns} {...props} />;
 }
-

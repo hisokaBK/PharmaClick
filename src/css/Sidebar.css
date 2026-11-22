@@ -1,12 +1,12 @@
 .global-menu-toggle {
   position: fixed;
   top: 10px;
-  left: 4px;
+  left: var(--nav-drawer-inset);
   z-index: 1010;
   display: grid;
   place-items: center;
-  width: 40px;
-  height: 40px;
+  width: var(--nav-drawer-size);
+  height: var(--nav-drawer-size);
   border: 0;
   border-radius: 6px;
   background: var(--nav-bg);
@@ -44,7 +44,7 @@ body:has(.global-sidebar[open]) { overflow-y: hidden; }
 
 /* Keep the drawer and its close control easy to tap below the desktop breakpoint. */
 @media (max-width: 1023px) {
-  .global-menu-toggle { top: 8px; width: 44px; height: 44px; }
+  .global-menu-toggle { top: 8px; }
   .global-menu-close { width: 44px; height: 44px; }
   .global-sidebar a { display: flex; align-items: center; min-height: 44px; }
 }

@@ -6,6 +6,7 @@ import {
   authenticateDemo, DemoAccountError, demoStorageKey, ensureUniqueEmail,
   findSession, publicAccount, readDemo, validateIdentity, writeDemo,
 } from "../store/demoAccounts";
+import { readProfilePhoto, writeProfilePhoto } from "../store/profilePhotos";
 
 const DemoAuthContext = createContext(null);
 
@@ -30,6 +31,9 @@ export default function DemoAuthProvider({ children }) {
   const store = useStore();
   const { notify } = useFeedback();
   const [user, setUser] = useState(() => publicAccount(findSession(readDemo())));
+  const [photo, setPhoto] = useState(null);
+  const [avatar, setAvatar] = useState(null);
+  const photoWrites = useRef(Promise.resolve());
   const owner = useRef(null);
   const guestCart = useRef([]);
   const switching = useRef(false);
@@ -91,6 +95,49 @@ export default function DemoAuthProvider({ children }) {
     };
   }, [store, notify, restoreSession]);
 
+  const accountId = user?.id;
+  useEffect(() => {
+    setPhoto(null);
+    if (!accountId || !window.indexedDB) return;
+    let cancelled = false;
+    readProfilePhoto(accountId).then((blob) => {
+      if (!cancelled) setPhoto((current) => current?.accountId === accountId ? current : { accountId, blob });
+    }).catch(() => {
+      // Keep the initials available if photo storage is blocked or unreadable.
+    });
+    return () => { cancelled = true; };
+  }, [accountId]);
+
+  useEffect(() => {
+    if (!photo?.blob || photo.accountId !== accountId) {
+      setAvatar(null);
+      return;
+    }
+    const url = URL.createObjectURL(photo.blob);
+    setAvatar({ photo, url });
+    return () => URL.revokeObjectURL(url);
+  }, [accountId, photo]);
+
+  function queuePhotoWrite(operation) {
+    const result = photoWrites.current.then(operation);
+    photoWrites.current = result.catch(() => {});
+    return result;
+  }
+
+  function updatePhoto(blob) {
+    return queuePhotoWrite(async () => {
+      if (!accountId || findSession(readDemo())?.id !== accountId) {
+        throw new DemoAccountError("Your session changed. Sign in again.");
+      }
+      await writeProfilePhoto(accountId, blob);
+      if (!readDemo().accounts.some(({ id }) => id === accountId)) {
+        await writeProfilePhoto(accountId, null);
+        throw new DemoAccountError("This demo account no longer exists.");
+      }
+      if (owner.current === accountId) setPhoto({ accountId, blob });
+    });
+  }
+
   async function signIn(email, password) {
     return restoreSession(await authenticateDemo(email, password));
   }
@@ -114,15 +161,21 @@ export default function DemoAuthProvider({ children }) {
   }
 
   function deleteAccount() {
-    const saved = readDemo();
-    if (findSession(saved)?.id !== user.id) throw new DemoAccountError("Your session changed. Sign in again.");
-    const next = { sessionId: null, accounts: saved.accounts.filter(({ id }) => id !== user.id) };
-    writeDemo(next);
-    restoreSession(next);
+    return queuePhotoWrite(async () => {
+      if (findSession(readDemo())?.id !== accountId) throw new DemoAccountError("Your session changed. Sign in again.");
+      if (window.indexedDB) await writeProfilePhoto(accountId, null);
+      const saved = readDemo();
+      if (findSession(saved)?.id !== accountId) throw new DemoAccountError("Your session changed. Sign in again.");
+      setPhoto({ accountId, blob: null });
+      const next = { sessionId: null, accounts: saved.accounts.filter(({ id }) => id !== accountId) };
+      writeDemo(next);
+      restoreSession(next);
+    });
   }
 
+  const photoUrl = avatar?.photo === photo && photo?.accountId === accountId ? avatar?.url : undefined;
   return (
-    <DemoAuthContext.Provider value={{ user, signIn, signOut, updateProfile, deleteAccount }}>
+    <DemoAuthContext.Provider value={{ user, signIn, signOut, updateProfile, deleteAccount, photoUrl, updatePhoto }}>
       {children}
     </DemoAuthContext.Provider>
   );

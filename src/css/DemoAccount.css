@@ -7,13 +7,14 @@
 
 .demo-password-hint { margin: -12px 0 12px; color: #4a5568; font-size: 0.875rem; }
 .demo-nav-guest a { display: block; text-align: center; }
-.demo-account-menu { position: relative; margin-inline-start: clamp(8px, 2vw, 28px); }
+.demo-account-menu { position: relative; min-width: 0; }
 
 .demo-account-trigger {
   display: flex;
   align-items: center;
   gap: 8px;
   min-height: 44px;
+  max-width: 100%;
   padding: 4px 6px;
   border: 0;
   border-radius: 8px;
@@ -31,7 +32,11 @@
   background: #038a61;
   color: white;
   font-weight: 700;
+  overflow: hidden;
 }
+
+.demo-avatar img { width: 100%; height: 100%; object-fit: cover; }
+.demo-account-trigger > svg { flex: none; }
 
 .demo-account-name {
   max-width: clamp(12ch, 18vw, 28ch);
@@ -100,13 +105,28 @@
 .demo-profile-tabs { display: flex; flex-wrap: wrap; gap: 6px 18px; margin: 16px 0; }
 .demo-profile-tabs a { display: inline-flex; align-items: center; min-height: 44px; color: #4a5568; text-decoration: none; }
 .demo-profile-tabs a[aria-current] { color: #038a61; box-shadow: inset 0 -2px #038a61; }
+.demo-profile-content {
+  display: grid;
+  align-items: start;
+  grid-template-columns: minmax(0, 1.65fr) minmax(0, 1fr);
+  gap: 14px;
+}
+
 .demo-profile-section h2 { margin: 0 0 16px; font-size: 1.25rem; }
 .demo-profile-section p, .demo-profile-details dd { overflow-wrap: anywhere; }
-.demo-profile-details { margin: 0; }
-.demo-profile-details dd { margin: 0 0 12px; }
-.demo-profile-form { display: grid; max-width: 32rem; gap: 14px; }
-.demo-profile-form input { min-height: 44px; margin-top: 5px; }
+.demo-profile-details, .demo-profile-form {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 190px), 1fr));
+  gap: 12px;
+  margin: 0;
+}
+.demo-profile-details dd { margin: 3px 0 0; }
+.demo-profile-form label { display: grid; gap: 5px; min-width: 0; }
+.demo-profile-form .form-control { min-height: 40px; height: auto; margin: 0; padding: 8px 10px; }
+.demo-profile-form .demo-profile-actions { grid-column: 1 / -1; margin-block-start: 8px; }
 .demo-profile-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.demo-photo-section > p { color: #4a5568; margin: 0 0 12px; }
+.demo-photo-preview { display: block; width: 72px; height: 72px; object-fit: cover; border-radius: 50%; margin-bottom: 12px; }
 .demo-primary, .demo-secondary, .demo-danger {
   display: inline-flex;
   align-items: center;
@@ -131,7 +151,10 @@
     padding: 0 6px;
     white-space: nowrap;
   }
-  .demo-account-menu { margin: 0; }
+}
+
+@media (max-width: 680px) {
+  .demo-profile-content { grid-template-columns: minmax(0, 1fr); }
 }
 
 @media (max-width: 480px) {
