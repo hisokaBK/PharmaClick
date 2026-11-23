@@ -10,8 +10,8 @@ import "../css/SignUp.css";
 import ScrolToTop from "./scrolToTop";
 import { useFeedback } from "./Feedback";
 import { useDemoAuth } from "./DemoAuth";
-import useDemoForm from "./useDemoForm";
-import { createDemoAccount, validAccountEmail, validAccountPassword } from "../store/demoAccounts";
+import useDemoForm, { demoPasswordRules } from "./useDemoForm";
+import { createDemoAccount, validAccountEmail } from "../store/demoAccounts";
 import { useI18n } from "../i18n/LanguageProvider";
 import ValidatedField, { useFieldValidation } from "./ValidatedField";
 import LanguageSelector from "../i18n/LanguageSelector";
@@ -24,8 +24,7 @@ export default function SignUp() {
   const validation = useFieldValidation({
     name: (value) => value.replace(/\s+/g, " ").length > 100 && "Enter a full name of up to 100 characters.",
     email: (value, input) => (input.validity.typeMismatch || !validAccountEmail(value)) && "Enter a valid email address.",
-    password: (value) => !validAccountPassword(value) && "Use a password with 8 to 128 characters.",
-    confirmation: (value, input, form) => value !== form.elements.namedItem("password").value && "The passwords do not match.",
+    ...demoPasswordRules,
   });
   const { pending, onSubmit } = useDemoForm(async (fields) => {
     await createDemoAccount(fields);

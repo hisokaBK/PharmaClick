@@ -6,6 +6,7 @@ import Nav from "./components/header";
 import Home from "./components/home";
 import SignUp from "./components/SignUp";
 import SignIn from "./components/SignI";
+import ForgotPassword from "./components/ForgotPassword";
 import ScrollToTop from "./components/scrolToTop"; // Corrected spelling
 import Contact from "./components/Contact";
 import About from "./components/About";
@@ -87,6 +88,7 @@ const App = () => {
         </Route>
         <Route path="/signup" element={<SignUp />} />
         <Route path="/signin" element={<SignIn />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
       </Routes>
       </DemoAuthProvider>
       </FeedbackProvider>

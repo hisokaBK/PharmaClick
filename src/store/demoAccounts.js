@@ -1,5 +1,6 @@
 export const demoStorageKey = "pharmaclick.demo.v1";
 export const demoAccountNotice = "Browser-only demo. Accounts and carts stay in this browser. Use a demo password you do not use elsewhere.";
+export const sameDemoPassword = "Choose a password different from your current demo password.";
 
 export class DemoAccountError extends Error {}
 const surnamePrefixes = new Set(["al", "el", "de", "del", "da", "di", "van", "von"]);
@@ -82,19 +83,48 @@ async function deriveVerifier(password, salt) {
   return hex(new Uint8Array(result));
 }
 
-export async function createDemoAccount({ name, email, password, confirmation }) {
-  const identity = validateIdentity(name, email);
+function validateNewPassword(password, confirmation) {
   if (!validAccountPassword(password)) throw new DemoAccountError("Use a password with 8 to 128 characters.");
   if (password !== confirmation) throw new DemoAccountError("The passwords do not match.");
-  ensureUniqueEmail(readDemo().accounts, identity.email);
+}
 
+async function newPasswordCredentials(password) {
   const crypto = cryptoForDemo();
   const salt = hex(crypto.getRandomValues(new Uint8Array(16)));
   const verifier = await deriveVerifier(password, salt);
+  return { salt, verifier };
+}
+
+export async function createDemoAccount({ name, email, password, confirmation }) {
+  const identity = validateIdentity(name, email);
+  validateNewPassword(password, confirmation);
+  ensureUniqueEmail(readDemo().accounts, identity.email);
+  const credentials = await newPasswordCredentials(password);
   const saved = readDemo();
   ensureUniqueEmail(saved.accounts, identity.email);
-  const id = hex(crypto.getRandomValues(new Uint8Array(16)));
-  writeDemo({ ...saved, accounts: [...saved.accounts, { id, ...identity, salt, verifier, cart: [] }] });
+  const id = hex(cryptoForDemo().getRandomValues(new Uint8Array(16)));
+  writeDemo({ ...saved, accounts: [...saved.accounts, { id, ...identity, ...credentials, cart: [] }] });
+}
+
+export async function resetDemoPassword({ id, email }, { password, confirmation }) {
+  validateNewPassword(password, confirmation);
+  const changed = new DemoAccountError("This demo account has changed. Check the email and try again.");
+  const selected = readDemo().accounts.find((account) => account.id === id && account.email === email);
+  if (!selected) throw changed;
+  if (await deriveVerifier(password, selected.salt) === selected.verifier) {
+    throw new DemoAccountError(sameDemoPassword);
+  }
+
+  const credentials = await newPasswordCredentials(password);
+  const saved = readDemo();
+  const current = saved.accounts.find((account) => account.id === id && account.email === email);
+  if (!current || current.salt !== selected.salt || current.verifier !== selected.verifier) throw changed;
+
+  writeDemo({
+    ...saved,
+    sessionId: saved.sessionId === id ? null : saved.sessionId,
+    accounts: saved.accounts.map((account) => account === current ? { ...account, ...credentials } : account),
+  });
 }
 
 export async function authenticateDemo(email, password) {

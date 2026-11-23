@@ -148,10 +148,7 @@ export default function SignIn() {
                       }}
                     >
                       <div>
-                        <Link to="/forgPass" style={{ color: "green" }} onClick={(event) => {
-                          event.preventDefault();
-                          notify("info", "Password recovery is unavailable in this demo.");
-                        }}>
+                        <Link to="/forgot-password" style={{ color: "green" }}>
                           {t("Forgot Password?")}
                         </Link>
                       </div>
