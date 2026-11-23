@@ -85,6 +85,8 @@
 
 /* Green Pulse Button */
 .pulse-button {
+  display: inline-block;
+  text-decoration: none;
   background: linear-gradient(to right, #4CAF50, #2E7D32);
   color: rgb(63, 79, 64);
   border: none;
@@ -100,7 +102,7 @@
   box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.7);
   transition: all 0.3s ease;
   animation: pulse 2s infinite;
-  margin-left:64px;
+  margin-inline-start: 64px;
 }
 
 .pulse-button:hover {
@@ -405,7 +407,7 @@
   .medications-container .header-text-overlay { position: relative; padding: 20px; }
   .medications-container .header-title { font-size: clamp(1.45rem, 5vw, 2rem); margin: 0 0 12px; }
   .medications-container .header-description { font-size: 1rem; }
-  .medications-container .pulse-button { margin-left: 0; max-width: 100%; }
+  .medications-container .pulse-button { margin-inline-start: 0; max-width: 100%; }
 }
 
 /* Keep the compact hero readable throughout its reveal. A small shared

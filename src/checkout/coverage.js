@@ -51,28 +51,39 @@ export function deliveryProblem(point) {
 }
 
 const normalize = (value) => value.normalize("NFD").replace(/\p{M}/gu, "").trim().toLowerCase();
-const places = cities.map(([en, fr, ar, lat, lng, name, ascii]) => ({
-  en, fr, ar, lat, lng, problem: deliveryProblem({ lat, lng }),
-  names: [...new Set([en, fr, ar, name, ascii].filter(Boolean).map(normalize))],
-}));
-const domestic = places.filter(({ problem }) => !problem);
+let placeIndex;
+
+function getPlaceIndex() {
+  if (!placeIndex) {
+    const places = cities.map(([en, fr, ar, lat, lng, name, ascii]) => ({
+      en, fr, ar, lat, lng, problem: deliveryProblem({ lat, lng }),
+      names: [...new Set([en, fr, ar, name, ascii].filter(Boolean).map(normalize))],
+    }));
+    placeIndex = { places, domestic: places.filter(({ problem }) => !problem) };
+  }
+  return placeIndex;
+}
 const distance = (a, b) => 111.195 * Math.hypot(a.lat - b.lat,
   (a.lng - b.lng) * Math.cos((a.lat + b.lat) * Math.PI / 360));
 
 export function searchCities(query) {
   const name = normalize(query);
+  const { places } = getPlaceIndex();
   const matching = places.filter((city) => city.names.some((alias) => alias.startsWith(name)));
   return matching.sort((a, b) => Number(b.names.includes(name)) - Number(a.names.includes(name)) ||
     Number(!b.problem) - Number(!a.problem)).slice(0, 8);
 }
 
 export function locationCity(point) {
+  const { domestic } = getPlaceIndex();
   const city = domestic.reduce((closest, item) => distance(point, item) < distance(point, closest) ? item : closest);
   return distance(point, city) <= 15 ? city : null;
 }
 
 export function addressLocationProblem(city, point) {
-  const matches = places.filter(({ names }) => names.includes(normalize(city)));
+  const { places } = getPlaceIndex();
+  const name = normalize(city);
+  const matches = places.filter(({ names }) => names.includes(name));
   if (!matches.length) return null;
   const domesticMatches = matches.filter(({ problem }) => !problem);
   if (!domesticMatches.length) {

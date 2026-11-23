@@ -137,30 +137,6 @@
   margin: 0;
 }
 
-.pharmacy-action-button {
-  background-color: #2e7d32;
-  color: white;
-  border: none;
-  padding: 0.75rem 2rem;
-  font-size: 1rem;
-  font-weight: 600;
-  border-radius: 0.25rem;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  transform: scale(0.95);
-  opacity: 0;
-}
-
-.pharmacy-action-button.visible {
-  transform: scale(1);
-  opacity: 1;
-}
-
-.pharmacy-action-button:hover {
-  background-color: #1b5e20;
-  transform: scale(1.05);
-}
-
 @keyframes pulse {
   0% {
     transform: scale(1);
@@ -177,6 +153,8 @@
 }
 
 .pharmacy-action-button {
+  display: inline-block;
+  text-decoration: none;
   background-color: #2e7d32;
   color: white;
   border: none;
@@ -197,6 +175,7 @@
 }
 
 .pharmacy-action-button:hover {
+  color: white;
   background-color: #1b5e20;
   transform: scale(1.05);
   animation: none; /* Stop the pulse animation on hover */

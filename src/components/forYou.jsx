@@ -79,12 +79,12 @@ const PharmacyServices = () => {
             ))}
           </div>
 
-          <Link to='/Medications'><button 
+          <Link to="/Medications"
             className="pharmacy-action-button"
-            ref={el => elementRefs.current[healthMetrics.length + serviceHighlights.length] = el}
+            ref={el => { elementRefs.current[healthMetrics.length + serviceHighlights.length] = el; }}
           >
             {t("Access medications easily →")}
-          </button></Link>
+          </Link>
         </div>
       </div>
     </section>

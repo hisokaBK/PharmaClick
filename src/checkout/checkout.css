@@ -17,11 +17,35 @@
   list-style: none;
 }
 .checkout-steps li {
-  padding: .6rem;
-  border-block-end: 3px solid #d6e6df;
+  min-inline-size: 0;
+  border-block-end: 3px solid #dcebe3;
+  border-radius: .4rem;
+  color: #4a5568;
   font-weight: 600;
 }
-.checkout-steps li[aria-current] { color: #075a40; border-color: #087653; background: #edf8f2; }
+.checkout-steps [data-state="completed"] { color: #075a40; border-color: #a8cdbd; background: #f5faf7; }
+.checkout-steps [data-state="current"] { color: #075a40; border-color: #087653; background: #edf8f2; }
+.checkout-steps .checkout-step {
+  display: flex;
+  align-items: center;
+  gap: .45rem;
+  inline-size: 100%;
+  min-block-size: 44px;
+  block-size: 100%;
+  padding: .6rem .7rem;
+  border: 0;
+  border-radius: inherit;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: start;
+  text-decoration: none;
+}
+.checkout-step svg { flex: none; color: #087653; }
+.checkout-step > span { min-inline-size: 0; }
+.checkout-steps :is(a, button).checkout-step:not(:disabled) { cursor: pointer; }
+.checkout-steps :is(a, button).checkout-step:not(:disabled):hover { background: #e4f3eb; }
+.checkout-step:focus-visible { outline: 2px solid #087653; outline-offset: -2px; }
 .checkout-panel {
   background: #fff;
   padding: clamp(1rem, 3vw, 2rem);

@@ -37,7 +37,7 @@ const Contact = () => {
           </ul>
             <div style={{display:'flex',justifyContent:'center'}}>
                  {/* Resolve this public asset from the hosting root on direct route loads. */}
-                 <img src="/back7.jpg" alt="" style={{height:'350px'}} />
+                 <img src="/back7.jpg" className="contact-artwork" alt="" decoding="async" />
             </div>
         </div>
 

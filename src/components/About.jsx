@@ -37,15 +37,15 @@ const About = () => {
         <div className="pha-content">
           <div className="pha-text">
             <h3 className="welcome-text">{t("Hello, Welcome")}</h3>
-            <h1 className="name-title">{t("Core Services of HiSoKa")}</h1>
+            <h1 className="name-title">{t("Core Services of PharmaClick")}</h1>
             <p className="bio-text">
-              {t("At Hisoka, we strive to improve healthcare accessibility by offering reliable online srvs for medication browsing, ordering, and expert advice.")}
+              {t("At PharmaClick, we strive to improve healthcare accessibility by offering reliable online services for medication browsing, ordering, and expert advice.")}
             </p>
             <div className="contact-section">
               <div>
-                <Link style={{textDecoration:'none'}} to='/contact' ><button className="animated-contact-btn">
+                <Link to="/contact" className="animated-contact-btn">
                   {t("Contact Us")}
-                </button></Link>
+                </Link>
               </div>
             </div>
           </div>

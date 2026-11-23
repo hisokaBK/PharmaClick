@@ -6,13 +6,14 @@ import Nav from "./components/header";
 import Home from "./components/home";
 import SignUp from "./components/SignUp";
 import SignIn from "./components/SignI";
+import ForgotPassword from "./components/ForgotPassword";
 import ScrollToTop from "./components/scrolToTop"; // Corrected spelling
 import Contact from "./components/Contact";
 import About from "./components/About";
 import Medications from "./Com_Medications/Medications";
 import Products from "./Com_Medications/Products";
 import ProduitFilter from "./Com_Medications/produitFilter";
-import Produit_by_needed_prescription from "./Com_Medications/Produit_by_needed_prescription";
+import ProductsByPrescription from "./Com_Medications/Produit_by_needed_prescription";
 import { Provider } from "react-redux";
 import { legacy_createStore } from "redux";
 import reducer from "./store/reducer";
@@ -69,7 +70,7 @@ const App = () => {
           <Route path="/Medications" element={<Medications />} />
           <Route path="/Products" element={<Products />} />
           <Route path="/Products/:category" element={<ProduitFilter />} />
-          <Route path="/Products2/:need" element={<Produit_by_needed_prescription />} />
+          <Route path="/Products2/:need" element={<ProductsByPrescription />} />
           <Route path="/Medications/Shop" element={<Cart />} />
           <Route path="/Produit/:idP" element={<Produit />} />
           <Route path="/Dashboard" element={<Dashboard />} />
@@ -87,6 +88,7 @@ const App = () => {
         </Route>
         <Route path="/signup" element={<SignUp />} />
         <Route path="/signin" element={<SignIn />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
       </Routes>
       </DemoAuthProvider>
       </FeedbackProvider>

@@ -40,9 +40,9 @@
   color: white;
 }
 
-.table th, .table td {
+.dashboard-container .table th, .dashboard-container .table td {
   padding: 12px;
-  text-align: left;
+  text-align: start;
   border-bottom: 1px solid #ddd;
 }
 
@@ -169,19 +169,26 @@
 }
 
 
-@media (max-width: 768px) {
-  .form-row {
-    flex-direction: column;
-  }
-  
-  .form-group {
-    width: 100%;
-  }
+.dashboard-editor {
+  inline-size: min(800px, calc(100% - 24px));
+  max-block-size: calc(100dvh - 24px);
+  padding: 0;
+  overflow: auto;
+  border: 0;
+  border-radius: 5px;
 }
-/* Keep long dashboard forms within the viewport so their actions remain
-   reachable in portrait and on short tablets. */
-@media (max-width: 1023px) {
-  .dashboard-container .add_idet .modal { overflow-y: auto; }
-  .dashboard-container .modal-dialog { margin: 12px auto; width: calc(100% - 24px); }
-  .dashboard-container .modal-footer { flex-wrap: wrap; }
+.dashboard-editor::backdrop { background: #0006; }
+.dashboard-editor .modal-content { margin: 0; }
+.dashboard-editor .modal-footer { flex-wrap: wrap; }
+.dashboard-editor .form-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 1rem;
+}
+.dashboard-editor .form-group { inline-size: 100%; min-inline-size: 0; }
+.dashboard-editor .closeAdd { min-inline-size: 44px; min-block-size: 44px; }
+.dashboard-container .table-responsive:focus-visible { outline: 2px solid #087653; outline-offset: -2px; }
+@media (max-width: 575px) {
+  .dashboard-editor .form-row { grid-template-columns: minmax(0, 1fr); }
+  .dashboard-container .btn12 { min-inline-size: 44px; min-block-size: 44px; }
 }

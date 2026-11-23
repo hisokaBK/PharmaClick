@@ -1,7 +1,7 @@
 import { webcrypto } from "crypto";
 import { fireEvent, render, screen, within } from "@testing-library/react";
 import App from "../App";
-import { createDemoAccount, authenticateDemo, demoStorageKey, initialsFor, readDemo } from "../store/demoAccounts";
+import { createDemoAccount, authenticateDemo, demoStorageKey, initialsFor, readDemo, writeDemo } from "../store/demoAccounts";
 
 const password = "demo-test-password";
 const cryptoWait = { timeout: 5000 };
@@ -75,6 +75,91 @@ test("sign-in reveals passwords without changing their value or submitting", () 
   expect(input).toHaveAttribute("type", "password");
   expect(input).toHaveValue("  example password  ");
 });
+
+test("forgot password updates only credentials and allows sign-in with the new password", async () => {
+  const emailAddress = "reset@example.com";
+  const newPassword = "new-demo-password";
+  await createDemoAccount({ name: "Reset Demo", email: emailAddress, password, confirmation: password });
+  const account = {
+    ...readDemo().accounts[0],
+    cart: [{ id: 1, times: 1 }],
+    orders: [{ reference: "PC-reset" }],
+    preferences: { delivery: "local" },
+  };
+  const other = { id: "keep", email: "keep@example.com", cart: [{ id: 2, times: 1 }], orders: [{ reference: "PC-keep" }] };
+  writeDemo({ accounts: [account, other], sessionId: null });
+  openPage("/signin");
+  fireEvent.click(screen.getByRole("link", { name: "Forgot Password?" }));
+  expect(screen.getByRole("heading", { name: "Forgot Password" })).toBeVisible();
+  expect(screen.getByText(/without email verification/)).toBeVisible();
+  expect(screen.getByRole("link", { name: "Back to Sign In" })).toHaveAttribute("href", "/signin");
+  const email = screen.getByLabelText("Email address");
+  const proceed = screen.getByRole("button", { name: "Continue" });
+  expect(email).not.toHaveAttribute("aria-invalid");
+  fireEvent.click(proceed);
+  expect(email).toHaveFocus();
+  expect(email).toHaveAccessibleDescription("This field is required.");
+  fill("Email address", "invalid");
+  expect(email).toHaveAccessibleDescription("Enter a valid email address.");
+  fill("Email address", "unknown@example.com");
+  expect(email).not.toHaveAttribute("aria-invalid");
+  fireEvent.click(proceed);
+  expect(email).toHaveAccessibleDescription("No demo account with this email was found in this browser.");
+  expect(email).toHaveValue("unknown@example.com");
+  expect(screen.queryByLabelText("New Password")).not.toBeInTheDocument();
+
+  fill("Email address", "RESET@example.com");
+  fireEvent.click(proceed);
+  const nextPassword = screen.getByLabelText("New Password");
+  const confirmation = screen.getByLabelText("Confirm New Password");
+  const save = screen.getByRole("button", { name: "Save New Password" });
+  expect(nextPassword).toHaveFocus();
+  expect(nextPassword).toHaveAttribute("type", "password");
+  expect(confirmation).toHaveAttribute("type", "password");
+  fireEvent.click(save);
+  expect(screen.getAllByText("This field is required.")).toHaveLength(2);
+  fill("New Password", "short");
+  expect(nextPassword).toHaveAccessibleDescription(/Use a password with 8 to 128 characters/);
+  fill("New Password", newPassword);
+  fill("Confirm New Password", "mismatch-password");
+  expect(confirmation).toHaveAccessibleDescription("The passwords do not match.");
+  fireEvent.click(screen.getByRole("button", { name: "Show password", exact: true }));
+  expect(nextPassword).toHaveAttribute("type", "text");
+  expect(confirmation).toHaveAttribute("type", "password");
+  fireEvent.click(screen.getByRole("button", { name: "Show password confirmation" }));
+  expect(confirmation).toHaveAttribute("type", "text");
+  expect(nextPassword).toHaveValue(newPassword);
+  expect(confirmation).toHaveValue("mismatch-password");
+  expect(readDemo().accounts).toEqual([account, other]);
+
+  fill("New Password", password);
+  fill("Confirm New Password", password);
+  fireEvent.click(save);
+  await screen.findByText("Choose a password different from your current demo password.", {}, cryptoWait);
+  expect(nextPassword).toHaveFocus();
+  expect(readDemo().accounts).toEqual([account, other]);
+  fill("New Password", newPassword);
+  fill("Confirm New Password", newPassword);
+  expect(confirmation).not.toHaveAttribute("aria-invalid");
+  writeDemo({ ...readDemo(), sessionId: account.id });
+  fireEvent.click(save);
+  await screen.findByRole("button", { name: "Sign in" }, cryptoWait);
+  expect(screen.getByLabelText("Email address")).toHaveValue(emailAddress);
+  const { salt, verifier, ...preserved } = readDemo().accounts[0];
+  const { salt: oldSalt, verifier: oldVerifier, ...existing } = account;
+  expect(preserved).toEqual(existing);
+  expect(salt).not.toBe(oldSalt);
+  expect(verifier).not.toBe(oldVerifier);
+  expect(localStorage.getItem(demoStorageKey)).not.toContain(newPassword);
+  expect(readDemo().sessionId).toBeNull();
+  expect(readDemo().accounts[1]).toEqual(other);
+
+  login(emailAddress, password);
+  expect(await screen.findAllByText("The email address or password is incorrect.", {}, cryptoWait)).not.toHaveLength(0);
+  login(emailAddress, newPassword);
+  await screen.findByRole("heading", { name: "Reset Demo" }, cryptoWait);
+  expect(readDemo().sessionId).toBe(account.id);
+}, 30000);
 
 test("registers, checks credentials, updates a profile, and restores isolated carts and sessions", async () => {
   const { unmount: unmountRegistration } = openPage("/signup");

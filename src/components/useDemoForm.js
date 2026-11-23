@@ -1,6 +1,11 @@
 import { useRef, useState } from "react";
-import { DemoAccountError } from "../store/demoAccounts";
+import { DemoAccountError, validAccountPassword } from "../store/demoAccounts";
 import { useFeedback } from "./Feedback";
+
+export const demoPasswordRules = {
+  password: (value) => !validAccountPassword(value) && "Use a password with 8 to 128 characters.",
+  confirmation: (value, input, form) => value !== form.elements.namedItem("password").value && "The passwords do not match.",
+};
 
 export default function useDemoForm(submit) {
   const { notify } = useFeedback();

@@ -4,7 +4,7 @@ import { Navigate, useLocation } from "react-router-dom";
 import { useFeedback } from "./Feedback";
 import {
   authenticateDemo, DemoAccountError, demoStorageKey, ensureUniqueEmail,
-  findSession, publicAccount, readDemo, validateIdentity, writeDemo,
+  findSession, publicAccount, readDemo, resetDemoPassword, validateIdentity, writeDemo,
 } from "../store/demoAccounts";
 import { readProfilePhoto, writeProfilePhoto } from "../store/profilePhotos";
 
@@ -176,9 +176,14 @@ export default function DemoAuthProvider({ children }) {
     });
   }
 
+  async function resetPassword(account, fields) {
+    await resetDemoPassword(account, fields);
+    if (owner.current === account.id) restoreSession(readDemo());
+  }
+
   const photoUrl = avatar?.photo === photo && photo?.accountId === accountId ? avatar?.url : undefined;
   return (
-    <DemoAuthContext.Provider value={{ user, signIn, signOut, updateProfile, deleteAccount, photoUrl, updatePhoto }}>
+    <DemoAuthContext.Provider value={{ user, signIn, signOut, updateProfile, deleteAccount, resetPassword, photoUrl, updatePhoto }}>
       {children}
     </DemoAuthContext.Provider>
   );

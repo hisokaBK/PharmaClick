@@ -1,19 +1,29 @@
-import { useEffect, useRef, useState } from "react";
+import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import { useStore, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { Banknote, CreditCard, LocateFixed } from "lucide-react";
+import { Banknote, Check, CreditCard, LocateFixed } from "lucide-react";
 import { clearCart } from "../store/actions";
 import { useDemoAuth } from "../components/DemoAuth";
 import { useFeedback } from "../components/Feedback";
 import ValidatedField, { useFieldValidation } from "../components/ValidatedField";
 import { useI18n } from "../i18n/LanguageProvider";
-import DeliveryMap from "./DeliveryMap";
 import { addressLocationProblem, deliveryProblem, locationCity, parseCoordinate, searchCities } from "./coverage";
 import { cartProblem, cartTotals, cleanAddress, deliveryAddressProblem, paymentLabels, saveOrder, validCart, validDeliveryPhone } from "./demoOrders";
 import { Address, OrderItems } from "./OrderInvoice";
 import "./checkout.css";
 
-const steps = ["Cart", "Delivery Location", "Payment", "Review & Confirmation"];
+const steps = [
+  { label: "Cart" },
+  { label: "Delivery Location", destination: "address" },
+  { label: "Payment", destination: "payment" },
+  { label: "Review & Confirmation" },
+];
+const LazyDeliveryMap = lazy(() => import("./DeliveryMap"));
+
+function DeliveryMap(props) {
+  const placeholder = <div aria-hidden="true" className={props.preview ? "checkout-map checkout-map-preview" : "checkout-map"} />;
+  return <Suspense fallback={placeholder}><LazyDeliveryMap {...props} /></Suspense>;
+}
 const fields = [
   ["name", "Full name", "name", 100],
   ["phone", "Phone number", "tel", 32],
@@ -63,7 +73,8 @@ function CheckoutFlow({ user }) {
     city: (value) => point && addressLocationProblem(value, point),
     street: null,
   });
-  const stepIndex = stage === "review" ? 3 : stage === "payment" ? 2 : 1;
+  const hasCart = validCart(items);
+  const stepIndex = !hasCart ? 0 : stage === "review" ? 3 : stage === "payment" ? 2 : 1;
 
   useEffect(() => {
     active.current = true;
@@ -192,12 +203,24 @@ function CheckoutFlow({ user }) {
       <p>{t("This is a demo. No payment is collected and no delivery is arranged.")}</p>
       <nav aria-label={t("Checkout progress")}>
         <ol className="checkout-steps">
-          {steps.map((step, index) => <li key={step} aria-current={stepIndex === index ? "step" : undefined}>
-            {index === 0 ? <Link to="/Medications/Shop">{t(step)}</Link> : t(step)}
-          </li>)}
+          {steps.map(({ label, destination }, index) => {
+            const current = index === stepIndex;
+            const completed = index < stepIndex;
+            const content = <>
+              {completed && <Check size={16} aria-hidden="true" />}
+              <span>{t(label)}</span>
+            </>;
+            return <li key={label} aria-current={current ? "step" : undefined}
+              data-state={current ? "current" : completed ? "completed" : "upcoming"}>
+              {index === 0 ? <Link className="checkout-step" to="/Medications/Shop">{content}</Link>
+                : completed && destination ? <button className="checkout-step" type="button" disabled={saving}
+                  onClick={() => go(destination)}>{content}</button>
+                  : <span className="checkout-step">{content}</span>}
+            </li>;
+          })}
         </ol>
       </nav>
-      {!validCart(items) ? <section className="checkout-panel">
+      {!hasCart ? <section className="checkout-panel">
         <p>{t(cartProblem)}</p><Link to="/Medications/Shop">{t("Back to Cart")}</Link>
       </section> : <>
         {stage === "location" && <section className="checkout-panel">

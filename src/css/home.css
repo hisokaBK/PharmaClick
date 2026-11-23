@@ -124,6 +124,9 @@
 
 /* ---------------- Buttons ---------------- */
 .homeButton {
+  display: inline-block;
+  color: #000;
+  text-decoration: none;
   background-color: rgba(240, 248, 255, 0);
   border: 1px solid;
   border-radius: 20px;
@@ -132,6 +135,7 @@
 }
 
 .homeButton:hover {
+  color: #000;
   background-color: rgba(20, 185, 100, 0.115);
   border: 1px solid;
 }

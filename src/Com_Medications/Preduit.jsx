@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import NavShop from "./NavShop";
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
@@ -16,18 +16,26 @@ export default function Produit() {
 
   const dispatch = useDispatch();
   const { idP } = useParams();
-  const NewProduit = useSelector((state) =>
-    state.cardData.find((med) => med.id == idP)
-  );
-  const produit = cartItems.find((med) => med.id == idP);
+  const productId = Number(idP);
+  const NewProduit = useSelector((state) => state.cardData.find((med) => med.id === productId));
+  const produit = cartItems.find((med) => med.id === productId);
   const [more, setMore] = useState(1);
   const { notify } = useFeedback();
+
+  if (!produit) return <>
+    <NavShop />
+    <main className="product-container">
+      <div className="product-details">
+        <h1 className="product-title">{t("No products found")}</h1>
+        <Link to="/Products">{t("Browse Products")}</Link>
+      </div>
+    </main>
+    <Footer />
+  </>;
 
   const handClick = () => {
     const targetProduct = NewProduit || produit;
     const quantity = Number(more) || 0;
-
-   
 
     if (targetProduct.stock < quantity) {
       notify("warning", "There is not enough stock for that quantity.");
@@ -65,7 +73,7 @@ export default function Produit() {
     else notify("success", "{0} added to your cart.", [produit.title]);
   };
 
-  let totalPrice = produit.price * more;
+  const totalPrice = produit.price * more;
 
   return (
     <>

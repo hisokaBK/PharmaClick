@@ -151,6 +151,7 @@
 }
 
 .animated-contact-btn {
+  text-decoration: none;
   position: relative;
   padding: 12px 30px;
   background-color: #04b077;
@@ -169,6 +170,7 @@
 }
 
 .animated-contact-btn:hover {
+  color: white;
   background-color: #038a62;
   transform: translateY(-3px);
   box-shadow: 0 6px 20px rgba(4, 176, 119, 0.4);
