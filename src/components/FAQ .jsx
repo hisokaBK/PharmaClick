@@ -122,7 +122,7 @@ const FAQ = () => {
 
       <div className="contact-support">
         <h3>{t("Didn't find what you were looking for?")}</h3>
-        <Link to='/contact'><button className="contact-btn">{t("Contact Customer Support")}</button></Link>
+        <Link to="/contact" className="contact-btn">{t("Contact Customer Support")}</Link>
       </div>
     </div>
     <Footer/>

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import { useStore, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { Banknote, Check, CreditCard, LocateFixed } from "lucide-react";
@@ -7,7 +7,6 @@ import { useDemoAuth } from "../components/DemoAuth";
 import { useFeedback } from "../components/Feedback";
 import ValidatedField, { useFieldValidation } from "../components/ValidatedField";
 import { useI18n } from "../i18n/LanguageProvider";
-import DeliveryMap from "./DeliveryMap";
 import { addressLocationProblem, deliveryProblem, locationCity, parseCoordinate, searchCities } from "./coverage";
 import { cartProblem, cartTotals, cleanAddress, deliveryAddressProblem, paymentLabels, saveOrder, validCart, validDeliveryPhone } from "./demoOrders";
 import { Address, OrderItems } from "./OrderInvoice";
@@ -19,6 +18,12 @@ const steps = [
   { label: "Payment", destination: "payment" },
   { label: "Review & Confirmation" },
 ];
+const LazyDeliveryMap = lazy(() => import("./DeliveryMap"));
+
+function DeliveryMap(props) {
+  const placeholder = <div aria-hidden="true" className={props.preview ? "checkout-map checkout-map-preview" : "checkout-map"} />;
+  return <Suspense fallback={placeholder}><LazyDeliveryMap {...props} /></Suspense>;
+}
 const fields = [
   ["name", "Full name", "name", 100],
   ["phone", "Phone number", "tel", 32],

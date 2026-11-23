@@ -110,6 +110,7 @@ test("checkout validates selections, confirms the address, saves and reopens a p
   });
   const { unmount } = open("/Medications/Shop");
   fireEvent.click(screen.getByRole("link", { name: /proceed to checkout/i }));
+  expect(await screen.findByRole("region", { name: "Delivery map" })).toBeVisible();
   const progress = within(screen.getByRole("navigation", { name: "Checkout progress" }));
   const [cartStep, , paymentStep, reviewStep] = progress.getAllByRole("listitem");
   expect(progress.getByRole("link", { name: "Cart" })).toHaveAttribute("href", "/Medications/Shop");

@@ -19,6 +19,24 @@ function addProductAndOpenCart() {
   fireEvent.click(screen.getByRole("link", { name: "Shopping cart, 1 products" }));
 }
 
+test("an unknown product URL offers a way back to the catalog", () => {
+  renderPage("/Produit/unknown");
+  expect(screen.getByRole("heading", { name: "No products found" })).toBeVisible();
+  expect(screen.getByRole("link", { name: "Browse Products" })).toHaveAttribute("href", "/Products");
+});
+
+test("the dashboard editor exposes labeled fields and returns focus on cancel", () => {
+  renderPage("/Dashboard");
+  const trigger = screen.getByRole("button", { name: "Add Medicament" });
+  fireEvent.click(trigger);
+  const editor = screen.getByRole("dialog", { name: "Add New Medicament" });
+  expect(within(editor).getByLabelText("Title")).toBeRequired();
+  expect(within(editor).getByLabelText("Stock Quantity")).toBeRequired();
+  fireEvent(editor, new Event("cancel", { cancelable: true }));
+  expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+  expect(trigger).toHaveFocus();
+});
+
 test("product detail warns about stock and adds an available quantity", () => {
   renderPage("/Produit/1");
   const quantity = screen.getByRole("spinbutton");
@@ -85,11 +103,12 @@ test("inventory deletion leaves the row in place when canceled", async () => {
   await waitFor(() => expect(screen.getByRole("button", { name: "Add Medicament" })).toHaveFocus());
 }, 12000);
 
-test("checkout opens the delivery step and explains the demo workflow", () => {
+test("checkout opens the delivery step and explains the demo workflow", async () => {
   addProductAndOpenCart();
   fireEvent.click(screen.getByRole("link", { name: /proceed to checkout/i }));
   expect(screen.getByRole("heading", { name: "Choose your delivery location" })).toBeInTheDocument();
   expect(screen.getByText("This is a demo. No payment is collected and no delivery is arranged.")).toBeInTheDocument();
+  expect(await screen.findByRole("region", { name: "Delivery map" })).toBeVisible();
 });
 
 function AsyncAction({ onConfirm }) {

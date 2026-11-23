@@ -11,15 +11,6 @@ import { useI18n } from "../i18n/LanguageProvider";
 
 const Footer = () => {
   const { t } = useI18n();
-  const links = [
-    { title: "Our services" },
-    { title: "About Us" },
-    { title: "Contact Us" },
-    { title: "FAQ" },
-
-    
-  ];
-
   return (
     <section className="client-showcase">
       <div className="showcase-container">

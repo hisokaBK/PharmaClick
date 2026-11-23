@@ -43,9 +43,9 @@ const About = () => {
             </p>
             <div className="contact-section">
               <div>
-                <Link style={{textDecoration:'none'}} to='/contact' ><button className="animated-contact-btn">
+                <Link to="/contact" className="animated-contact-btn">
                   {t("Contact Us")}
-                </button></Link>
+                </Link>
               </div>
             </div>
           </div>

@@ -6,7 +6,6 @@
     "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.2.0",
-    "@testing-library/user-event": "^13.5.0",
     "bootstrap": "^5.3.6",
     "framer-motion": "^12.11.3",
     "leaflet": "1.9.4",
@@ -17,8 +16,7 @@
     "react-redux": "^9.2.0",
     "react-router-dom": "^7.5.2",
     "react-scripts": "5.0.1",
-    "redux": "^5.0.1",
-    "web-vitals": "^2.1.4"
+    "redux": "^5.0.1"
   },
   "scripts": {
     "start": "react-scripts start",

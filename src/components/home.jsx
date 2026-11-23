@@ -49,9 +49,7 @@ export default function Home() {
                     {t("Register now to benefit from all our services.")}
                   </p>
                   <div style={{ display: "flex", justifyContent: "center" }}>
-                    <Link to="/SignUp">
-                      <button className="homeButton">{t("sign up now")}</button>
-                    </Link>
+                    <Link to="/SignUp" className="homeButton">{t("sign up now")}</Link>
                   </div>
                 </div>
               </div>
@@ -68,7 +66,7 @@ export default function Home() {
                     {t("You can discover all our different services here.")}
                   </p>
                   <div style={{ display: "flex", justifyContent: "center" }}>
-                    <Link to='/About' ><button className="homeButton">{t("Discover More")}</button></Link>
+                    <Link to="/About" className="homeButton">{t("Discover More")}</Link>
                   </div>
                 </div>
               </div>

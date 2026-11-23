@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import '../css/TrackingPage.css';
 import Footer from '../components/Footer';
 import MoroccoBranchMap from './MoroccoBranchMap';
@@ -10,10 +10,11 @@ const TrackingPage = () => {
   const { notify } = useFeedback();
   const [delivery, setDelivery] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [loadVideo, setLoadVideo] = useState(false);
+  const videoSection = useRef(null);
 
   useEffect(() => {
-    const fetchData = () => {
-      setTimeout(() => {
+    const timer = setTimeout(() => {
         setDelivery({
           orderId: "RX-789456",
           status: "out_for_delivery",
@@ -27,10 +28,24 @@ const TrackingPage = () => {
           eta: "2023-05-20T16:30",
         });
         setIsLoading(false);
-      }, 1000);
-    };
-    fetchData();
+    }, 1000);
+    return () => clearTimeout(timer);
   }, []);
+
+  useEffect(() => {
+    if (isLoading) return;
+    if (typeof IntersectionObserver === "undefined") {
+      setLoadVideo(true);
+      return;
+    }
+    const observer = new IntersectionObserver(([entry]) => {
+      if (!entry.isIntersecting) return;
+      observer.disconnect();
+      setLoadVideo(true);
+    }, { rootMargin: "160px" });
+    observer.observe(videoSection.current);
+    return () => observer.disconnect();
+  }, [isLoading]);
 
   if (isLoading) return (
     <div className="loader-container">
@@ -85,9 +100,9 @@ const TrackingPage = () => {
         <div className="courier-section">
           <h2 className="section-title">{t("Your Delivery Specialist")}</h2>
           <div className="courier67">
-            <div className="courier-video">
+            <div className="courier-video" ref={videoSection}>
               <video
-                src="/images_marque/hello1.mp4"
+                src={loadVideo ? "/images_marque/hello1.mp4" : undefined}
                 autoPlay
                 loop
                 muted

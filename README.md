@@ -16,11 +16,11 @@ The hosted demo predates the checkout and password reset shown in this README. R
 
 ## Screenshots
 
-### Home and navigation
+### Arabic navigation and healthcare resources
 
-<img src="docs/images/pharmaclick-homepage.png" width="840" alt="PharmaClick homepage with medication and services menus, a language selector, and an illustrated pharmacy hero">
+<img src="docs/images/pharmaclick-homepage.png" width="840" alt="PharmaClick Herbal Solutions page in Arabic with right-to-left navigation and an illustration of herbs">
 
-The homepage provides entry points to the storefront, healthcare resources, and demo accounts.
+The Arabic view shows the right-to-left navigation and educational resource cards.
 
 ### Morocco delivery checkout
 

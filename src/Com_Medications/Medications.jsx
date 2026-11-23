@@ -21,24 +21,25 @@ export default function Medications() {
   const descriptionRef = useRef(null);
 
   useEffect(() => {
+    const headings = [headerRef.current, descriptionRef.current].filter(Boolean);
+    if (typeof IntersectionObserver === "undefined") {
+      headings.forEach((element) => element.classList.add("show"));
+      return;
+    }
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             entry.target.classList.add("show");
+            observer.unobserve(entry.target);
           }
         });
       },
       { threshold: 0.1 }
     );
 
-    if (headerRef.current) observer.observe(headerRef.current);
-    if (descriptionRef.current) observer.observe(descriptionRef.current);
-
-    return () => {
-      if (headerRef.current) observer.unobserve(headerRef.current);
-      if (descriptionRef.current) observer.unobserve(descriptionRef.current);
-    };
+    headings.forEach((element) => observer.observe(element));
+    return () => observer.disconnect();
   }, []);
 
   const [query, setQuery] = useProductSearch();
@@ -63,7 +64,7 @@ export default function Medications() {
                 {t("Providing safe, effective medications with expert support and seamless delivery — committed to your well-being.")}
               </p>
               <div>
-                <Link to='/Products'><button className="pulse-button">{t("Browse Products")}</button></Link>
+                <Link to="/Products" className="pulse-button">{t("Browse Products")}</Link>
               </div>
             </div>
           </div>

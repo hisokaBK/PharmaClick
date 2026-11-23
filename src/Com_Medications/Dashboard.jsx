@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useLayoutEffect, useRef, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { addMedicament, deleteMedicament, updateMedicament } from '../store/actions';
 import NavShop from './NavShop';
@@ -14,10 +14,15 @@ const Dashboard = () => {
   const medicaments = useSelector(state => state.fullData);
   const dispatch = useDispatch();
   const addButton = useRef(null);
+  const editor = useRef(null);
+  const editorTrigger = useRef(null);
   const { notify, requestConfirmation } = useFeedback();
 
   const [showModal, setShowModal] = useState(false);
   const [currentMedicament, setCurrentMedicament] = useState(null);
+  useLayoutEffect(() => {
+    if (showModal && !editor.current.open) editor.current.showModal();
+  }, [showModal]);
   const [formData, setFormData] = useState({
     title: '',
     price: '',
@@ -49,7 +54,8 @@ const Dashboard = () => {
     handleCloseModal();
   };
 
-  const handleAddMedicament = () => {
+  const handleAddMedicament = (event) => {
+    editorTrigger.current = event.currentTarget;
     setCurrentMedicament(null);
     setFormData({
       title: '',
@@ -64,7 +70,8 @@ const Dashboard = () => {
     setShowModal(true);
   };
 
-  const handleEditMedicament = (medicament) => {
+  const handleEditMedicament = (medicament, trigger) => {
+    editorTrigger.current = trigger;
     setCurrentMedicament(medicament);
     setFormData({
       title: medicament.title,
@@ -95,8 +102,10 @@ const Dashboard = () => {
   };
 
   const handleCloseModal = () => {
+    editor.current?.close();
     setShowModal(false);
     setCurrentMedicament(null);
+    editorTrigger.current?.focus();
   };
 
   return (
@@ -115,7 +124,7 @@ const Dashboard = () => {
         <div className="row">
           <main role="main" className="col-md-9 ml-sm-auto col-lg-10 px-md-4">
             <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-              <h2>{t("Medicament Management")}</h2>
+              <h2 id="dashboard-medications">{t("Medicament Management")}</h2>
               <button 
                 className="btn btn-success"
                 ref={addButton}
@@ -125,7 +134,7 @@ const Dashboard = () => {
                 {t("Add Medicament")}
               </button>
             </div>
-            <div className="table-responsive">
+            <div className="table-responsive" role="region" aria-labelledby="dashboard-medications" tabIndex={0}>
               <table className="table table-striped table-hover">
                 <thead className="thead-dark">
                   <tr>
@@ -157,7 +166,7 @@ const Dashboard = () => {
                         <button 
                           className="btn12 btn-sm btn-outline-primary mr-2"
                           aria-label={t("Edit {0}", [med.title])}
-                          onClick={() => handleEditMedicament(med)}
+                          onClick={(event) => handleEditMedicament(med, event.currentTarget)}
                         >
                           <FaEdit/>
                         </button>
@@ -179,24 +188,24 @@ const Dashboard = () => {
       </div>
 
       {showModal && (
-        <div className="add_idet">
-          <div className="modal d-block" >
-            <div className="modal-dialog modal-lg">
+        <dialog className="dashboard-editor" ref={editor} aria-labelledby="dashboard-editor-title"
+          onCancel={(event) => { event.preventDefault(); handleCloseModal(); }}>
               <div className="modal-content">
                 <div className="modal-header bg-success text-white">
-                  <h5 className="modal-title">
+                  <h5 className="modal-title" id="dashboard-editor-title">
                     {currentMedicament ? t("Edit Medicament") : t("Add New Medicament")}
                   </h5>
-                  <button type="button" className="closeAdd" onClick={handleCloseModal}>
-                    <FaTimes/>
+                  <button type="button" className="closeAdd" aria-label={t("Cancel")} onClick={handleCloseModal}>
+                    <FaTimes aria-hidden="true" />
                   </button>
                 </div>
                 <div className="modal-body">
                   <form onSubmit={handleSubmit} onInvalid={onInvalid}>
                     <div className="form-row">
                       <div className="form-group col-md-6">
-                        <label>{t("Title")}</label>
+                        <label htmlFor="medication-title">{t("Title")}</label>
                         <input
+                          id="medication-title"
                           type="text"
                           className="form-control"
                           name="name"
@@ -206,8 +215,9 @@ const Dashboard = () => {
                         />
                       </div>
                       <div className="form-group col-md-6">
-                        <label>{t("Price (DHs)")}</label>
+                        <label htmlFor="medication-price">{t("Price (DHs)")}</label>
                         <input
+                          id="medication-price"
                           type="number"
                           className="form-control"
                           name="price"
@@ -222,8 +232,9 @@ const Dashboard = () => {
 
                     <div className="form-row">
                       <div className="form-group col-md-6">
-                        <label>{t("Category")}</label>
+                        <label htmlFor="medication-category">{t("Category")}</label>
                         <select
+                          id="medication-category"
                           className="form-control"
                           name="category"
                           value={formData.category}
@@ -238,8 +249,9 @@ const Dashboard = () => {
                         </select>
                       </div>
                       <div className="form-group col-md-6">
-                        <label>{t("Stock Quantity")}</label>
+                        <label htmlFor="medication-stock">{t("Stock Quantity")}</label>
                         <input
+                          id="medication-stock"
                           type="number"
                           className="form-control"
                           name="stock"
@@ -252,23 +264,24 @@ const Dashboard = () => {
                     </div>
 
                      <div className="form-group col-md-6">
-                        <label>{t("short Description")}</label>
-                        <textarea name="" required onChange={(e)=>setFormData({...formData,shortDescription:e.target.value})} value={formData.shortDescription} className="form-control"  id="">
+                        <label htmlFor="medication-short-description">{t("short Description")}</label>
+                        <textarea name="shortDescription" required onChange={(e)=>setFormData({...formData,shortDescription:e.target.value})} value={formData.shortDescription} className="form-control" id="medication-short-description">
                         </textarea>
                         
                       </div>
 
                        <div className="form-group col-md-6">
-                        <label>{t("Full Description")}</label>
-                        <textarea  required onChange={(e)=>setFormData({...formData,fullDescription:e.target.value})} value={formData.fullDescription} className="form-control"  id="">
+                        <label htmlFor="medication-full-description">{t("Full Description")}</label>
+                        <textarea required onChange={(e)=>setFormData({...formData,fullDescription:e.target.value})} value={formData.fullDescription} className="form-control" id="medication-full-description">
                         </textarea>
                         
                       </div>
 
                     <div className="form-row">
                       <div className="form-group col-md-6">
-                        <label>{t("Image URL")}</label>
+                        <label htmlFor="medication-image">{t("Image URL")}</label>
                         <input
+                          id="medication-image"
                           type="text"
                           className="form-control"
                           name="image"
@@ -283,7 +296,7 @@ const Dashboard = () => {
                             type="checkbox"
                             className="form-check"
                             name="prescriptionRequired"
-                            
+                            checked={formData.needed_prescription === "yes"}
                           onChange={(e)=>setFormData({...formData,needed_prescription:e.target.checked?'yes':'No'})}
                             id="prescriptionCheck"
                           />
@@ -305,9 +318,7 @@ const Dashboard = () => {
                   </form>
                 </div>
               </div>
-            </div>
-          </div>
-        </div>
+        </dialog>
       )}
     </div>
   );
