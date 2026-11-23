@@ -9,6 +9,7 @@ import useDemoForm from "./useDemoForm";
 import { demoAccountNotice } from "../store/demoAccounts";
 import { useI18n } from "../i18n/LanguageProvider";
 import useLocalizedInvalid from "../i18n/useLocalizedInvalid";
+import { OrderHistory } from "../checkout/OrderHistory";
 
 function PersonalInformation({ user, editing, setEditing }) {
   const { t } = useI18n();
@@ -76,13 +77,7 @@ export default function Profile() {
             <ProfilePhoto />
           </div>
         )}
-        {tab === "orders" && (
-          <section className="demo-profile-section">
-            <h2>{t("My Orders")}</h2>
-            <p>{t("No orders yet. Checkout previews invoices, and this demo does not submit orders.")}</p>
-            <Link to="/Products">{t("Browse products")}</Link>
-          </section>
-        )}
+        {tab === "orders" && <OrderHistory key={user.id} userId={user.id} />}
         {tab === "settings" && (
           <section className="demo-profile-section">
             <h2>{t("Account Settings")}</h2>
@@ -90,7 +85,7 @@ export default function Profile() {
             <p>{t(demoAccountNotice)}</p>
             <button type="button" className="demo-danger" onClick={(event) => requestConfirmation({
               title: "Delete demo account?",
-              description: "This permanently removes this demo account, its photo, and its saved cart from this browser.",
+              description: "This permanently removes this demo account, its photo, saved cart and demo orders from this browser.",
               confirmLabel: "Delete account",
               trigger: event.currentTarget,
               onConfirm: async () => {

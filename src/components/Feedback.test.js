@@ -85,11 +85,11 @@ test("inventory deletion leaves the row in place when canceled", async () => {
   await waitFor(() => expect(screen.getByRole("button", { name: "Add Medicament" })).toHaveFocus());
 }, 12000);
 
-test("checkout opens the printable invoice and explains the demo workflow", () => {
+test("checkout opens the delivery step and explains the demo workflow", () => {
   addProductAndOpenCart();
-  fireEvent.click(screen.getByRole("button", { name: /proceed to checkout/i }));
-  expect(screen.getByRole("heading", { name: "Purchase invoice" })).toBeInTheDocument();
-  expect(screen.getAllByText("This is an invoice preview. Online ordering is unavailable.")).toHaveLength(2);
+  fireEvent.click(screen.getByRole("link", { name: /proceed to checkout/i }));
+  expect(screen.getByRole("heading", { name: "Choose your delivery location" })).toBeInTheDocument();
+  expect(screen.getByText("This is a demo. No payment is collected and no delivery is arranged.")).toBeInTheDocument();
 });
 
 function AsyncAction({ onConfirm }) {

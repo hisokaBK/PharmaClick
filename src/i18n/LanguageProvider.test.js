@@ -138,20 +138,35 @@ test("keeps an edited description and leaves an empty field blank", () => {
   expect(screen.getByTestId("empty-description")).toBeEmptyDOMElement();
 });
 
-test("prevents the native validation popup and updates an active warning when changing languages", () => {
+test("shows localized sign-in field errors and clears each error when corrected", () => {
   window.history.replaceState({}, "", "/signin");
   render(<App />);
   const selector = screen.getByRole("button", { name: /Language.*English/ });
-  const message = "Enter a valid email address and your password.";
+  const message = "This field is required.";
   chooseLanguage(selector, "fr");
   const email = screen.getByLabelText(fr["Email address"]);
-  expect(fireEvent.invalid(email)).toBe(false);
+  const toggle = screen.getByRole("button", { name: fr["Show password"] });
+  expect(email.form).toHaveAttribute("novalidate");
+  expect(email).not.toHaveAttribute("aria-invalid");
+  fireEvent.submit(email.form);
   expect(email).toHaveFocus();
   expect(screen.getAllByText(fr[message])).toHaveLength(2);
+  expect(email).toHaveAccessibleDescription(fr[message]);
 
   chooseLanguage(selector, "ar");
+  expect(toggle).toHaveAccessibleName(ar["Show password"]);
+  fireEvent.click(toggle);
+  expect(toggle).toHaveAccessibleName(ar["Hide password"]);
   expect(document.documentElement.dir).toBe("rtl");
   expect(screen.getAllByText(ar[message])).toHaveLength(2);
+  fireEvent.change(email, { target: { value: "invalid-email" } });
+  expect(email).toHaveAccessibleDescription(ar["Enter a valid email address."]);
+  chooseLanguage(selector, "en");
+  expect(email).toHaveValue("invalid-email");
+  expect(email).toHaveAccessibleDescription("Enter a valid email address.");
+  fireEvent.change(email, { target: { value: "valid@example.com" } });
+  expect(email).not.toHaveAttribute("aria-invalid");
+  expect(screen.getByLabelText("Password")).toHaveAttribute("aria-invalid", "true");
 });
 
 test("French and Arabic keep the search route and cart, persist on reload, and restore English direction", () => {

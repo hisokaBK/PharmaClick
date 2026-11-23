@@ -1,24 +1,23 @@
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 import { useSelector, useDispatch } from "react-redux";
 import { Addplus } from "../store/actions";
 import { RemovePanier, clearCart } from "../store/actions";
 import '../css/Cart.css'; 
 import NavShop from "./NavShop";
 import Footer from "../components/Footer";
-import Commander from './Commander';
 import { Link } from 'react-router-dom';
 import { useFeedback } from "../components/Feedback";
 import { useDemoAuth } from "../components/DemoAuth";
 import { findSession, readDemo } from "../store/demoAccounts";
 import { useI18n } from "../i18n/LanguageProvider";
 import CatalogDescription from "./CatalogDescription";
+import { cartTotals, readOrders } from "../checkout/demoOrders";
 
 export default function Cart() {
   const { t } = useI18n();
   
   const cartItems = useSelector((state) => state.cardData);
   const dispatch = useDispatch();
-  const [showCommander, setShowCommander] = useState(false);
   const cartRegion = useRef(null);
   const { notify, requestConfirmation } = useFeedback();
   const { user } = useDemoAuth();
@@ -36,8 +35,8 @@ const updateCartItem = (item, quantityChange) => {
   const newTimes = item.times + quantityChange;
   const newStock = item.stock - quantityChange;
 
-  if (newTimes < 0) return;  
-  if (quantityChange > 0 && newTimes > item.stock) {
+  if (newTimes < 1) return;
+  if (quantityChange > 0 && newStock < 0) {
     notify("warning", "There is not enough stock for that quantity.");
     return;
   }
@@ -79,7 +78,7 @@ const handleDecrease = (item) => updateCartItem(item, -1);
     });
   };
 
-  const subtotal = cartItems.reduce((sum, item) => sum + (item.price * item.times), 0);
+  const { subtotal, shipping, total } = cartTotals(cartItems);
 
   return (
     <>
@@ -91,6 +90,7 @@ const handleDecrease = (item) => updateCartItem(item, -1);
             <Link to="/Products" className="continue-shopping">
               {t("Continue Shopping")}
             </Link>
+            {!user && readOrders(null).length > 0 && <p><Link to="/checkout/orders">{t("View My Orders")}</Link></p>}
           </div>
         ) : (
           <>
@@ -114,7 +114,7 @@ const handleDecrease = (item) => updateCartItem(item, -1);
                     
                     <div className="item-actions">
                       <div className="quantity-control2">
-                        <button aria-label={t("Decrease quantity")} onClick={() => handleDecrease(item)} className="quantity-btn">-</button>
+                        <button aria-label={t("Decrease quantity")} onClick={() => handleDecrease(item)} className="quantity-btn" disabled={item.times <= 1}>-</button>
                         <span className="quantity">{item.times}</span>
                         <button aria-label={t("Increase quantity")} onClick={() => handleIncrease(item)} className="quantity-btn">+</button>
                       </div>
@@ -142,36 +142,23 @@ const handleDecrease = (item) => updateCartItem(item, -1);
               </div>
               <div className="summary-row">
                 <span>{t("Shipping")}</span>
-                <span className="shipping-price">30.00 {t("Dhs")}</span>
+                <span className="shipping-price">{shipping.toFixed(2)} {t("Dhs")}</span>
               </div>
               <div className="summary-row total">
                 <span>{t("Total")}</span>
-                <span className="total-price">{(subtotal + 30).toFixed(2)} {t("Dhs")}</span>
+                <span className="total-price">{total.toFixed(2)} {t("Dhs")}</span>
               </div>
-              <button 
-                className="checkout-btn" 
-                onClick={() => {
-                  setShowCommander(true);
-                  notify("info", "This is an invoice preview. Online ordering is unavailable.");
-                }}
-              >
-                {t("Proceed to Checkout ({0} {1})", [(subtotal + 30).toFixed(2), t("Dhs")])}
-              </button>
+              <Link className="checkout-btn" to="/checkout">
+                {t("Proceed to Checkout ({0} {1})", [total.toFixed(2), t("Dhs")])}
+              </Link>
               <button type="button" className="remove-btn" onClick={(event) => handleClearCart(event.currentTarget)}>
                 {t("Clear cart")}
               </button>
+              {!user && readOrders(null).length > 0 && <Link to="/checkout/orders">{t("View My Orders")}</Link>}
             </div>
           </>
         )}
       </main>
-      
-      {showCommander && (
-        <Commander 
-          cartItems={cartItems}
-          subtotal={subtotal}
-          onClose={() => setShowCommander(false)}
-        />
-      )}
       
       <Footer/>
     </>

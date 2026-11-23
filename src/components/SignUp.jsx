@@ -11,17 +11,22 @@ import ScrolToTop from "./scrolToTop";
 import { useFeedback } from "./Feedback";
 import { useDemoAuth } from "./DemoAuth";
 import useDemoForm from "./useDemoForm";
-import { createDemoAccount } from "../store/demoAccounts";
+import { createDemoAccount, validAccountEmail, validAccountPassword } from "../store/demoAccounts";
 import { useI18n } from "../i18n/LanguageProvider";
-import useLocalizedInvalid from "../i18n/useLocalizedInvalid";
+import ValidatedField, { useFieldValidation } from "./ValidatedField";
 import LanguageSelector from "../i18n/LanguageSelector";
 
 export default function SignUp() {
   const { t } = useI18n();
-  const onInvalid = useLocalizedInvalid("Complete the required fields and check your email address.");
   const { notify } = useFeedback();
   const { user } = useDemoAuth();
   const navigate = useNavigate();
+  const validation = useFieldValidation({
+    name: (value) => value.replace(/\s+/g, " ").length > 100 && "Enter a full name of up to 100 characters.",
+    email: (value, input) => (input.validity.typeMismatch || !validAccountEmail(value)) && "Enter a valid email address.",
+    password: (value) => !validAccountPassword(value) && "Use a password with 8 to 128 characters.",
+    confirmation: (value, input, form) => value !== form.elements.namedItem("password").value && "The passwords do not match.",
+  });
   const { pending, onSubmit } = useDemoForm(async (fields) => {
     await createDemoAccount(fields);
     notify("success", "Demo account created. You can now sign in.");
@@ -129,53 +134,50 @@ export default function SignUp() {
                 </div>
                 <div className="card-body px-4 py-5 px-md-5">
                   <form
-                    onInvalid={onInvalid}
-                    onSubmit={onSubmit}
+                    noValidate
+                    onBlur={validation.onBlur}
+                    onChange={validation.onChange}
+                    onSubmit={(event) => {
+                      event.preventDefault();
+                      if (!pending && validation.validate(event.currentTarget)) onSubmit(event);
+                    }}
                     aria-busy={pending}
                   >
                     <div className="form-group form-outline mb-4">
-                      <input type="text" name="name" id="register-name" className="form-control"
-                        autoComplete="name" maxLength={100} placeholder=" " required />
-                      <label className="form-label" htmlFor="register-name">{t("Full name")}</label>
+                      <ValidatedField floating showRequiredMark={false} label="Full name" error={validation.errors.name}
+                        type="text" name="name" id="register-name" autoComplete="name"
+                        maxLength={100} placeholder=" " required />
                     </div>
 
                     <div className="form-group form-outline mb-4">
-                      <input
+                      <ValidatedField floating showRequiredMark={false} label="Email address" error={validation.errors.email}
                         type="email"
                         name="email"
                         autoComplete="email"
                         required
                         id="form3Example3"
-                        className="form-control"
                         placeholder=" "
                       />
-                      <label className="form-label" htmlFor="form3Example3">
-                        {t("Email address")}
-                      </label>
                     </div>
 
                     <div className="form-group  mb-4">
-                      <input
+                      <ValidatedField floating showRequiredMark={false} label="Password" error={validation.errors.password}
                         type="password"
                         name="password"
                         maxLength={128}
                         autoComplete="new-password"
-                        aria-describedby="demo-password-hint"
+                        describedBy="demo-password-hint"
                         required
                         id="form3Example4"
-                        className="form-control"
                         placeholder=" "
                       />
-                      <label className="form-label" htmlFor="form3Example4">
-                        {t("Password")}
-                      </label>
                     </div>
 
                     <p className="demo-password-hint" id="demo-password-hint">{t("Use 8 to 128 characters.")}</p>
                     <div className="form-group mb-4">
-                      <input type="password" name="confirmation" id="register-confirmation"
-                        className="form-control" autoComplete="new-password" maxLength={128} placeholder=" " required />
-                      <label className="form-label" htmlFor="register-confirmation">{t("Confirm password")}</label>
+                      <ValidatedField floating showRequiredMark={false} label="Confirm password" error={validation.errors.confirmation}
+                        type="password" name="confirmation" id="register-confirmation" autoComplete="new-password"
+                        maxLength={128} placeholder=" " required />
                     </div>
 
                     <div className="divSubmit">

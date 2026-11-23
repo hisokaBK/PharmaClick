@@ -13,17 +13,20 @@ import { useFeedback } from "./Feedback";
 import { useDemoAuth } from "./DemoAuth";
 import useDemoForm from "./useDemoForm";
 import { useI18n } from "../i18n/LanguageProvider";
-import useLocalizedInvalid from "../i18n/useLocalizedInvalid";
+import ValidatedField, { useFieldValidation } from "./ValidatedField";
 import LanguageSelector from "../i18n/LanguageSelector";
 
 export default function SignIn() {
   const { t } = useI18n();
-  const onInvalid = useLocalizedInvalid("Enter a valid email address and your password.");
   const { notify } = useFeedback();
   const { user, signIn } = useDemoAuth();
   const navigate = useNavigate();
   const { state } = useLocation();
   const profile = { pathname: "/profile", search: state?.profileSearch || "" };
+  const validation = useFieldValidation({
+    email: (value, input) => input.validity.typeMismatch && "Enter a valid email address.",
+    password: (value) => value.length > 128 && "The email address or password is incorrect.",
+  });
   const { pending, onSubmit } = useDemoForm(async ({ email, password }) => {
     const account = await signIn(email, password);
     notify("success", "Welcome back, {0}.", [account.name]);
@@ -103,40 +106,37 @@ export default function SignIn() {
                 </div>
                 <div className="card-body px-4 py-5 px-md-5">
                   <form
-                    onInvalid={onInvalid}
-                    onSubmit={onSubmit}
+                    noValidate
+                    onBlur={validation.onBlur}
+                    onChange={validation.onChange}
+                    onSubmit={(event) => {
+                      event.preventDefault();
+                      if (!pending && validation.validate(event.currentTarget)) onSubmit(event);
+                    }}
                     aria-busy={pending}
                   >
                     <div className="form-group form-outline mb-4">
-                      <input
+                      <ValidatedField floating showRequiredMark={false} label="Email address" error={validation.errors.email}
                         type="email"
                         name="email"
                         autoComplete="email"
                         defaultValue={state?.registeredEmail || ""}
                         required
                         id="form3Example3"
-                        className="form-control"
                         placeholder=" "
                       />
-                      <label className="form-label" htmlFor="form3Example3">
-                        {t("Email address")}
-                      </label>
                     </div>
 
                     <div className="form-group  mb-4">
-                      <input
+                      <ValidatedField floating showRequiredMark={false} label="Password" error={validation.errors.password}
                         type="password"
                         name="password"
                         maxLength={128}
                         autoComplete="current-password"
                         required
                         id="form3Example4"
-                        className="form-control"
                         placeholder=" "
                       />
-                      <label className="form-label" htmlFor="form3Example4">
-                        {t("Password")}
-                      </label>
                     </div>
 
                     {/* Let the existing sign-in options wrap when they need more room. */}
