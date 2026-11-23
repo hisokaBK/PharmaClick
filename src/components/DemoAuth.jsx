@@ -74,6 +74,9 @@ export default function DemoAuthProvider({ children }) {
         return;
       }
       const items = cart.map(({ id, times }) => ({ id, times }));
+      const storedCart = findSession(saved)?.cart;
+      if (storedCart?.length === items.length && items.every(({ id, times }, index) =>
+        storedCart[index].id === id && storedCart[index].times === times)) return;
       try {
         writeDemo({ ...saved, accounts: saved.accounts.map((account) =>
           account.id === owner.current ? { ...account, cart: items } : account) });

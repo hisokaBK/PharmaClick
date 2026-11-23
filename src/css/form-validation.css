@@ -1,0 +1,75 @@
+.required-mark, .field-error {
+  color: #b42318;
+}
+
+.required-mark::before {
+  content: "*";
+}
+
+.form-control[aria-invalid="true"],
+.form-control[aria-invalid="true"]:focus {
+  border-color: #b42318;
+}
+
+.form-control[aria-invalid="true"]:focus {
+  outline: 2px solid #b42318;
+  outline-offset: 2px;
+}
+
+.field-error {
+  margin: .35rem 0 0;
+  font-size: .875rem;
+  line-height: 1.35;
+  text-align: start;
+  overflow-wrap: anywhere;
+}
+
+.password-field {
+  position: relative;
+  margin-block-end: 1rem;
+}
+
+.password-field .form-control {
+  margin-block-end: 0;
+  padding-inline-end: 2.75rem;
+}
+
+[dir="rtl"] .password-field .form-control {
+  direction: ltr;
+  padding-inline-start: 2.75rem;
+  padding-inline-end: 8px;
+}
+
+.password-field .form-label {
+  max-inline-size: calc(100% - 4.5rem);
+}
+
+.password-visibility {
+  position: absolute;
+  inset-block: 0;
+  inset-inline-end: 0;
+  z-index: 1;
+  inline-size: 2.75rem;
+  block-size: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #075a40;
+  cursor: pointer;
+}
+
+.password-visibility svg {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+}
+
+.password-visibility:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: -4px;
+  border-radius: 4px;
+}
+
+.password-field .form-control::-ms-reveal {
+  display: none;
+}

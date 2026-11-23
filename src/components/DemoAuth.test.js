@@ -54,10 +54,56 @@ test.each([["Bakessou Bilal", "BB"], ["John Smith", "JS"], ["Sara", "S"], ["Moha
   (name, expected) => expect(initialsFor(name)).toBe(expected)
 );
 
+test("sign-in reveals passwords without changing their value or submitting", () => {
+  openPage("/signin");
+  const input = screen.getByLabelText("Password");
+  expect(input).toBeRequired();
+  expect(input).toHaveAttribute("type", "password");
+  fill("Password", "  example password  ");
+  const toggle = screen.getByRole("button", { name: "Show password" });
+  expect(toggle).toHaveAttribute("type", "button");
+  toggle.focus();
+  fireEvent.click(toggle);
+  expect(toggle).toHaveFocus();
+  expect(toggle).toHaveAttribute("aria-pressed", "true");
+  expect(toggle).toHaveAccessibleName("Hide password");
+  expect(input).toHaveAttribute("type", "text");
+  expect(input).toHaveValue("  example password  ");
+  expect(screen.getByLabelText("Email address")).not.toHaveAttribute("aria-invalid");
+  fireEvent.click(toggle);
+  expect(toggle).toHaveAttribute("aria-pressed", "false");
+  expect(input).toHaveAttribute("type", "password");
+  expect(input).toHaveValue("  example password  ");
+});
+
 test("registers, checks credentials, updates a profile, and restores isolated carts and sessions", async () => {
   const { unmount: unmountRegistration } = openPage("/signup");
+  fireEvent.click(screen.getByRole("button", { name: "Sign up" }));
+  expect(screen.getByLabelText("Full name")).toHaveFocus();
+  expect(screen.getAllByText("This field is required.")).toHaveLength(4);
+  expect(screen.getByLabelText(/^password$/i)).toHaveAccessibleDescription(
+    "Use 8 to 128 characters. This field is required."
+  );
+  fill(/^password$/i, "short");
+  expect(screen.getByLabelText(/^password$/i)).toHaveAccessibleDescription(
+    "Use 8 to 128 characters. Use a password with 8 to 128 characters."
+  );
+  const passwordInput = screen.getByLabelText(/^password$/i);
+  const confirmationInput = screen.getByLabelText("Confirm password");
+  fireEvent.click(screen.getByRole("button", { name: "Show password" }));
+  expect(passwordInput).toHaveAttribute("type", "text");
+  expect(passwordInput).toHaveValue("short");
+  expect(passwordInput).toHaveAttribute("aria-invalid", "true");
+  expect(confirmationInput).toHaveAttribute("type", "password");
+  fireEvent.click(screen.getByRole("button", { name: "Show password confirmation" }));
+  fireEvent.click(screen.getByRole("button", { name: "Hide password" }));
+  expect(passwordInput).toHaveAttribute("type", "password");
+  expect(confirmationInput).toHaveAttribute("type", "text");
   register("Bakessou Bilal", "bilal@example.com", "different-password");
-  expect((await screen.findAllByText("The passwords do not match.")).length).toBeGreaterThan(0);
+  expect(screen.getByLabelText("Confirm password")).toHaveFocus();
+  expect(screen.getByLabelText("Confirm password")).toHaveAccessibleDescription("The passwords do not match.");
+  fill("Confirm password", password);
+  expect(screen.getByLabelText("Confirm password")).not.toHaveAttribute("aria-invalid");
   expect(readDemo().accounts).toHaveLength(0);
 
   register("Bakessou Bilal", "bilal@example.com");
@@ -122,7 +168,7 @@ test("registers, checks credentials, updates a profile, and restores isolated ca
     expect(window.location.pathname + window.location.search).toBe("/profile?tab=orders");
     expect(screen.getByRole("button", { name: /Mohammed Amine El Idrissi/ })).toBeInTheDocument();
   }
-}, 20000);
+}, 45000);
 
 test("account deletion is confirmed and preserves other accounts", async () => {
   HTMLDialogElement.prototype.showModal = function () { this.open = true; };

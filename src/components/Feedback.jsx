@@ -74,6 +74,7 @@ function Toast({ toast, dismiss }) {
 
 function ConfirmationDialog({ request, onComplete, notify }) {
   const { t } = useI18n();
+  const Icon = request.icon || Trash2;
   const dialog = useRef(null);
   const cancelButton = useRef(null);
   const inProgress = useRef(false);
@@ -124,7 +125,7 @@ function ConfirmationDialog({ request, onComplete, notify }) {
         if (!inProgress.current) close();
       }}
     >
-      <Trash2 className="feedback-dialog-icon" size={24} aria-hidden="true" />
+      <Icon className="feedback-dialog-icon" size={24} aria-hidden="true" />
       <h2 id={titleId}>{t(request.title)}</h2>
       <p id={descriptionId}>{t(request.description, request.descriptionValues)}</p>
       <div className="feedback-dialog-actions">

@@ -137,6 +137,9 @@
 }
 
 .checkout-btn {
+  display: block;
+  text-align: center;
+  text-decoration: none;
   width: 100%;
   padding: 12px;
   background-color: #2e7d32; 
@@ -150,6 +153,7 @@
 
 .checkout-btn:hover {
   background-color: #1b5e20; 
+  color: white;
 }
 
 @media (max-width: 768px) {

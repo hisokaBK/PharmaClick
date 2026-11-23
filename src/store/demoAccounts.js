@@ -28,11 +28,19 @@ export function publicAccount(account) {
   return { id, name, email };
 }
 
+export function validAccountEmail(email) {
+  return email.length <= 254 && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
+export function validAccountPassword(password) {
+  return password.length >= 8 && password.length <= 128;
+}
+
 export function validateIdentity(name, email) {
   const cleanName = name.trim().replace(/\s+/g, " ");
   const cleanEmail = email.trim().toLowerCase();
   if (!cleanName || cleanName.length > 100) throw new DemoAccountError("Enter a full name of up to 100 characters.");
-  if (cleanEmail.length > 254 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(cleanEmail)) {
+  if (!validAccountEmail(cleanEmail)) {
     throw new DemoAccountError("Enter a valid email address.");
   }
   return { name: cleanName, email: cleanEmail };
@@ -76,7 +84,7 @@ async function deriveVerifier(password, salt) {
 
 export async function createDemoAccount({ name, email, password, confirmation }) {
   const identity = validateIdentity(name, email);
-  if (password.length < 8 || password.length > 128) throw new DemoAccountError("Use a password with 8 to 128 characters.");
+  if (!validAccountPassword(password)) throw new DemoAccountError("Use a password with 8 to 128 characters.");
   if (password !== confirmation) throw new DemoAccountError("The passwords do not match.");
   ensureUniqueEmail(readDemo().accounts, identity.email);
 

@@ -17,6 +17,10 @@ import { Provider } from "react-redux";
 import { legacy_createStore } from "redux";
 import reducer from "./store/reducer";
 import Cart from "./Com_Medications/Cart";
+import Checkout from "./checkout/Checkout";
+import OrderInvoice from "./checkout/OrderInvoice";
+import GuestOrderHistory from "./checkout/OrderHistory";
+import Footer from "./components/Footer";
 import Produit from "./Com_Medications/Preduit";
 import FAQ from "./components/FAQ ";
 import TrackingPage from "./Com_Medications/Delivery";
@@ -58,6 +62,9 @@ const App = () => {
             <Route path="/FAQ" element={<FAQ />} />
             <Route path="/Delivery" element={<TrackingPage />} />
             <Route path="/profile" element={<RequireDemoAccount><Profile /></RequireDemoAccount>} />
+            <Route path="/checkout" element={<><Checkout /><Footer /></>} />
+            <Route path="/checkout/invoice/:reference" element={<><OrderInvoice /><Footer /></>} />
+            <Route path="/checkout/orders" element={<><GuestOrderHistory /><Footer /></>} />
           </Route>
           <Route path="/Medications" element={<Medications />} />
           <Route path="/Products" element={<Products />} />
